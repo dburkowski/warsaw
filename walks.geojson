@@ -1,0 +1,201 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "Warsaw Memory Walks",
+    "note": "Add stops by copying a feature below. status: survives | fragment | gone. theme: ghetto | uprising | prewar. category: stop | tchorek | boundary. Coordinates are [lng, lat].",
+    "walks": {
+      "small-ghetto": { "label": "Small Ghetto — survivals & seams", "color": "#8c3b4a" },
+      "praga": { "label": "Praga — surviving pre-war Warsaw", "color": "#7a6a3c" }
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.00097, 52.2361165] },
+      "properties": {
+        "name": "Nożyk Synagogue",
+        "walk": "small-ghetto",
+        "order": 1,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "1902",
+        "blurb": "The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable and fodder store; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
+        "place_id": "ChIJsVd1DonMHkcRCDpFLJXw440",
+        "source": "https://warszawa.jewish.org.pl/pl/visit/warsaw/nozyk",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0033177, 52.2354096] },
+      "properties": {
+        "name": "All Saints Church",
+        "walk": "small-ghetto",
+        "order": 2,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "1883",
+        "blurb": "Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding; Ringelblum recorded its role.",
+        "place_id": "ChIJ-ZnF2IvMHkcRtdrJTKeAS1g",
+        "source": "http://www.wszyscyswieci.pl/",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0052525, 52.2365106] },
+      "properties": {
+        "name": "Próżna Street",
+        "walk": "small-ghetto",
+        "order": 3,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "pre-1900",
+        "blurb": "The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes in the facades; several buildings are under long renovation.",
+        "place_id": "ChIJp8DML4rMHkcRersX820kLOY",
+        "source": "https://maps.google.com/?cid=16585671582347148154",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [20.9986541, 52.2307601] },
+      "properties": {
+        "name": "Ghetto Wall — Sienna 55 / Złota 62",
+        "walk": "small-ghetto",
+        "order": 4,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "fragment",
+        "date": "1940",
+        "blurb": "Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
+        "place_id": "ChIJp-XwyIXMHkcRwOEWRHuH_Zw",
+        "source": "https://app.1943.pl/#/przewodnik/en",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [20.9927355, 52.2341338] },
+      "properties": {
+        "name": "Ghetto Wall — Waliców",
+        "walk": "small-ghetto",
+        "order": 5,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "fragment",
+        "date": "1940",
+        "blurb": "Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby — the boundary-marker thread runs through here.",
+        "place_id": "ChIJqUv4IurNHkcR6KYmpOyqdO8",
+        "source": "https://maps.google.com/?cid=17254604005706213096",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [20.9895072, 52.2373961] },
+      "properties": {
+        "name": "The Memory Footbridge",
+        "walk": "small-ghetto",
+        "order": 6,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "gone",
+        "date": "1942",
+        "blurb": "Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain (lights no longer lit).",
+        "place_id": "ChIJg4NSv4bMHkcRQKzDqdHjN8I",
+        "source": "https://app.1943.pl/#/przewodnik/en",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [20.9945, 52.2346] },
+      "properties": {
+        "name": "Prosta 51 — sewer escape (approx.)",
+        "walk": "small-ghetto",
+        "order": 7,
+        "category": "stop",
+        "theme": "ghetto",
+        "status": "gone",
+        "date": "10 May 1943",
+        "blurb": "Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — verify and refine on site.",
+        "place_id": null,
+        "source": null,
+        "then_photo": null
+      }
+    },
+
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0392656, 52.2516096] },
+      "properties": {
+        "name": "Praga Museum of Warsaw",
+        "walk": "praga",
+        "order": 1,
+        "category": "stop",
+        "theme": "prewar",
+        "status": "survives",
+        "date": "18th–19th c. houses",
+        "blurb": "Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
+        "place_id": "ChIJz3gHi0fMHkcRK4C61nMG5vY",
+        "source": "http://muzeumpragi.pl/",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0398623, 52.2516423] },
+      "properties": {
+        "name": "Bazar Różyckiego",
+        "walk": "praga",
+        "order": 2,
+        "category": "stop",
+        "theme": "prewar",
+        "status": "survives",
+        "date": "1880s",
+        "blurb": "One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
+        "place_id": "ChIJC5xcFADNHkcRSqCF96QjswA",
+        "source": "https://maps.google.com/?cid=50423212265545802",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0407218, 52.2534636] },
+      "properties": {
+        "name": "Ząbkowska Street",
+        "walk": "praga",
+        "order": 3,
+        "category": "stop",
+        "theme": "prewar",
+        "status": "survives",
+        "date": "late 19th c.",
+        "blurb": "Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
+        "place_id": null,
+        "source": "https://maps.google.com/?q=Z%C4%85bkowska,+Warszawa",
+        "then_photo": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.0447327, 52.2555643] },
+      "properties": {
+        "name": "Centrum Praskie Koneser",
+        "walk": "praga",
+        "order": 4,
+        "category": "stop",
+        "theme": "prewar",
+        "status": "survives",
+        "date": "1897",
+        "blurb": "Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
+        "place_id": "ChIJXy0-HzjMHkcRmLHJOhBhixU",
+        "source": "https://koneser.eu/",
+        "then_photo": null
+      }
+    }
+  ]
+}
