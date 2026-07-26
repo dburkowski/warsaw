@@ -88,7 +88,14 @@
     .leaflet-popup-tip { background:var(--paper); border:1px solid var(--line); }
     .leaflet-popup-content { margin:0; width:270px !important; }
     .pop { padding:0 0 14px; }
-    .pop-img { width:100%; height:150px; object-fit:cover; border-radius:3px 3px 0 0; display:block; background:var(--paper-2); }
+    .pop-img { width:100%; height:150px; object-fit:cover; border-radius:3px 3px 0 0; display:block; background:var(--paper-2); cursor:zoom-in; }
+    /* lightbox */
+    #lightbox { position:fixed; inset:0; z-index:3000; display:none; align-items:center; justify-content:center;
+      background:rgba(20,18,16,.9); padding:24px; cursor:zoom-out; }
+    #lightbox.open { display:flex; }
+    #lightbox img { max-width:100%; max-height:100%; border-radius:3px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+    #lightbox .lb-close { position:absolute; top:16px; right:20px; font-family:"Space Grotesk",sans-serif;
+      font-size:26px; line-height:1; color:var(--paper); background:none; border:0; cursor:pointer; }
     .pop-body { padding:12px 15px 0; }
     .pop-order { font-family:"Space Grotesk",sans-serif; font-size:11px; letter-spacing:.12em;
       text-transform:uppercase; color:var(--ink-soft); }
@@ -100,6 +107,9 @@
     .tag.status-gone { border-style:dashed; color:var(--ink-soft); }
     .pop-blurb { font-size:14px; line-height:1.5; margin:0 0 8px; }
     .pop-date { font-style:italic; color:var(--ink-soft); margin:0 0 12px; font-size:14px; }
+    .pop-reads { display:flex; gap:7px; margin-bottom:7px; }
+    .pop-reads .btn { flex:1; padding:9px 6px; }
+    .flag { font-size:14px; }
     .pop-actions { display:flex; flex-direction:column; gap:7px; }
     .btn { font-family:"Space Grotesk",sans-serif; font-size:13px; text-align:center; text-decoration:none;
       padding:9px 10px; border-radius:3px; border:1px solid var(--ink); }
@@ -165,12 +175,14 @@
     <main id="map"></main>
   </div>
 
+  <div id="lightbox" aria-hidden="true"><button class="lb-close" aria-label="Close">×</button><img alt="" /></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
   /* ------- DATA -------
      Add a stop by copying one feature. coordinates are [lng, lat].
      status: survives | fragment | gone   theme: ghetto | uprising | prewar
-     photo: image URL (shows in popup)    read: long-form article link
+     photo: image URL (shows in popup)    read_en / read_pl: long-form article links
      directions are generated automatically from the coordinates. */
   const EMBEDDED = {
     "metadata": { "walks": {
@@ -182,68 +194,68 @@
         "name":"Nożyk Synagogue","walk":"small-ghetto","order":1,"theme":"ghetto","status":"survives","date":"1902",
         "blurb":"The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjA-pN0oAErm9czNTe9OZOrlbWEYF2y477AdVgNPgQdpFl9SSNrkR5OFDKJKA8bqBNJ2eL_qUkzRp0sz1dIus4VqIzB8O0cXnowHzAZmjug6w4VYQVdfDm6IuHRvMhZMlVmGMShwuqz6rWxZnUM=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Synagoga%20No%C5%BCyk%C3%B3w",
         "place_id":"ChIJsVd1DonMHkcRCDpFLJXw440"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0033177,52.2354096]},"properties":{
         "name":"All Saints Church","walk":"small-ghetto","order":2,"theme":"ghetto","status":"survives","date":"1883",
         "blurb":"Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAyl7D23pj_ibhhy1TDsXM--kIyI_00-jzk8EKn9r2a-6hxM3Kl5uFqFx0Iz3xlSDfiIrOgBNfAv5bE9juJ7991PgkC8b-tnVXkKGvIjIRklHSl4Tcr7Afsv6CvYVOOXfJv44vtDqRnf3351A=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%2C%20Warsaw",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%2C%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ko%C5%9Bci%C3%B3%C5%82%20Wszystkich%20%C5%9Awi%C4%99tych%20w%20Warszawie",
         "place_id":"ChIJ-ZnF2IvMHkcRtdrJTKeAS1g"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0052525,52.2365106]},"properties":{
         "name":"Próżna Street","walk":"small-ghetto","order":3,"theme":"ghetto","status":"survives","date":"pre-1900",
         "blurb":"The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes; several buildings are under long renovation.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDePI78_ykB1ACuyWfZhDd4L1M1MKQSQy3hrBKJ7Ej_BPNJ-NkOuFc5JUS1f93TJJcDGQbp_-4heiYxh4bPa-3FfJQrwbgYSfVuDsXvKGhZ26lPLa0kWcYKwWpZkHZYc0HavHLpYhjK8KtJBAU=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20Street",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20Street","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Pr%C3%B3%C5%BCna%20w%20Warszawie",
         "place_id":"ChIJp8DML4rMHkcRersX820kLOY"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9986541,52.2307601]},"properties":{
         "name":"Ghetto Wall — Sienna 55 / Złota 62","walk":"small-ghetto","order":4,"theme":"ghetto","status":"fragment","date":"1940",
         "blurb":"Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDq6HhBd_uBCsavvuEsdayJu5FZPGZKfeMnwuT1TPwcW5GuanTJ7xaxldb9ABzwWg86WnIJagKFrVkaduiHIyglvpHJieXmZVxo7u6dMgIHXpKmtTGKmez9l4mtsucADuTdkLuTbvwv2LPwrg=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Getto%20warszawskie",
         "place_id":"ChIJp-XwyIXMHkcRwOEWRHuH_Zw"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9927355,52.2341338]},"properties":{
         "name":"Ghetto Wall — Waliców","walk":"small-ghetto","order":5,"theme":"ghetto","status":"fragment","date":"1940",
         "blurb":"Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjB11QnayTJbAbZpW7kW0A_uPzOhvj0qkse_9PAOGO-rLYYTiLc_zDu5uS3zoA8YgevpuXXsJLdBnEc51JD8Q_3I7YkFLwqZJybB97PPE30s5-33v_MKcnNUncecE1fUZYtsthZwNJI8zf54k7Z4LuNZIg=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20wall",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20wall","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Mur%20getta%20warszawskiego",
         "place_id":"ChIJqUv4IurNHkcR6KYmpOyqdO8"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9895072,52.2373961]},"properties":{
         "name":"The Memory Footbridge","walk":"small-ghetto","order":6,"theme":"ghetto","status":"gone","date":"1942",
         "blurb":"Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDv7__Hm72muB4w_jJ9KQzEh12mu9QckMxYWd5kpTwR-8pWgu0g6z2aJba_G3Enj7X3Al3QGm8zeWgygQi7sE00-mNpZ-BdSKxFVJ9CSiHP7JUgSPU0jFhPYUJoW-pqf-kVQiaajqmMSl9-cWw=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ch%C5%82odna%20Street%20ghetto%20footbridge",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ch%C5%82odna%20Street%20ghetto%20footbridge","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=K%C5%82adka%20nad%20ulic%C4%85%20Ch%C5%82odn%C4%85",
         "place_id":"ChIJg4NSv4bMHkcRQKzDqdHjN8I"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9945,52.2346]},"properties":{
         "name":"Prosta 51 — sewer escape (approx.)","walk":"small-ghetto","order":7,"theme":"ghetto","status":"gone","date":"10 May 1943",
         "blurb":"Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — refine on site.",
         "photo":null,
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20Uprising",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20Uprising","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Powstanie%20w%20getcie%20warszawskim",
         "place_id":null}},
 
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0392656,52.2516096]},"properties":{
         "name":"Praga Museum of Warsaw","walk":"praga","order":1,"theme":"prewar","status":"survives","date":"18th–19th c. houses",
         "blurb":"Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCyMzFyu9RIfOJev8n5fH6S-chn8qM56YiWvP906kgLKu1eV_90HgqxANQxb31vMcCGs0gOBVG_Bsq2M6CPZiIIQIAXhyY1gdefoy4mmwFNgCI4_yFgP6PG_TPVZLaS1Qz6KHiPqgA20P6seA=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Praga%20Warsaw",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Praga%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Muzeum%20Warszawskiej%20Pragi",
         "place_id":"ChIJz3gHi0fMHkcRK4C61nMG5vY"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0398623,52.2516423]},"properties":{
         "name":"Bazar Różyckiego","walk":"praga","order":2,"theme":"prewar","status":"survives","date":"1880s",
         "blurb":"One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCatvCNaMojn4YvHdPGQsNuXgAzwlWPvvX6j0HOLyuHUomtazNO4PkEYh-ViA53snSbO5ijdvGnEdslLyk5YPR28icb1Sea6YPbD-Fk9w7ourgCxsGFtgMpn7H1JGfoC-CC2obX0-1r7d29rnCD3mtFog=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
         "place_id":"ChIJC5xcFADNHkcRSqCF96QjswA"}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0407218,52.2534636]},"properties":{
         "name":"Ząbkowska Street","walk":"praga","order":3,"theme":"prewar","status":"survives","date":"late 19th c.",
         "blurb":"Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAikblv2BUKZXH_bhON733I7OS9T6pcYjoD9zhH8A50JQQUAaWiXRVEPflPeO8G_O20aYaTpzOve4hF3rt-Uv6P5eMqpWrLbNUiFNoSIFEzna4nsAcxQSvPrtV-PSck1lPMEhfMCtuAKj-ksQ=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%20Warsaw",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Z%C4%85bkowska%20w%20Warszawie",
         "place_id":null}},
       { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0447327,52.2555643]},"properties":{
         "name":"Centrum Praskie Koneser","walk":"praga","order":4,"theme":"prewar","status":"survives","date":"1897",
         "blurb":"Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
         "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjBxVKeZAtfm75JXbgTAnASwLPQSlJGPsRR_JFWP5LEvdoUiGX21WCCqRnNn7x09wKMoXT78VSjVbFmnoxsP509APQ2VFY2yfLrmFPLGhqnHrFTx9pVWjogtSQvU4WKUYTzNRr_HOW4SjeoFVYHSy0-D_Q=s4800-w800-h600",
-        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Praga%20Warsaw",
+        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Praga%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Centrum%20Praskie%20Koneser",
         "place_id":"ChIJXy0-HzjMHkcRmLHJOhBhixU"}}
     ]
   };
@@ -297,8 +309,11 @@
       +     '<div class="pop-tags"><span class="tag">'+esc(p.theme)+'</span><span class="tag status-'+esc(p.status)+'">'+esc(p.status)+'</span></div>'
       +     '<p class="pop-blurb">'+esc(p.blurb)+'</p>'
       +     '<p class="pop-date">'+esc(p.date||"")+'</p>'
+      +     '<div class="pop-reads">'
+      +       (p.read_en ? '<a class="btn btn-read" href="'+esc(p.read_en)+'" target="_blank" rel="noopener"><span class="flag">🇬🇧</span> English</a>' : '')
+      +       (p.read_pl ? '<a class="btn btn-read" href="'+esc(p.read_pl)+'" target="_blank" rel="noopener"><span class="flag">🇵🇱</span> Polski</a>' : '')
+      +     '</div>'
       +     '<div class="pop-actions">'
-      +       (p.read ? '<a class="btn btn-read" href="'+esc(p.read)+'" target="_blank" rel="noopener">Read the full history →</a>' : '')
       +       '<a class="btn btn-go" href="'+esc(directionsUrl(p,lat,lng))+'" target="_blank" rel="noopener">Walk here ↗</a>'
       +     '</div>'
       +   '</div>'
@@ -391,6 +406,14 @@
   document.querySelectorAll(".f-theme,.f-status,#f-routes").forEach(el=>el.addEventListener("change",render));
   const app=document.getElementById("app");
   document.getElementById("panel-toggle").addEventListener("click",()=>app.classList.toggle("panel-open"));
+
+  // lightbox: click a popup photo to view it large
+  const lb=document.getElementById("lightbox"), lbImg=lb.querySelector("img");
+  function openLightbox(src){ lbImg.src=src; lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); }
+  function closeLightbox(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); lbImg.src=""; }
+  document.addEventListener("click",e=>{ if(e.target.classList&&e.target.classList.contains("pop-img")) openLightbox(e.target.src); });
+  lb.addEventListener("click",closeLightbox);
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeLightbox(); });
 
   render();
   const b=L.latLngBounds(FEATURES.map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]));
