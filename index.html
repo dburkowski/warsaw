@@ -9,219 +9,114 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <style>
-:root {
-  --ink: #211f1c;
-  --ink-soft: #4c473f;
-  --paper: #e7e4dc;
-  --paper-2: #dcd8ce;
-  --line: #c3bdb0;
-  --ghetto: #8c3b4a;
-  --uprising: #3f5e78;
-  --prewar: #7a6a3c;
-  --focus: #b8863b;
-  --panel-w: 340px;
-}
+    :root {
+      --ink:#211f1c; --ink-soft:#4c473f; --paper:#e7e4dc; --paper-2:#dcd8ce;
+      --line:#c3bdb0; --ghetto:#8c3b4a; --uprising:#3f5e78; --prewar:#7a6a3c;
+      --focus:#b8863b; --panel-w:360px;
+    }
+    * { box-sizing:border-box; }
+    html,body { height:100%; margin:0; }
+    body { font-family:"Spectral",Georgia,serif; color:var(--ink); background:var(--paper); }
+    #app { display:flex; height:100vh; overflow:hidden; }
 
-* { box-sizing: border-box; }
+    #panel { width:var(--panel-w); flex:0 0 var(--panel-w); height:100%; overflow-y:auto;
+      background:var(--paper); border-right:1px solid var(--line); padding:26px 24px 20px; }
+    .eyebrow { font-family:"Space Grotesk",sans-serif; font-size:11px; letter-spacing:.22em;
+      text-transform:uppercase; color:var(--ink-soft); margin:0 0 6px; }
+    #brand h1 { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:29px;
+      line-height:1.02; letter-spacing:-.01em; margin:0 0 12px; }
+    .lede { font-size:15px; line-height:1.5; color:var(--ink-soft); margin:0 0 24px; max-width:31ch; }
 
-html, body { height: 100%; margin: 0; }
+    .control { border:0; margin:0 0 22px; padding:0; }
+    .control-label { display:block; font-family:"Space Grotesk",sans-serif; font-size:11px;
+      letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:10px; padding:0; }
+    select#walk-select { width:100%; font-family:"Spectral",serif; font-size:15px; color:var(--ink);
+      background:var(--paper-2); border:1px solid var(--line); border-radius:2px; padding:9px 10px; cursor:pointer; }
+    select#walk-select:focus-visible { outline:2px solid var(--focus); outline-offset:1px; }
 
-body {
-  font-family: "Spectral", Georgia, serif;
-  color: var(--ink);
-  background: var(--paper);
-}
+    .check { display:flex; align-items:center; gap:9px; font-size:15px; padding:5px 0; cursor:pointer; user-select:none; }
+    .check.standalone { margin-bottom:20px; font-family:"Space Grotesk",sans-serif; font-size:13px; }
+    .check input { accent-color:var(--ink); width:15px; height:15px; }
+    .swatch { width:13px; height:13px; border-radius:50%; display:inline-block; }
+    .swatch[data-theme="ghetto"] { background:var(--ghetto); }
+    .swatch[data-theme="uprising"] { background:var(--uprising); }
+    .swatch[data-theme="prewar"] { background:var(--prewar); }
+    .mk { width:15px; height:15px; display:inline-block; border-radius:50%; border:2px solid var(--ink); }
+    .mk-survives { background:var(--ink); }
+    .mk-fragment { background:transparent; }
+    .mk-gone { background:transparent; border-style:dashed; opacity:.75; }
 
-#app { display: flex; height: 100vh; overflow: hidden; }
+    /* itinerary / navigation list */
+    #itinerary { list-style:none; margin:0; padding:0; }
+    #itinerary li { margin:0 0 2px; }
+    .itin { display:flex; align-items:center; gap:11px; width:100%; text-align:left;
+      background:none; border:0; border-radius:3px; padding:7px 8px; cursor:pointer; color:var(--ink);
+      font-family:"Spectral",serif; font-size:15px; }
+    .itin:hover { background:var(--paper-2); }
+    .itin:focus-visible { outline:2px solid var(--focus); outline-offset:1px; }
+    .itin-n { flex:0 0 auto; width:23px; height:23px; border-radius:50%; display:flex; align-items:center;
+      justify-content:center; font-family:"Space Grotesk",sans-serif; font-size:12px; font-weight:600;
+      color:#fff; background:var(--c,var(--ink)); }
+    .itin-name { flex:1; line-height:1.2; }
+    .itin-start { flex:0 0 auto; font-family:"Space Grotesk",sans-serif; font-size:9px; letter-spacing:.1em;
+      text-transform:uppercase; color:#fff; background:var(--ink); border-radius:2px; padding:2px 6px; }
+    .route-head { font-family:"Space Grotesk",sans-serif; font-size:12px; font-weight:600; letter-spacing:.02em;
+      color:var(--ink); margin:16px 0 8px; padding-left:2px; }
+    .route-head:first-child { margin-top:0; }
 
-/* ---- Panel ---- */
-#panel {
-  width: var(--panel-w);
-  flex: 0 0 var(--panel-w);
-  height: 100%;
-  overflow-y: auto;
-  background: var(--paper);
-  border-right: 1px solid var(--line);
-  padding: 28px 26px 20px;
-}
+    .count { font-size:13px; color:var(--ink-soft); font-style:italic; margin:6px 0 22px; }
+    #foot { font-family:"Space Grotesk",sans-serif; font-size:11px; line-height:1.5; color:var(--ink-soft);
+      border-top:1px solid var(--line); padding-top:14px; }
 
-.eyebrow {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin: 0 0 6px;
-}
+    #map { flex:1; height:100%; background:var(--paper-2); }
+    #panel-toggle { display:none; position:absolute; z-index:1000; top:12px; left:12px;
+      font-family:"Space Grotesk",sans-serif; font-size:13px; background:var(--paper); color:var(--ink);
+      border:1px solid var(--line); border-radius:2px; padding:8px 12px; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.15); }
 
-#brand h1 {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  margin: 0 0 12px;
-}
+    /* numbered map pins */
+    .pin { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:13px; border:2.5px solid var(--c);
+      box-shadow:0 1px 5px rgba(0,0,0,.4); }
+    .pin-survives { background:var(--c); color:#fff; }
+    .pin-fragment { background:#f4f1ea; color:var(--c); }
+    .pin-gone { background:#f4f1ea; color:var(--c); border-style:dashed; }
+    .pin-start { box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--c),0 1px 6px rgba(0,0,0,.4); }
 
-.lede {
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  margin: 0 0 26px;
-  max-width: 30ch;
-}
+    /* popups */
+    .leaflet-popup-content-wrapper { background:var(--paper); color:var(--ink); border-radius:3px;
+      border:1px solid var(--line); box-shadow:0 6px 22px rgba(0,0,0,.22); }
+    .leaflet-popup-tip { background:var(--paper); border:1px solid var(--line); }
+    .leaflet-popup-content { margin:0; width:270px !important; }
+    .pop { padding:0 0 14px; }
+    .pop-img { width:100%; height:150px; object-fit:cover; border-radius:3px 3px 0 0; display:block; background:var(--paper-2); }
+    .pop-body { padding:12px 15px 0; }
+    .pop-order { font-family:"Space Grotesk",sans-serif; font-size:11px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--ink-soft); }
+    .pop-order .start { color:var(--ghetto); font-weight:600; }
+    .pop-name { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:18px; line-height:1.15; margin:3px 0 9px; }
+    .pop-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+    .tag { font-family:"Space Grotesk",sans-serif; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+      padding:2px 7px; border-radius:2px; border:1px solid var(--line); color:var(--ink); }
+    .tag.status-gone { border-style:dashed; color:var(--ink-soft); }
+    .pop-blurb { font-size:14px; line-height:1.5; margin:0 0 8px; }
+    .pop-date { font-style:italic; color:var(--ink-soft); margin:0 0 12px; font-size:14px; }
+    .pop-actions { display:flex; flex-direction:column; gap:7px; }
+    .btn { font-family:"Space Grotesk",sans-serif; font-size:13px; text-align:center; text-decoration:none;
+      padding:9px 10px; border-radius:3px; border:1px solid var(--ink); }
+    .btn-read { background:var(--ink); color:var(--paper); }
+    .btn-read:hover { background:#000; }
+    .btn-go { background:transparent; color:var(--ink); }
+    .btn-go:hover { background:var(--paper-2); }
+    .leaflet-container { font-family:"Space Grotesk",sans-serif; }
+    .leaflet-bar a:focus-visible, .check input:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
 
-.control { border: 0; margin: 0 0 22px; padding: 0; }
-
-.control-label {
-  display: block;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-select#walk-select {
-  width: 100%;
-  font-family: "Spectral", serif;
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--paper-2);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  padding: 9px 10px;
-  cursor: pointer;
-}
-select#walk-select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-
-.check {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 15px;
-  padding: 5px 0;
-  cursor: pointer;
-  user-select: none;
-}
-.check.standalone { margin-bottom: 20px; font-family: "Space Grotesk", sans-serif; font-size: 13px; letter-spacing: 0.02em; }
-.check input { accent-color: var(--ink); width: 15px; height: 15px; }
-
-.swatch { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
-.swatch[data-theme="ghetto"] { background: var(--ghetto); }
-.swatch[data-theme="uprising"] { background: var(--uprising); }
-.swatch[data-theme="prewar"] { background: var(--prewar); }
-
-/* marker morphology key — mirrors what's drawn on the map */
-.mk { width: 15px; height: 15px; display: inline-block; border-radius: 50%; border: 2px solid var(--ink); }
-.mk-survives { background: var(--ink); }
-.mk-fragment { background: transparent; }
-.mk-gone { background: transparent; border-style: dashed; opacity: 0.75; }
-
-.count { font-size: 13px; color: var(--ink-soft); font-style: italic; margin: 4px 0 24px; }
-
-#foot {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  color: var(--ink-soft);
-  border-top: 1px solid var(--line);
-  padding-top: 14px;
-}
-#foot code { background: var(--paper-2); padding: 1px 4px; border-radius: 2px; font-size: 10.5px; }
-
-/* ---- Map ---- */
-#map { flex: 1; height: 100%; background: var(--paper-2); }
-
-#panel-toggle {
-  display: none;
-  position: absolute;
-  z-index: 1000;
-  top: 12px; left: 12px;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  background: var(--paper);
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  padding: 8px 12px;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,.15);
-}
-
-/* ---- Popups ---- */
-.leaflet-popup-content-wrapper {
-  background: var(--paper);
-  color: var(--ink);
-  border-radius: 3px;
-  border: 1px solid var(--line);
-  box-shadow: 0 6px 22px rgba(0,0,0,.22);
-}
-.leaflet-popup-tip { background: var(--paper); border: 1px solid var(--line); }
-.leaflet-popup-content { margin: 15px 17px; font-family: "Spectral", serif; width: 250px !important; }
-
-.pop-order {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.pop-name {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 1.15;
-  margin: 3px 0 9px;
-}
-.pop-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-.tag {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 2px;
-  border: 1px solid var(--line);
-  color: var(--ink);
-}
-.tag.status-gone { border-style: dashed; color: var(--ink-soft); }
-.pop-blurb { font-size: 14px; line-height: 1.5; margin: 0 0 10px; }
-.pop-date { font-style: italic; color: var(--ink-soft); }
-.pop-img { width: 100%; border-radius: 2px; margin: 4px 0 10px; display: block; }
-.pop-link {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 12px;
-  color: var(--ghetto);
-  text-decoration: none;
-  border-bottom: 1px solid currentColor;
-}
-.pop-link:hover { color: var(--ink); }
-
-.leaflet-container { font-family: "Space Grotesk", sans-serif; }
-.leaflet-bar a:focus-visible, .check input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-
-/* ---- Mobile ---- */
-@media (max-width: 720px) {
-  #panel-toggle { display: block; }
-  #panel {
-    position: absolute; z-index: 1001;
-    width: 86%; max-width: 340px; height: 100%;
-    transform: translateX(-102%);
-    transition: transform .25s ease;
-    box-shadow: 4px 0 24px rgba(0,0,0,.25);
-  }
-  #app.panel-open #panel { transform: translateX(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #panel { transition: none; }
-}
-
+    @media (max-width:720px) {
+      #panel-toggle { display:block; }
+      #panel { position:absolute; z-index:1001; width:88%; max-width:360px; height:100%;
+        transform:translateX(-102%); transition:transform .25s ease; box-shadow:4px 0 24px rgba(0,0,0,.25); }
+      #app.panel-open #panel { transform:translateX(0); }
+    }
+    @media (prefers-reduced-motion:reduce) { #panel { transition:none; } }
   </style>
 </head>
 <body>
@@ -230,7 +125,7 @@ select#walk-select:focus-visible { outline: 2px solid var(--focus); outline-offs
       <header id="brand">
         <p class="eyebrow">Warsaw · 1940–1944</p>
         <h1>Memory Walks</h1>
-        <p class="lede">What the city kept, and what it only marks. Two on-foot routes through the ghetto and the pre-war fabric that outlived the war.</p>
+        <p class="lede">What the city kept, and what it only marks. Follow the numbers — Stop 1 is where each walk begins.</p>
       </header>
 
       <div class="control">
@@ -240,6 +135,11 @@ select#walk-select:focus-visible { outline: 2px solid var(--focus); outline-offs
           <option value="small-ghetto">Small Ghetto — survivals &amp; seams</option>
           <option value="praga">Praga — surviving pre-war Warsaw</option>
         </select>
+      </div>
+
+      <div class="control">
+        <span class="control-label">Itinerary — tap to fly there</span>
+        <div id="itinerary"></div>
       </div>
 
       <fieldset class="control">
@@ -257,363 +157,244 @@ select#walk-select:focus-visible { outline: 2px solid var(--focus); outline-offs
       </fieldset>
 
       <label class="check standalone"><input type="checkbox" id="f-routes" checked />Draw route lines</label>
-
       <p id="count" class="count"></p>
-      <footer id="foot">
-        <span id="foot-count"></span> stops loaded · edit <code>data/walks.geojson</code> to add more.
-      </footer>
+      <footer id="foot"><span id="foot-count"></span> stops · edit this file's <code>EMBEDDED</code> block to add more.</footer>
     </aside>
 
-    <button id="panel-toggle" aria-label="Toggle panel">☰ Filters</button>
+    <button id="panel-toggle" aria-label="Toggle panel">☰ Walks</button>
     <main id="map"></main>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-/* Warsaw Memory Walks — Leaflet map.
-   Markers encode two things at once:
-     colour = theme (ghetto / uprising / prewar)
-     form   = status (survives=solid, fragment=hollow ring, gone=dashed hollow)
-   Data lives in data/walks.geojson. Add features there; no code changes needed. */
+  /* ------- DATA -------
+     Add a stop by copying one feature. coordinates are [lng, lat].
+     status: survives | fragment | gone   theme: ghetto | uprising | prewar
+     photo: image URL (shows in popup)    read: long-form article link
+     directions are generated automatically from the coordinates. */
+  const EMBEDDED = {
+    "metadata": { "walks": {
+      "small-ghetto": { "label": "Small Ghetto — survivals & seams", "color": "#8c3b4a" },
+      "praga": { "label": "Praga — surviving pre-war Warsaw", "color": "#7a6a3c" }
+    }},
+    "features": [
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.00097,52.2361165]},"properties":{
+        "name":"Nożyk Synagogue","walk":"small-ghetto","order":1,"theme":"ghetto","status":"survives","date":"1902",
+        "blurb":"The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjA-pN0oAErm9czNTe9OZOrlbWEYF2y477AdVgNPgQdpFl9SSNrkR5OFDKJKA8bqBNJ2eL_qUkzRp0sz1dIus4VqIzB8O0cXnowHzAZmjug6w4VYQVdfDm6IuHRvMhZMlVmGMShwuqz6rWxZnUM=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue",
+        "place_id":"ChIJsVd1DonMHkcRCDpFLJXw440"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0033177,52.2354096]},"properties":{
+        "name":"All Saints Church","walk":"small-ghetto","order":2,"theme":"ghetto","status":"survives","date":"1883",
+        "blurb":"Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAyl7D23pj_ibhhy1TDsXM--kIyI_00-jzk8EKn9r2a-6hxM3Kl5uFqFx0Iz3xlSDfiIrOgBNfAv5bE9juJ7991PgkC8b-tnVXkKGvIjIRklHSl4Tcr7Afsv6CvYVOOXfJv44vtDqRnf3351A=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%2C%20Warsaw",
+        "place_id":"ChIJ-ZnF2IvMHkcRtdrJTKeAS1g"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0052525,52.2365106]},"properties":{
+        "name":"Próżna Street","walk":"small-ghetto","order":3,"theme":"ghetto","status":"survives","date":"pre-1900",
+        "blurb":"The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes; several buildings are under long renovation.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDePI78_ykB1ACuyWfZhDd4L1M1MKQSQy3hrBKJ7Ej_BPNJ-NkOuFc5JUS1f93TJJcDGQbp_-4heiYxh4bPa-3FfJQrwbgYSfVuDsXvKGhZ26lPLa0kWcYKwWpZkHZYc0HavHLpYhjK8KtJBAU=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20Street",
+        "place_id":"ChIJp8DML4rMHkcRersX820kLOY"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9986541,52.2307601]},"properties":{
+        "name":"Ghetto Wall — Sienna 55 / Złota 62","walk":"small-ghetto","order":4,"theme":"ghetto","status":"fragment","date":"1940",
+        "blurb":"Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDq6HhBd_uBCsavvuEsdayJu5FZPGZKfeMnwuT1TPwcW5GuanTJ7xaxldb9ABzwWg86WnIJagKFrVkaduiHIyglvpHJieXmZVxo7u6dMgIHXpKmtTGKmez9l4mtsucADuTdkLuTbvwv2LPwrg=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto",
+        "place_id":"ChIJp-XwyIXMHkcRwOEWRHuH_Zw"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9927355,52.2341338]},"properties":{
+        "name":"Ghetto Wall — Waliców","walk":"small-ghetto","order":5,"theme":"ghetto","status":"fragment","date":"1940",
+        "blurb":"Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjB11QnayTJbAbZpW7kW0A_uPzOhvj0qkse_9PAOGO-rLYYTiLc_zDu5uS3zoA8YgevpuXXsJLdBnEc51JD8Q_3I7YkFLwqZJybB97PPE30s5-33v_MKcnNUncecE1fUZYtsthZwNJI8zf54k7Z4LuNZIg=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20wall",
+        "place_id":"ChIJqUv4IurNHkcR6KYmpOyqdO8"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9895072,52.2373961]},"properties":{
+        "name":"The Memory Footbridge","walk":"small-ghetto","order":6,"theme":"ghetto","status":"gone","date":"1942",
+        "blurb":"Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDv7__Hm72muB4w_jJ9KQzEh12mu9QckMxYWd5kpTwR-8pWgu0g6z2aJba_G3Enj7X3Al3QGm8zeWgygQi7sE00-mNpZ-BdSKxFVJ9CSiHP7JUgSPU0jFhPYUJoW-pqf-kVQiaajqmMSl9-cWw=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ch%C5%82odna%20Street%20ghetto%20footbridge",
+        "place_id":"ChIJg4NSv4bMHkcRQKzDqdHjN8I"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9945,52.2346]},"properties":{
+        "name":"Prosta 51 — sewer escape (approx.)","walk":"small-ghetto","order":7,"theme":"ghetto","status":"gone","date":"10 May 1943",
+        "blurb":"Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — refine on site.",
+        "photo":null,
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20Uprising",
+        "place_id":null}},
 
-const THEME = { ghetto: "#8c3b4a", uprising: "#3f5e78", prewar: "#7a6a3c" };
-const INK = "#211f1c";
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0392656,52.2516096]},"properties":{
+        "name":"Praga Museum of Warsaw","walk":"praga","order":1,"theme":"prewar","status":"survives","date":"18th–19th c. houses",
+        "blurb":"Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCyMzFyu9RIfOJev8n5fH6S-chn8qM56YiWvP906kgLKu1eV_90HgqxANQxb31vMcCGs0gOBVG_Bsq2M6CPZiIIQIAXhyY1gdefoy4mmwFNgCI4_yFgP6PG_TPVZLaS1Qz6KHiPqgA20P6seA=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Praga%20Warsaw",
+        "place_id":"ChIJz3gHi0fMHkcRK4C61nMG5vY"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0398623,52.2516423]},"properties":{
+        "name":"Bazar Różyckiego","walk":"praga","order":2,"theme":"prewar","status":"survives","date":"1880s",
+        "blurb":"One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCatvCNaMojn4YvHdPGQsNuXgAzwlWPvvX6j0HOLyuHUomtazNO4PkEYh-ViA53snSbO5ijdvGnEdslLyk5YPR28icb1Sea6YPbD-Fk9w7ourgCxsGFtgMpn7H1JGfoC-CC2obX0-1r7d29rnCD3mtFog=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
+        "place_id":"ChIJC5xcFADNHkcRSqCF96QjswA"}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0407218,52.2534636]},"properties":{
+        "name":"Ząbkowska Street","walk":"praga","order":3,"theme":"prewar","status":"survives","date":"late 19th c.",
+        "blurb":"Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAikblv2BUKZXH_bhON733I7OS9T6pcYjoD9zhH8A50JQQUAaWiXRVEPflPeO8G_O20aYaTpzOve4hF3rt-Uv6P5eMqpWrLbNUiFNoSIFEzna4nsAcxQSvPrtV-PSck1lPMEhfMCtuAKj-ksQ=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%20Warsaw",
+        "place_id":null}},
+      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0447327,52.2555643]},"properties":{
+        "name":"Centrum Praskie Koneser","walk":"praga","order":4,"theme":"prewar","status":"survives","date":"1897",
+        "blurb":"Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
+        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjBxVKeZAtfm75JXbgTAnASwLPQSlJGPsRR_JFWP5LEvdoUiGX21WCCqRnNn7x09wKMoXT78VSjVbFmnoxsP509APQ2VFY2yfLrmFPLGhqnHrFTx9pVWjogtSQvU4WKUYTzNRr_HOW4SjeoFVYHSy0-D_Q=s4800-w800-h600",
+        "read":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Praga%20Warsaw",
+        "place_id":"ChIJXy0-HzjMHkcRmLHJOhBhixU"}}
+    ]
+  };
 
-const map = L.map("map", { zoomControl: true, scrollWheelZoom: true })
-  .setView([52.2385, 20.9975], 14);
+  const THEME = { ghetto:"#8c3b4a", uprising:"#3f5e78", prewar:"#7a6a3c" };
+  const INK = "#211f1c";
 
-L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: "abcd",
-  maxZoom: 20
-}).addTo(map);
+  const map = L.map("map", { zoomControl:true, scrollWheelZoom:true }).setView([52.2385,20.9975],14);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:"abcd", maxZoom:20
+  }).addTo(map);
 
-const stopLayer = L.layerGroup().addTo(map);
-const routeLayer = L.layerGroup().addTo(map);
+  const stopLayer = L.layerGroup().addTo(map);
+  const routeLayer = L.layerGroup().addTo(map);
 
-let FEATURES = [];
-let WALKS = {};
+  const FEATURES = EMBEDDED.features || [];
+  const WALKS = (EMBEDDED.metadata && EMBEDDED.metadata.walks) || {};
+  const markerIndex = {};
+  const keyOf = p => p.walk + ":" + p.order;
 
-function markerStyle(theme, status) {
-  const color = THEME[theme] || INK;
-  const base = { radius: 8, color, weight: 2.5, fillColor: color };
-  if (status === "survives") return { ...base, fillOpacity: 0.9 };
-  if (status === "fragment") return { ...base, fillOpacity: 0.15 };
-  return { ...base, fillOpacity: 0, dashArray: "3 4", opacity: 0.85 }; // gone
-}
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
-function esc(s) {
-  return String(s == null ? "" : s).replace(/[&<>"]/g, c =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-}
+  function directionsUrl(p, lat, lng){
+    let u = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng + "&travelmode=walking";
+    if (p.place_id) u += "&destination_place_id=" + encodeURIComponent(p.place_id);
+    return u;
+  }
 
-function popupHtml(p) {
-  const walkLabel = (WALKS[p.walk] && WALKS[p.walk].label) || p.walk || "";
-  const img = p.then_photo
-    ? `<img class="pop-img" src="${esc(p.then_photo)}" alt="Archive photo of ${esc(p.name)}" loading="lazy" />`
-    : "";
-  const link = p.source
-    ? `<a class="pop-link" href="${esc(p.source)}" target="_blank" rel="noopener">Reference &rsaquo;</a>`
-    : "";
-  const statusTag = `<span class="tag status-${esc(p.status)}">${esc(p.status)}</span>`;
-  return `
-    <div class="pop">
-      <div class="pop-order">${esc(walkLabel)}${p.order ? " · Stop " + esc(p.order) : ""}</div>
-      <div class="pop-name">${esc(p.name)}</div>
-      <div class="pop-tags"><span class="tag">${esc(p.theme)}</span>${statusTag}</div>
-      ${img}
-      <p class="pop-blurb">${esc(p.blurb)}</p>
-      <p class="pop-date">${esc(p.date || "")}</p>
-      ${link}
-    </div>`;
-}
-
-function activeSet(cls) {
-  return new Set(
-    [...document.querySelectorAll("." + cls + ":checked")].map(i => i.value)
-  );
-}
-
-function render() {
-  stopLayer.clearLayers();
-  routeLayer.clearLayers();
-
-  const walkSel = document.getElementById("walk-select").value;
-  const themes = activeSet("f-theme");
-  const statuses = activeSet("f-status");
-  const showRoutes = document.getElementById("f-routes").checked;
-
-  const shown = FEATURES.filter(f => {
-    const p = f.properties;
-    if (walkSel !== "all" && p.walk !== walkSel) return false;
-    if (!themes.has(p.theme)) return false;
-    if (!statuses.has(p.status)) return false;
-    return true;
-  });
-
-  // route lines: connect visible stops of each walk in order
-  if (showRoutes) {
-    const byWalk = {};
-    shown.forEach(f => {
-      const w = f.properties.walk;
-      (byWalk[w] = byWalk[w] || []).push(f);
-    });
-    Object.entries(byWalk).forEach(([w, feats]) => {
-      if (feats.length < 2) return;
-      const pts = feats
-        .slice()
-        .sort((a, b) => (a.properties.order || 0) - (b.properties.order || 0))
-        .map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]]);
-      L.polyline(pts, {
-        color: (WALKS[w] && WALKS[w].color) || INK,
-        weight: 2,
-        opacity: 0.5,
-        dashArray: "1 6",
-        lineCap: "round"
-      }).addTo(routeLayer);
+  function pinIcon(p){
+    const color = THEME[p.theme] || INK;
+    const cls = "pin pin-" + p.status + (p.order===1 ? " pin-start" : "");
+    return L.divIcon({
+      className:"",
+      html:'<div class="'+cls+'" style="--c:'+color+'">'+esc(p.order)+'</div>',
+      iconSize:[28,28], iconAnchor:[14,14], popupAnchor:[0,-15]
     });
   }
 
-  // markers
-  shown.forEach(f => {
-    const p = f.properties;
-    const [lng, lat] = f.geometry.coordinates;
-    L.circleMarker([lat, lng], markerStyle(p.theme, p.status))
-      .bindPopup(popupHtml(p), { maxWidth: 300 })
-      .bindTooltip(p.name, { direction: "top", offset: [0, -6] })
-      .addTo(stopLayer);
-  });
+  function popupHtml(p, lat, lng){
+    const walkLabel = (WALKS[p.walk] && WALKS[p.walk].label) || p.walk || "";
+    const isStart = p.order===1;
+    const img = p.photo ? '<img class="pop-img" src="'+esc(p.photo)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.style.display=\'none\'" />' : "";
+    const orderLine = esc(walkLabel) + " · Stop " + esc(p.order) + (isStart ? ' · <span class="start">Start here</span>' : "");
+    return ''
+      + '<div class="pop">'
+      +   img
+      +   '<div class="pop-body">'
+      +     '<div class="pop-order">'+orderLine+'</div>'
+      +     '<div class="pop-name">'+esc(p.name)+'</div>'
+      +     '<div class="pop-tags"><span class="tag">'+esc(p.theme)+'</span><span class="tag status-'+esc(p.status)+'">'+esc(p.status)+'</span></div>'
+      +     '<p class="pop-blurb">'+esc(p.blurb)+'</p>'
+      +     '<p class="pop-date">'+esc(p.date||"")+'</p>'
+      +     '<div class="pop-actions">'
+      +       (p.read ? '<a class="btn btn-read" href="'+esc(p.read)+'" target="_blank" rel="noopener">Read the full history →</a>' : '')
+      +       '<a class="btn btn-go" href="'+esc(directionsUrl(p,lat,lng))+'" target="_blank" rel="noopener">Walk here ↗</a>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>';
+  }
 
-  document.getElementById("count").textContent =
-    shown.length + (shown.length === 1 ? " stop shown" : " stops shown");
-}
+  function activeSet(cls){ return new Set([...document.querySelectorAll("."+cls+":checked")].map(i=>i.value)); }
 
-const EMBEDDED = {
-  "type": "FeatureCollection",
-  "metadata": {
-    "title": "Warsaw Memory Walks",
-    "note": "Add stops by copying a feature below. status: survives | fragment | gone. theme: ghetto | uprising | prewar. category: stop | tchorek | boundary. Coordinates are [lng, lat].",
-    "walks": {
-      "small-ghetto": { "label": "Small Ghetto — survivals & seams", "color": "#8c3b4a" },
-      "praga": { "label": "Praga — surviving pre-war Warsaw", "color": "#7a6a3c" }
+  function flyTo(key){
+    const m = markerIndex[key];
+    if (!m) return;
+    map.flyTo(m.getLatLng(), 16, { duration:.6 });
+    m.openPopup();
+    document.getElementById("app").classList.remove("panel-open");
+  }
+
+  function render(){
+    stopLayer.clearLayers();
+    routeLayer.clearLayers();
+    for (const k in markerIndex) delete markerIndex[k];
+
+    const walkSel = document.getElementById("walk-select").value;
+    const themes = activeSet("f-theme");
+    const statuses = activeSet("f-status");
+    const showRoutes = document.getElementById("f-routes").checked;
+
+    const shown = FEATURES.filter(f=>{
+      const p=f.properties;
+      if (walkSel!=="all" && p.walk!==walkSel) return false;
+      if (!themes.has(p.theme)) return false;
+      if (!statuses.has(p.status)) return false;
+      return true;
+    });
+
+    // route lines connect visible stops in order
+    if (showRoutes){
+      const byWalk={};
+      shown.forEach(f=>{ const w=f.properties.walk; (byWalk[w]=byWalk[w]||[]).push(f); });
+      Object.entries(byWalk).forEach(([w,feats])=>{
+        if (feats.length<2) return;
+        const pts = feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0))
+          .map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
+        L.polyline(pts,{ color:(WALKS[w]&&WALKS[w].color)||INK, weight:2, opacity:.5, dashArray:"1 6", lineCap:"round" }).addTo(routeLayer);
+      });
     }
-  },
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.00097, 52.2361165] },
-      "properties": {
-        "name": "Nożyk Synagogue",
-        "walk": "small-ghetto",
-        "order": 1,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "survives",
-        "date": "1902",
-        "blurb": "The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable and fodder store; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
-        "place_id": "ChIJsVd1DonMHkcRCDpFLJXw440",
-        "source": "https://warszawa.jewish.org.pl/pl/visit/warsaw/nozyk",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0033177, 52.2354096] },
-      "properties": {
-        "name": "All Saints Church",
-        "walk": "small-ghetto",
-        "order": 2,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "survives",
-        "date": "1883",
-        "blurb": "Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding; Ringelblum recorded its role.",
-        "place_id": "ChIJ-ZnF2IvMHkcRtdrJTKeAS1g",
-        "source": "http://www.wszyscyswieci.pl/",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0052525, 52.2365106] },
-      "properties": {
-        "name": "Próżna Street",
-        "walk": "small-ghetto",
-        "order": 3,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "survives",
-        "date": "pre-1900",
-        "blurb": "The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes in the facades; several buildings are under long renovation.",
-        "place_id": "ChIJp8DML4rMHkcRersX820kLOY",
-        "source": "https://maps.google.com/?cid=16585671582347148154",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [20.9986541, 52.2307601] },
-      "properties": {
-        "name": "Ghetto Wall — Sienna 55 / Złota 62",
-        "walk": "small-ghetto",
-        "order": 4,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "fragment",
-        "date": "1940",
-        "blurb": "Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
-        "place_id": "ChIJp-XwyIXMHkcRwOEWRHuH_Zw",
-        "source": "https://app.1943.pl/#/przewodnik/en",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [20.9927355, 52.2341338] },
-      "properties": {
-        "name": "Ghetto Wall — Waliców",
-        "walk": "small-ghetto",
-        "order": 5,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "fragment",
-        "date": "1940",
-        "blurb": "Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby — the boundary-marker thread runs through here.",
-        "place_id": "ChIJqUv4IurNHkcR6KYmpOyqdO8",
-        "source": "https://maps.google.com/?cid=17254604005706213096",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [20.9895072, 52.2373961] },
-      "properties": {
-        "name": "The Memory Footbridge",
-        "walk": "small-ghetto",
-        "order": 6,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "gone",
-        "date": "1942",
-        "blurb": "Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain (lights no longer lit).",
-        "place_id": "ChIJg4NSv4bMHkcRQKzDqdHjN8I",
-        "source": "https://app.1943.pl/#/przewodnik/en",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [20.9945, 52.2346] },
-      "properties": {
-        "name": "Prosta 51 — sewer escape (approx.)",
-        "walk": "small-ghetto",
-        "order": 7,
-        "category": "stop",
-        "theme": "ghetto",
-        "status": "gone",
-        "date": "10 May 1943",
-        "blurb": "Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — verify and refine on site.",
-        "place_id": null,
-        "source": null,
-        "then_photo": null
-      }
-    },
 
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0392656, 52.2516096] },
-      "properties": {
-        "name": "Praga Museum of Warsaw",
-        "walk": "praga",
-        "order": 1,
-        "category": "stop",
-        "theme": "prewar",
-        "status": "survives",
-        "date": "18th–19th c. houses",
-        "blurb": "Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
-        "place_id": "ChIJz3gHi0fMHkcRK4C61nMG5vY",
-        "source": "http://muzeumpragi.pl/",
-        "then_photo": null
+    // markers
+    shown.forEach(f=>{
+      const p=f.properties, lat=f.geometry.coordinates[1], lng=f.geometry.coordinates[0];
+      const m = L.marker([lat,lng],{ icon:pinIcon(p) })
+        .bindPopup(popupHtml(p,lat,lng),{ maxWidth:290, minWidth:270 })
+        .bindTooltip(p.order + ". " + p.name,{ direction:"top", offset:[0,-14] })
+        .addTo(stopLayer);
+      markerIndex[keyOf(p)] = m;
+    });
+
+    buildItinerary(shown);
+    document.getElementById("count").textContent = shown.length + (shown.length===1?" stop shown":" stops shown");
+  }
+
+  function buildItinerary(shown){
+    const box = document.getElementById("itinerary");
+    box.innerHTML = "";
+    const byWalk={};
+    shown.forEach(f=>{ const w=f.properties.walk; (byWalk[w]=byWalk[w]||[]).push(f); });
+    const order = Object.keys(WALKS).filter(w=>byWalk[w]);
+    order.forEach(w=>{
+      if (Object.keys(byWalk).length>1){
+        const h=document.createElement("div"); h.className="route-head";
+        h.textContent=(WALKS[w]&&WALKS[w].label)||w; box.appendChild(h);
       }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0398623, 52.2516423] },
-      "properties": {
-        "name": "Bazar Różyckiego",
-        "walk": "praga",
-        "order": 2,
-        "category": "stop",
-        "theme": "prewar",
-        "status": "survives",
-        "date": "1880s",
-        "blurb": "One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
-        "place_id": "ChIJC5xcFADNHkcRSqCF96QjswA",
-        "source": "https://maps.google.com/?cid=50423212265545802",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0407218, 52.2534636] },
-      "properties": {
-        "name": "Ząbkowska Street",
-        "walk": "praga",
-        "order": 3,
-        "category": "stop",
-        "theme": "prewar",
-        "status": "survives",
-        "date": "late 19th c.",
-        "blurb": "Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
-        "place_id": null,
-        "source": "https://maps.google.com/?q=Z%C4%85bkowska,+Warszawa",
-        "then_photo": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [21.0447327, 52.2555643] },
-      "properties": {
-        "name": "Centrum Praskie Koneser",
-        "walk": "praga",
-        "order": 4,
-        "category": "stop",
-        "theme": "prewar",
-        "status": "survives",
-        "date": "1897",
-        "blurb": "Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
-        "place_id": "ChIJXy0-HzjMHkcRmLHJOhBhixU",
-        "source": "https://koneser.eu/",
-        "then_photo": null
-      }
-    }
-  ]
-};
-(function () {
-  FEATURES = EMBEDDED.features || [];
-  WALKS = (EMBEDDED.metadata && EMBEDDED.metadata.walks) || {};
+      const ol=document.createElement("ol"); ol.id="itinerary"; ol.style.listStyle="none"; ol.style.margin="0"; ol.style.padding="0";
+      byWalk[w].slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).forEach(f=>{
+        const p=f.properties, color=THEME[p.theme]||INK;
+        const li=document.createElement("li");
+        const btn=document.createElement("button");
+        btn.className="itin"; btn.type="button";
+        btn.innerHTML='<span class="itin-n" style="--c:'+color+'">'+esc(p.order)+'</span>'
+          + '<span class="itin-name">'+esc(p.name)+'</span>'
+          + (p.order===1?'<span class="itin-start">Start</span>':'');
+        btn.addEventListener("click",()=>flyTo(keyOf(p)));
+        li.appendChild(btn); ol.appendChild(li);
+      });
+      box.appendChild(ol);
+    });
+  }
+
   document.getElementById("foot-count").textContent = FEATURES.length;
+  document.getElementById("walk-select").addEventListener("change",render);
+  document.querySelectorAll(".f-theme,.f-status,#f-routes").forEach(el=>el.addEventListener("change",render));
+  const app=document.getElementById("app");
+  document.getElementById("panel-toggle").addEventListener("click",()=>app.classList.toggle("panel-open"));
+
   render();
-  const b = L.latLngBounds(
-    FEATURES.map(f => [f.geometry.coordinates[1], f.geometry.coordinates[0]])
-  );
-  if (b.isValid()) map.fitBounds(b, { padding: [50, 50] });
-})();
-
-// wire controls
-["change"].forEach(evt => {
-  document.getElementById("walk-select").addEventListener(evt, render);
-  document.querySelectorAll(".f-theme, .f-status, #f-routes")
-    .forEach(el => el.addEventListener(evt, render));
-});
-
-// mobile panel
-const app = document.getElementById("app");
-document.getElementById("panel-toggle")
-  .addEventListener("click", () => app.classList.toggle("panel-open"));
-map.on("click", () => app.classList.remove("panel-open"));
-
+  const b=L.latLngBounds(FEATURES.map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]));
+  if (b.isValid()) map.fitBounds(b,{ padding:[50,50] });
   </script>
 </body>
 </html>
