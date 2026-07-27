@@ -679,18 +679,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #map{position:fixed;inset:0;height:100dvh;width:100vw;background:var(--bg);z-index:0}
 
     /* ---- frosted bottom nav ---- */
-    #nav{position:fixed;z-index:1000;left:10px;right:10px;bottom:calc(10px + var(--saf));
+    #nav{position:fixed;z-index:1200;left:10px;right:10px;bottom:calc(10px + var(--saf));
       display:flex;align-items:center;gap:8px;padding:7px;border-radius:20px;
-      background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+      background:rgba(255,255,255,.82);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
       border:.5px solid rgba(0,0,0,.06);box-shadow:0 6px 24px rgba(0,0,0,.16)}
     .segwrap{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
     .segwrap::-webkit-scrollbar{display:none}
-    .seg{display:inline-flex;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
-    .seg button{flex:0 0 auto;white-space:nowrap;border:0;background:none;border-radius:11px;padding:9px 13px;cursor:pointer;
+    .seg{display:flex;width:100%;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
+    .seg button{flex:1;white-space:nowrap;border:0;background:none;border-radius:11px;padding:9px 10px;cursor:pointer;
       font-family:var(--font);font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
     .seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14)}
-    #list-btn{flex:0 0 auto;border:0;border-radius:13px;width:44px;height:40px;cursor:pointer;background:var(--blue);color:#fff;
-      font-size:17px;display:flex;align-items:center;justify-content:center}
 
     .leaflet-top.leaflet-right{top:calc(10px + env(safe-area-inset-top,0px))}
     .leaflet-control-zoom{border:none!important;border-radius:12px!important;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.15)!important}
@@ -702,7 +700,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #backdrop.open{opacity:1;visibility:visible}
     .sheet{position:fixed;z-index:1100;left:0;right:0;bottom:0;height:88dvh;overflow-y:auto;background:var(--bg);
       border-radius:16px 16px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,.25);transform:translateY(101%);
-      transition:transform .32s cubic-bezier(.32,.72,0,1);padding:0 0 calc(24px + var(--saf));-webkit-overflow-scrolling:touch}
+      transition:transform .32s cubic-bezier(.32,.72,0,1);padding:0 0 calc(78px + var(--saf));-webkit-overflow-scrolling:touch}
     .sheet.open{transform:translateY(0)}
     .grip{position:sticky;top:0;background:var(--bg);padding:8px 0 6px;z-index:2}
     .grip::before{content:"";display:block;width:38px;height:5px;border-radius:3px;background:#c7c7cc;margin:0 auto}
@@ -775,7 +773,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <button data-trip="trip2">Aug 21–23</button>
       <button data-trip="food">Restaurants</button>
     </div></div>
-    <button id="list-btn" aria-label="List">☰</button>
   </nav>
 
   <div id="backdrop"></div>
@@ -819,6 +816,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       "base": {
         "label": "Base",
         "color": "#c9a227"
+      },
+      "stay1": {
+        "label": "Where I'm staying",
+        "color": "#e0a400"
+      },
+      "stay2": {
+        "label": "Where I'm staying",
+        "color": "#e0a400"
       }
     }
   },
@@ -1363,16 +1368,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
       },
       "properties": {
         "name": "Home base — Pańska 57",
-        "walk": "base",
+        "walk": "stay2",
         "order": 0,
         "theme": "base",
         "status": "base",
-        "date": "the Airbnb",
+        "date": "Airbnb · Aug 21–24",
         "blurb": "Home base for the trip. Western Śródmieście — walking distance to the Uprising Museum (~15 min) and the Palace of Culture.",
         "photo": null,
         "read_en": null,
         "read_pl": null,
-        "place_id": "ChIJIVedrI_MHkcRwbd8mxkdTpI"
+        "place_id": "ChIJIVedrI_MHkcRwbd8mxkdTpI",
+        "trip": "trip2"
       }
     },
     {
@@ -1553,7 +1559,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.mezze.com.pl/",
         "place_id": "ChIJC-Kg8ifNHkcRrwCjA51n2dE",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Mezze%20hummus%20%26%20falafel&query_place_id=ChIJC-Kg8ifNHkcRrwCjA51n2dE"
+        "gmaps": "https://maps.google.com/?cid=15121231147941691567"
       }
     },
     {
@@ -1577,7 +1583,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://yesbutcher.pl/",
         "place_id": "ChIJy9VvsuPNHkcR8zw7DfjuqvQ",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Yes%20Butcher%21%20Shop%20%26%20Bistro&query_place_id=ChIJy9VvsuPNHkcR8zw7DfjuqvQ"
+        "gmaps": "https://maps.google.com/?cid=17630166440436514035"
       }
     },
     {
@@ -1601,7 +1607,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJRXqWJivNHkcRP1Zq2v6cYaE",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=CUORE%20Italian%20Street%20Food&query_place_id=ChIJRXqWJivNHkcRP1Zq2v6cYaE"
+        "gmaps": "https://maps.google.com/?cid=11628748331247359551"
       }
     },
     {
@@ -1625,7 +1631,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://lokalnarybe.com/",
         "place_id": "ChIJ3SWHMdfMHkcRnlMt8aIGou4",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Lokal%20na%20Ryb%C4%99&query_place_id=ChIJ3SWHMdfMHkcRnlMt8aIGou4"
+        "gmaps": "https://maps.google.com/?cid=17195313624154723230"
       }
     },
     {
@@ -1649,7 +1655,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://panodkawy.pl/",
         "place_id": "ChIJR2sLfCLNHkcRO97S82T-Irg",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Pan%20od%20Kawy&query_place_id=ChIJR2sLfCLNHkcRO97S82T-Irg"
+        "gmaps": "https://maps.google.com/?cid=13268447161727770171"
       }
     },
     {
@@ -1673,7 +1679,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/KoreaTown-Rest-117795462061812/",
         "place_id": "ChIJmbJjgNjMHkcRMxAO7FlPaSI",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=KoreaTown&query_place_id=ChIJmbJjgNjMHkcRMxAO7FlPaSI"
+        "gmaps": "https://maps.google.com/?cid=2479600317475196979"
       }
     },
     {
@@ -1697,7 +1703,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/senorlucasmexican/",
         "place_id": "ChIJ2emK2U3NHkcRxodT1bJbaCc",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Se%C3%B1or%20Lucas%20taquer%C3%ADa&query_place_id=ChIJ2emK2U3NHkcRxodT1bJbaCc"
+        "gmaps": "https://maps.google.com/?cid=2839620388698425286"
       }
     },
     {
@@ -1721,7 +1727,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://rogerthatfoods.pl/",
         "place_id": "ChIJj2SsDzTNHkcRP6jbuUf0pI0",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Roger%20That%20Foods&query_place_id=ChIJj2SsDzTNHkcRP6jbuUf0pI0"
+        "gmaps": "https://maps.google.com/?cid=10206551244426422335"
       }
     },
     {
@@ -1745,7 +1751,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://sledziezbornholmu.pl/",
         "place_id": "ChIJ_RiGoVDNHkcR1RuULu-fLwU",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=%C5%9Aledzie%20z%20Bornholmu&query_place_id=ChIJ_RiGoVDNHkcR1RuULu-fLwU"
+        "gmaps": "https://maps.google.com/?cid=373693143722499029"
       }
     },
     {
@@ -1769,7 +1775,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.baken.pl/",
         "place_id": "ChIJx1tgRlXNHkcRBZrSOvQw6uA",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=BAKEN%20piekarnia&query_place_id=ChIJx1tgRlXNHkcRBZrSOvQw6uA"
+        "gmaps": "https://maps.google.com/?cid=16206820034563185157"
       }
     },
     {
@@ -1793,7 +1799,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/rubengrilldeli/",
         "place_id": "ChIJBcxgSEgzGUcR5kUL8aV6EKc",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Ruben%20Grill%20%26%20Deli&query_place_id=ChIJBcxgSEgzGUcR5kUL8aV6EKc"
+        "gmaps": "https://maps.google.com/?cid=12038256657093576166"
       }
     },
     {
@@ -1817,7 +1823,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://ramenownia.pl/",
         "place_id": "ChIJyaDa9G7NHkcRe2OAAmgOHfA",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=RAMENOWNIA&query_place_id=ChIJyaDa9G7NHkcRe2OAAmgOHfA"
+        "gmaps": "https://maps.google.com/?cid=17302001183308669819"
       }
     },
     {
@@ -1841,7 +1847,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.kregliccy.pl/santorini",
         "place_id": "ChIJRQniQgrNHkcReQ9B5H5m8qU",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Santorini&query_place_id=ChIJRQniQgrNHkcReQ9B5H5m8qU"
+        "gmaps": "https://maps.google.com/?cid=11957732655803469689"
       }
     },
     {
@@ -1865,7 +1871,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://wloskistrajk.goodresto.app/",
         "place_id": "ChIJ_x7ejgrNHkcRVXsvaeDhoTs",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=W%C5%82oski%20Strajk&query_place_id=ChIJ_x7ejgrNHkcRVXsvaeDhoTs"
+        "gmaps": "https://maps.google.com/?cid=4296963873441807189"
       }
     },
     {
@@ -1889,7 +1895,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/epi.bistro.deli/",
         "website": null,
         "place_id": "ChIJz1qnTDTNHkcRUf3M4HPs58M",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Epicurien%20Bistro%20%26%20Deli&query_place_id=ChIJz1qnTDTNHkcRUf3M4HPs58M"
+        "gmaps": "https://maps.google.com/?cid=14116511539453033809"
       }
     },
     {
@@ -1913,7 +1919,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://melio.choiceqr.com/",
         "place_id": "ChIJu34WKGUzGUcRS6vcGs_xpb8",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=MELIO%20Pizzeria&query_place_id=ChIJu34WKGUzGUcRS6vcGs_xpb8"
+        "gmaps": "https://maps.google.com/?cid=13809709704212687691"
       }
     },
     {
@@ -1937,7 +1943,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://kontakt.wine/",
         "place_id": "ChIJRYjOeS7NHkcRGeaDEBNZQlQ",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=kontakt%20wino%20%26%20bistro&query_place_id=ChIJRYjOeS7NHkcRGeaDEBNZQlQ"
+        "gmaps": "https://maps.google.com/?cid=6071513186065180185"
       }
     },
     {
@@ -1961,7 +1967,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.izumisushi.eu/",
         "place_id": "ChIJB6sMAebMHkcRpwxRI8hupSk",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Izumi%20Sushi&query_place_id=ChIJB6sMAebMHkcRpwxRI8hupSk"
+        "gmaps": "https://maps.google.com/?cid=3000926532577332391"
       }
     },
     {
@@ -1985,7 +1991,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/toast_warsaw",
         "website": null,
         "place_id": "ChIJFwfuO4rNHkcRaSk2NtJ7JEw",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=TOAST&query_place_id=ChIJFwfuO4rNHkcRaSk2NtJ7JEw"
+        "gmaps": "https://maps.google.com/?cid=5486646388826974569"
       }
     },
     {
@@ -2009,7 +2015,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://domotwartywarszawa.pl/",
         "place_id": "ChIJP4cdEgDNHkcRzfMQ1faYwNg",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Dom%20Otwarty&query_place_id=ChIJP4cdEgDNHkcRzfMQ1faYwNg"
+        "gmaps": "https://maps.google.com/?cid=15618651693624914893"
       }
     },
     {
@@ -2033,7 +2039,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJ3YQUdNXNHkcRAzIbAVh3tUc",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=HAECHI&query_place_id=ChIJ3YQUdNXNHkcRAzIbAVh3tUc"
+        "gmaps": "https://maps.google.com/?cid=5167167367336899075"
       }
     },
     {
@@ -2057,7 +2063,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://meatologia.pl/",
         "place_id": "ChIJE7vnHdDNHkcRKH_Nm5Q_z4o",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Meatologia%20%E2%80%94%20Krucza&query_place_id=ChIJE7vnHdDNHkcRKH_Nm5Q_z4o"
+        "gmaps": "https://maps.google.com/?cid=10002283204914806568"
       }
     },
     {
@@ -2081,7 +2087,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://meatologia.pl/",
         "place_id": "ChIJrdoiPMDNHkcRBVz2uNkFrSQ",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Meatologia%20%E2%80%94%20Koszykowa&query_place_id=ChIJrdoiPMDNHkcRBVz2uNkFrSQ"
+        "gmaps": "https://maps.google.com/?cid=2642774989005544453"
       }
     },
     {
@@ -2105,7 +2111,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/rene.cucina",
         "website": null,
         "place_id": "ChIJs8tILrfNHkcRlmA_c0Z-gF8",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Ren%C3%A9%20Cucina&query_place_id=ChIJs8tILrfNHkcRlmA_c0Z-gF8"
+        "gmaps": "https://maps.google.com/?cid=6881639071668461718"
       }
     },
     {
@@ -2129,7 +2135,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.rusiko.pl/",
         "place_id": "ChIJ4eujiPrMHkcRT6UkCG0NOSs",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Rusiko&query_place_id=ChIJ4eujiPrMHkcRT6UkCG0NOSs"
+        "gmaps": "https://maps.google.com/?cid=3114535379242624335"
       }
     },
     {
@@ -2153,7 +2159,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.wyraj.net/",
         "place_id": "ChIJt5KXq3nNHkcRJuEjEjsFf_4",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=WYRAJ&query_place_id=ChIJt5KXq3nNHkcRJuEjEjsFf_4"
+        "gmaps": "https://maps.google.com/?cid=18338381958941499686"
       }
     },
     {
@@ -2177,7 +2183,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/ukiuki.udon/",
         "place_id": "ChIJY3tPpfHMHkcRuNFaGlmtFHA",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=UKI%20UKI%20%E2%80%94%20Krucza&query_place_id=ChIJY3tPpfHMHkcRuNFaGlmtFHA"
+        "gmaps": "https://maps.google.com/?cid=8076270629987996088"
       }
     },
     {
@@ -2201,7 +2207,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://ukiuki.goodresto.app/",
         "place_id": "ChIJv1VMzePNHkcRIsOck5l9F-Q",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=UKI%20UKI%20%E2%80%94%20Zgoda&query_place_id=ChIJv1VMzePNHkcRIsOck5l9F-Q"
+        "gmaps": "https://maps.google.com/?cid=16435743463671907106"
       }
     },
     {
@@ -2225,7 +2231,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/peaches_gastrogirls",
         "website": null,
         "place_id": "ChIJk0leL3PNHkcRm9xqdaJWsLw",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Peaches&query_place_id=ChIJk0leL3PNHkcRm9xqdaJWsLw"
+        "gmaps": "https://maps.google.com/?cid=13596462530786155675"
       }
     },
     {
@@ -2249,7 +2255,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJ8yrXnykzGUcRi5h6SHB7Fus",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=My%20Food%20China&query_place_id=ChIJ8yrXnykzGUcRi5h6SHB7Fus"
+        "gmaps": "https://maps.google.com/?cid=16939862770583246987"
       }
     },
     {
@@ -2273,7 +2279,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.trojkakielichow.pl/",
         "place_id": "ChIJBzRJT2jNHkcR93llQaYCb-8",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Tr%C3%B3jka%20Kielich%C3%B3w&query_place_id=ChIJBzRJT2jNHkcR93llQaYCb-8"
+        "gmaps": "https://maps.google.com/?cid=17253011610564655607"
       }
     },
     {
@@ -2297,7 +2303,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.ahaan.pl/",
         "place_id": "ChIJzQ0VQADNHkcRKFfbovvhTLw",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=AHAAN&query_place_id=ChIJzQ0VQADNHkcRKFfbovvhTLw"
+        "gmaps": "https://maps.google.com/?cid=13568468248245786408"
       }
     },
     {
@@ -2321,7 +2327,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://fb.com/jejukoreawarszawa",
         "place_id": "ChIJSUA9iTvNHkcRr99WPdG1__E",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Jeju%20Korea&query_place_id=ChIJSUA9iTvNHkcRr99WPdG1__E"
+        "gmaps": "https://maps.google.com/?cid=17437856192483745711"
       }
     },
     {
@@ -2345,7 +2351,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/profile.php?id=61555674361494",
         "place_id": "ChIJE4e9DwDNHkcRJhbdyYpZUAg",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Cha%C5%82ka%20Kawiarnia%20Bistro&query_place_id=ChIJE4e9DwDNHkcRJhbdyYpZUAg"
+        "gmaps": "https://maps.google.com/?cid=599077203067344422"
       }
     },
     {
@@ -2369,7 +2375,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.konesergrillwarszawa.pl/",
         "place_id": "ChIJ89TOehPNHkcRNg6oWZfnLq4",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Koneser%20Grill&query_place_id=ChIJ89TOehPNHkcRNg6oWZfnLq4"
+        "gmaps": "https://maps.google.com/?cid=12551223848758414902"
       }
     },
     {
@@ -2393,7 +2399,47 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://trzykruki.pl/",
         "place_id": "ChIJ8Qt5SzjNHkcRa-f7H4mePbc",
-        "gmaps": "https://www.google.com/maps/search/?api=1&query=Trzy%20Kruki&query_place_id=ChIJ8Qt5SzjNHkcRa-f7H4mePbc"
+        "gmaps": "https://maps.google.com/?cid=13203883994304472939"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9995589,
+          52.24454
+        ]
+      },
+      "properties": {
+        "name": "Andersa 1",
+        "walk": "stay1",
+        "order": 1,
+        "theme": "base",
+        "status": "base",
+        "trip": "trip1",
+        "date": "Airbnb · Jul 31–Aug 8",
+        "place_id": "ChIJkXLgl3zMHkcRW8XwSXlPdQQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0054151,
+          52.2464329
+        ]
+      },
+      "properties": {
+        "name": "Al. Solidarności 60B",
+        "walk": "stay1",
+        "order": 2,
+        "theme": "base",
+        "status": "base",
+        "trip": "trip1",
+        "date": "Airbnb · Jul 31–Aug 8",
+        "place_id": "ChIJ39jD52TMHkcRV6tdZFpXQhI"
       }
     }
   ]
@@ -2406,8 +2452,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const keyOf=p=>p.walk+":"+p.order;
 
   const TRIPS={
-    trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga & the Uprising trail",walks:["small-ghetto","uprising-srodmiescie","praga"]},
-    trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["sights"]},
+    trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga & the Uprising trail",walks:["stay1","small-ghetto","uprising-srodmiescie","praga"]},
+    trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["stay2","sights"]},
     food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]}
   };
   let curTrip="trip1";
@@ -2433,6 +2479,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   function popupHtml(p,lat,lng){
     const img=p.photo?'<img class="pop-img" src="'+esc(p.photo)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.style.display=\'none\'">':'';
+    if(p.theme==="base"){
+      return '<div><div class="pop-b"><div class="pop-k">Home base</div><div class="pop-name">'+esc(p.name)+'</div>'
+        +(p.date?'<div class="pop-meta">'+esc(p.date)+'</div>':'')
+        +'<div class="btns"><a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div></div>';
+    }
     if(p.theme==="food"){
       const ig=p.instagram?'<a class="btn sub" href="'+esc(p.instagram)+'" target="_blank" rel="noopener">Instagram</a>':'';
       const gm=p.gmaps?'<a class="btn sub" href="'+esc(p.gmaps)+'" target="_blank" rel="noopener">Google Maps</a>':'';
@@ -2465,14 +2516,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const byWalk={};
     shown.forEach(f=>{const w=f.properties.walk;(byWalk[w]=byWalk[w]||[]).push(f)});
     Object.entries(byWalk).forEach(([w,feats])=>{
-      if(w==="food"||w==="sights"||feats.length<2)return;
+      if(w==="food"||w==="sights"||w.indexOf("stay")===0||feats.length<2)return;
       const c=(WALKS[w]&&WALKS[w].color)||INK;
       const pts=feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
       for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])<=1200)L.polyline([pts[i],pts[i+1]],{color:c,weight:2.5,opacity:.5,dashArray:"1 7",lineCap:"round"}).addTo(routeLayer);
     });
 
-    // base always
-    const all=shown.concat(FEATURES.filter(f=>f.properties.theme==="base"));
+    // markers for the current trip (bases are scoped via their walk)
+    const all=shown;
     all.forEach(f=>{
       const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
       const m=L.marker([lat,lng],{icon:pinIcon(p)}).bindPopup(popupHtml(p,lat,lng),{maxWidth:280,autoPanPadding:[16,90]}).addTo(stopLayer);
@@ -2557,13 +2608,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* nav */
   document.getElementById("seg").addEventListener("click",e=>{
     const btn=e.target.closest("button");if(!btn)return;
+    const trip=btn.dataset.trip;
+    if(trip===curTrip && sheet.classList.contains("open")){closeSheet();return;}
     [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===btn));
-    curTrip=btn.dataset.trip;render();
+    curTrip=trip;render();openSheet();
   });
   const sheet=document.getElementById("sheet"),backdrop=document.getElementById("backdrop");
   function openSheet(){sheet.classList.add("open");backdrop.classList.add("open");sheet.scrollTop=0;sheet.setAttribute("aria-hidden","false")}
   function closeSheet(){sheet.classList.remove("open");backdrop.classList.remove("open");sheet.setAttribute("aria-hidden","true")}
-  document.getElementById("list-btn").addEventListener("click",openSheet);
   backdrop.addEventListener("click",closeSheet);
   map.on("click",closeSheet);
 
