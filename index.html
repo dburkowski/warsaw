@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
-  <title>Warsaw Memory Walks</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <title>Warsaw</title>
   <style>/* required styles */
 
 .leaflet-pane,
@@ -668,149 +667,123 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 </style>
   <style>
-    :root {
-      --ink:#211f1c; --ink-soft:#4c473f; --paper:#efece4; --paper-2:#e2ded4;
-      --line:#cbc5b8; --ghetto:#8c3b4a; --uprising:#3f5e78; --prewar:#7a6a3c;
-      --focus:#b8863b; --saf:env(safe-area-inset-bottom,0px);
+    :root{
+      --bg:#f2f2f7; --card:#fff; --ink:#1c1c1e; --sec:#8e8e93; --sep:#e5e5ea;
+      --blue:#007aff; --ghetto:#8c3b4a; --uprising:#3f5e78; --prewar:#7a6a3c;
+      --food:#ff7a1a; --sights:#0a84c2; --base:#e0a400; --saf:env(safe-area-inset-bottom,0px);
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
     }
-    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-    html,body { margin:0; height:100%; overflow:hidden; overscroll-behavior:none;
-      font-family:"Spectral",Georgia,serif; color:var(--ink); background:var(--paper-2); }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;font-family:var(--font);color:var(--ink);background:var(--bg);
+      -webkit-font-smoothing:antialiased}
+    #map{position:fixed;inset:0;height:100dvh;width:100vw;background:var(--bg);z-index:0}
 
-    #map { position:fixed; inset:0; height:100dvh; width:100vw; background:var(--paper-2); z-index:0; }
+    /* ---- frosted bottom nav ---- */
+    #nav{position:fixed;z-index:1000;left:10px;right:10px;bottom:calc(10px + var(--saf));
+      display:flex;align-items:center;gap:8px;padding:7px;border-radius:20px;
+      background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+      border:.5px solid rgba(0,0,0,.06);box-shadow:0 6px 24px rgba(0,0,0,.16)}
+    .segwrap{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+    .segwrap::-webkit-scrollbar{display:none}
+    .seg{display:inline-flex;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
+    .seg button{flex:0 0 auto;white-space:nowrap;border:0;background:none;border-radius:11px;padding:9px 13px;cursor:pointer;
+      font-family:var(--font);font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+    .seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14)}
+    #list-btn{flex:0 0 auto;border:0;border-radius:13px;width:44px;height:40px;cursor:pointer;background:var(--blue);color:#fff;
+      font-size:17px;display:flex;align-items:center;justify-content:center}
 
-    /* ---------- floating bottom nav bar ---------- */
-    #navbar { position:fixed; z-index:1000; left:12px; right:12px;
-      bottom:calc(12px + var(--saf));
-      display:flex; align-items:center; gap:8px; padding:8px;
-      background:var(--paper); border:1px solid var(--line); border-radius:18px;
-      box-shadow:0 8px 30px rgba(0,0,0,.28); }
-    .seg { display:flex; flex:1; gap:4px; background:var(--paper-2); border-radius:12px; padding:4px; }
-    .seg button { flex:1; border:0; background:none; border-radius:9px; padding:9px 4px; cursor:pointer;
-      font-family:"Space Grotesk",sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft); }
-    .seg button.on { background:var(--paper); color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.18); }
-    #stops-btn { flex:0 0 auto; border:0; border-radius:12px; padding:11px 15px; cursor:pointer;
-      background:var(--ink); color:var(--paper); font-family:"Space Grotesk",sans-serif; font-size:13px; font-weight:600;
-      display:flex; align-items:center; gap:7px; }
-    #stops-btn .n { background:var(--paper); color:var(--ink); border-radius:999px; font-size:11px; padding:1px 7px; }
+    .leaflet-top.leaflet-right{top:calc(10px + env(safe-area-inset-top,0px))}
+    .leaflet-control-zoom{border:none!important;border-radius:12px!important;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.15)!important}
+    .leaflet-control-zoom a{background:rgba(255,255,255,.9)!important;backdrop-filter:blur(10px);color:var(--ink)!important;border:none!important}
+    .leaflet-control-attribution{font-family:var(--font);font-size:10px;background:rgba(255,255,255,.6)!important}
 
-    /* zoom buttons floating top-right, above map */
-    .leaflet-top.leaflet-right { top:calc(10px + env(safe-area-inset-top,0px)); }
-    .leaflet-control-zoom { border:1px solid var(--line)!important; box-shadow:0 2px 10px rgba(0,0,0,.2)!important; }
+    /* ---- bottom sheet ---- */
+    #backdrop{position:fixed;inset:0;z-index:1090;background:rgba(0,0,0,.32);opacity:0;visibility:hidden;transition:opacity .25s}
+    #backdrop.open{opacity:1;visibility:visible}
+    .sheet{position:fixed;z-index:1100;left:0;right:0;bottom:0;height:88dvh;overflow-y:auto;background:var(--bg);
+      border-radius:16px 16px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,.25);transform:translateY(101%);
+      transition:transform .32s cubic-bezier(.32,.72,0,1);padding:0 0 calc(24px + var(--saf));-webkit-overflow-scrolling:touch}
+    .sheet.open{transform:translateY(0)}
+    .grip{position:sticky;top:0;background:var(--bg);padding:8px 0 6px;z-index:2}
+    .grip::before{content:"";display:block;width:38px;height:5px;border-radius:3px;background:#c7c7cc;margin:0 auto}
+    .sheet-title{font-size:26px;font-weight:700;letter-spacing:-.02em;padding:2px 18px 2px}
+    .sheet-sub{color:var(--sec);font-size:14px;padding:0 18px 10px}
+    .grouphd{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--sec);text-transform:uppercase;padding:16px 18px 7px}
 
-    /* ---------- bottom sheet ---------- */
-    #backdrop { position:fixed; inset:0; z-index:1090; background:rgba(20,18,16,.45); opacity:0; visibility:hidden;
-      transition:opacity .2s; }
-    #backdrop.open { opacity:1; visibility:visible; }
-    #sheet { position:fixed; z-index:1100; left:0; right:0; bottom:0; max-height:82dvh; overflow-y:auto;
-      background:var(--paper); border-radius:20px 20px 0 0; box-shadow:0 -6px 30px rgba(0,0,0,.3);
-      transform:translateY(101%); transition:transform .28s cubic-bezier(.4,0,.2,1);
-      padding:8px 18px calc(24px + var(--saf)); -webkit-overflow-scrolling:touch; }
-    #sheet.open { transform:translateY(0); }
-    .grip { width:40px; height:4px; border-radius:2px; background:var(--line); margin:6px auto 12px; }
-    .sheet-h { font-family:"Space Grotesk",sans-serif; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
-      color:var(--ink-soft); margin:14px 0 8px; }
-    .sheet-h:first-of-type { margin-top:2px; }
+    /* ---- cards ---- */
+    .cardlist{padding:0 12px}
+    .card{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:14px;padding:10px;margin-bottom:10px;
+      box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer}
+    .card:active{background:#f7f7fa}
+    .thumb{flex:0 0 auto;width:64px;height:64px;border-radius:10px;object-fit:cover;background:var(--sep)}
+    .badge{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:600;font-size:15px}
+    .cbody{flex:1;min-width:0}
+    .cname{font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+    .cmeta{color:var(--sec);font-size:13px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .cact{display:flex;gap:6px;margin-top:7px}
+    .chip{font-size:12px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:8px;background:rgba(0,122,255,.1);color:var(--blue)}
+    .chip.ghost{background:rgba(118,118,128,.12);color:var(--ink)}
+    .cnote{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);
+      font-size:15px;line-height:1.5}
+    .cnote b{font-weight:600}
+    .cnote .day{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
 
-    .chips { display:flex; flex-wrap:wrap; gap:7px; }
-    .chip { font-family:"Space Grotesk",sans-serif; font-size:13px; padding:8px 13px; border-radius:999px;
-      border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; gap:7px; }
-    .chip.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
-    .chip .dot { width:11px; height:11px; border-radius:50%; }
-    .chip .ring { width:11px; height:11px; border-radius:50%; border:2px solid currentColor; }
-    .chip .ring.dash { border-style:dashed; }
+    /* ---- pins ---- */
+    .pin{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-family:var(--font);font-weight:600;font-size:13px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);background:var(--c);color:#fff}
+    .pin.fragment{background:#fff;color:var(--c);border-color:var(--c)}
+    .pin.gone{background:#fff;color:var(--c);border:2px dashed var(--c)}
+    .pin.start{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c),0 1px 5px rgba(0,0,0,.35)}
+    .dot{width:15px;height:15px;border-radius:50%;background:var(--c);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+    .home{width:32px;height:32px;border-radius:50%;background:var(--base);color:#fff;border:2px solid #fff;
+      display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 0 0 2px var(--base),0 2px 7px rgba(0,0,0,.4)}
 
-    #itinerary { list-style:none; margin:6px 0 0; padding:0; }
-    #itinerary li { margin:0 0 2px; }
-    .route-head { font-family:"Space Grotesk",sans-serif; font-size:13px; font-weight:600; color:var(--ink);
-      margin:16px 0 6px; }
-    .itin { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:none; border:0;
-      border-radius:11px; padding:11px 8px; cursor:pointer; color:var(--ink); font-family:"Spectral",serif; font-size:16px; }
-    .itin:active { background:var(--paper-2); }
-    .itin-n { flex:0 0 auto; width:27px; height:27px; border-radius:50%; display:flex; align-items:center;
-      justify-content:center; font-family:"Space Grotesk",sans-serif; font-size:13px; font-weight:600; color:#fff; background:var(--c,var(--ink)); }
-    .itin-name { flex:1; line-height:1.2; }
-    .itin-start { flex:0 0 auto; font-family:"Space Grotesk",sans-serif; font-size:9px; letter-spacing:.1em;
-      text-transform:uppercase; color:#fff; background:var(--ink); border-radius:3px; padding:3px 7px; }
+    /* ---- popup ---- */
+    .leaflet-popup-content-wrapper{border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.25);border:none}
+    .leaflet-popup-content{margin:0;width:270px!important}
+    .leaflet-popup-close-button{width:30px!important;height:30px!important;font-size:20px!important;color:#fff!important;
+      top:8px!important;right:8px!important;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+    .pop-img{width:100%;height:158px;object-fit:cover;display:block;background:var(--sep);cursor:zoom-in}
+    .pop-b{padding:13px 16px 15px}
+    .pop-k{font-size:12px;font-weight:600;color:var(--sec);letter-spacing:.02em}
+    .pop-k .start{color:var(--blue)}
+    .pop-name{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:3px 0 8px}
+    .pop-blurb{font-size:14px;line-height:1.5;color:#3a3a3c;margin:0 0 12px}
+    .pop-meta{font-size:13px;color:var(--sec);margin:0 0 12px}
+    .btns{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{flex:1;min-width:calc(50% - 4px);text-align:center;text-decoration:none;font-size:14px;font-weight:600;padding:11px 8px;border-radius:11px}
+    .btn.primary{background:var(--blue);color:#fff}
+    .btn.sub{background:rgba(118,118,128,.14);color:var(--ink)}
+    .btn.full{min-width:100%}
 
-    /* ---------- numbered pins ---------- */
-    .pin { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:14px; border:2.5px solid var(--c);
-      box-shadow:0 2px 6px rgba(0,0,0,.4); }
-    .pin-survives { background:var(--c); color:#fff; }
-    .pin-fragment { background:#f4f1ea; color:var(--c); }
-    .pin-gone { background:#f4f1ea; color:var(--c); border-style:dashed; }
-    .pin-start { box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--c),0 2px 7px rgba(0,0,0,.4); }
-
-    /* ---------- popups ---------- */
-    .leaflet-popup-content-wrapper { background:var(--paper); color:var(--ink); border-radius:14px;
-      border:1px solid var(--line); box-shadow:0 8px 28px rgba(0,0,0,.28); }
-    .leaflet-popup-tip { background:var(--paper); border:1px solid var(--line); }
-    .leaflet-popup-content { margin:0; width:264px !important; }
-    .leaflet-popup-close-button { width:34px !important; height:34px !important; font-size:22px !important;
-      padding:6px 8px !important; color:var(--ink-soft) !important; }
-    .pop-img { width:100%; height:150px; object-fit:cover; border-radius:13px 13px 0 0; display:block;
-      background:var(--paper-2); cursor:zoom-in; }
-    .pop-body { padding:12px 16px 15px; }
-    .pop-order { font-family:"Space Grotesk",sans-serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
-    .pop-order .start { color:var(--ghetto); font-weight:600; }
-    .pop-name { font-family:"Space Grotesk",sans-serif; font-weight:600; font-size:19px; line-height:1.15; margin:4px 0 10px; }
-    .pop-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:11px; }
-    .tag { font-family:"Space Grotesk",sans-serif; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
-      padding:3px 8px; border-radius:999px; border:1px solid var(--line); color:var(--ink); }
-    .tag.status-gone { border-style:dashed; color:var(--ink-soft); }
-    .pop-blurb { font-size:14.5px; line-height:1.5; margin:0 0 9px; }
-    .pop-date { font-style:italic; color:var(--ink-soft); margin:0 0 13px; font-size:14px; }
-    .pop-reads { display:flex; gap:8px; margin-bottom:8px; }
-    .pop-reads .btn { flex:1; }
-    .btn { font-family:"Space Grotesk",sans-serif; font-size:14px; text-align:center; text-decoration:none;
-      padding:12px 8px; border-radius:11px; border:1px solid var(--ink); display:block; }
-    .btn-read { background:var(--ink); color:var(--paper); }
-    .btn-go { background:transparent; color:var(--ink); }
-    .flag { font-size:15px; }
-
-    /* ---------- lightbox ---------- */
-    #lightbox { position:fixed; inset:0; z-index:3000; display:none; align-items:center; justify-content:center;
-      background:rgba(20,18,16,.92); padding:16px; cursor:zoom-out; }
-    #lightbox.open { display:flex; }
-    #lightbox img { max-width:100%; max-height:100%; border-radius:6px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
-    #lightbox .lb-close { position:absolute; top:calc(14px + env(safe-area-inset-top,0px)); right:18px; font-family:"Space Grotesk",sans-serif;
-      font-size:30px; line-height:1; color:var(--paper); background:none; border:0; cursor:pointer; }
-    .leaflet-container { font-family:"Space Grotesk",sans-serif; }
+    /* ---- lightbox ---- */
+    #lb{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);padding:14px;cursor:zoom-out}
+    #lb.open{display:flex}
+    #lb img{max-width:100%;max-height:100%;border-radius:8px}
+    #lb .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:18px;font-size:30px;color:#fff;background:none;border:0;cursor:pointer}
+    .leaflet-container{font-family:var(--font)}
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <nav id="navbar">
-    <div class="seg" id="seg">
-      <button data-walk="all" class="on">All</button>
-      <button data-walk="small-ghetto">Ghetto</button>
-      <button data-walk="praga">Praga</button>
-    </div>
-    <button id="stops-btn">Stops <span class="n" id="stops-n">0</span></button>
+  <nav id="nav">
+    <div class="segwrap"><div class="seg" id="seg">
+      <button data-trip="trip1" class="on">Jul 31–Aug 8</button>
+      <button data-trip="trip2">Aug 21–23</button>
+      <button data-trip="food">Restaurants</button>
+    </div></div>
+    <button id="list-btn" aria-label="List">☰</button>
   </nav>
 
   <div id="backdrop"></div>
-  <div id="sheet" aria-hidden="true">
+  <div id="sheet" class="sheet" aria-hidden="true">
     <div class="grip"></div>
-    <div class="sheet-h">Theme</div>
-    <div class="chips" id="theme-chips">
-      <button class="chip on" data-theme="ghetto"><span class="dot" style="background:var(--ghetto)"></span>Ghetto</button>
-      <button class="chip on" data-theme="uprising"><span class="dot" style="background:var(--uprising)"></span>Uprising</button>
-      <button class="chip on" data-theme="prewar"><span class="dot" style="background:var(--prewar)"></span>Pre-war</button>
-    </div>
-    <div class="sheet-h">What remains</div>
-    <div class="chips" id="status-chips">
-      <button class="chip on" data-status="survives"><span class="dot" style="background:var(--ink)"></span>Survives</button>
-      <button class="chip on" data-status="fragment"><span class="ring"></span>Fragment</button>
-      <button class="chip on" data-status="gone"><span class="ring dash"></span>Gone</button>
-    </div>
-    <div class="sheet-h">Itinerary — tap to go there</div>
-    <div id="itinerary"></div>
+    <div id="sheet-body"></div>
   </div>
 
-  <div id="lightbox" aria-hidden="true"><button class="lb-close" aria-label="Close">×</button><img alt="" /></div>
+  <div id="lb" aria-hidden="true"><button class="x" aria-label="Close">×</button><img alt=""/></div>
 
   <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -820,244 +793,1797 @@ svg.leaflet-image-layer.leaflet-interactive path {
 //# sourceMappingURL=leaflet.js.map</script>
   <script>
   const EMBEDDED = {
-    "metadata": { "walks": {
-      "small-ghetto": { "label": "Small Ghetto — survivals & seams", "color": "#8c3b4a" },
-      "praga": { "label": "Praga — surviving pre-war Warsaw", "color": "#7a6a3c" }
-    }},
-    "features": [
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.00097,52.2361165]},"properties":{
-        "name":"Nożyk Synagogue","walk":"small-ghetto","order":1,"theme":"ghetto","status":"survives","date":"1902",
-        "blurb":"The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjA-pN0oAErm9czNTe9OZOrlbWEYF2y477AdVgNPgQdpFl9SSNrkR5OFDKJKA8bqBNJ2eL_qUkzRp0sz1dIus4VqIzB8O0cXnowHzAZmjug6w4VYQVdfDm6IuHRvMhZMlVmGMShwuqz6rWxZnUM=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Synagoga%20No%C5%BCyk%C3%B3w",
-        "place_id":"ChIJsVd1DonMHkcRCDpFLJXw440"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0033177,52.2354096]},"properties":{
-        "name":"All Saints Church","walk":"small-ghetto","order":2,"theme":"ghetto","status":"survives","date":"1883",
-        "blurb":"Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAyl7D23pj_ibhhy1TDsXM--kIyI_00-jzk8EKn9r2a-6hxM3Kl5uFqFx0Iz3xlSDfiIrOgBNfAv5bE9juJ7991PgkC8b-tnVXkKGvIjIRklHSl4Tcr7Afsv6CvYVOOXfJv44vtDqRnf3351A=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%2C%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ko%C5%9Bci%C3%B3%C5%82%20Wszystkich%20%C5%9Awi%C4%99tych%20w%20Warszawie",
-        "place_id":"ChIJ-ZnF2IvMHkcRtdrJTKeAS1g"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0052525,52.2365106]},"properties":{
-        "name":"Próżna Street","walk":"small-ghetto","order":3,"theme":"ghetto","status":"survives","date":"pre-1900",
-        "blurb":"The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes; several buildings are under long renovation.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDePI78_ykB1ACuyWfZhDd4L1M1MKQSQy3hrBKJ7Ej_BPNJ-NkOuFc5JUS1f93TJJcDGQbp_-4heiYxh4bPa-3FfJQrwbgYSfVuDsXvKGhZ26lPLa0kWcYKwWpZkHZYc0HavHLpYhjK8KtJBAU=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20Street","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Pr%C3%B3%C5%BCna%20w%20Warszawie",
-        "place_id":"ChIJp8DML4rMHkcRersX820kLOY"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9986541,52.2307601]},"properties":{
-        "name":"Ghetto Wall — Sienna 55 / Złota 62","walk":"small-ghetto","order":4,"theme":"ghetto","status":"fragment","date":"1940",
-        "blurb":"Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDq6HhBd_uBCsavvuEsdayJu5FZPGZKfeMnwuT1TPwcW5GuanTJ7xaxldb9ABzwWg86WnIJagKFrVkaduiHIyglvpHJieXmZVxo7u6dMgIHXpKmtTGKmez9l4mtsucADuTdkLuTbvwv2LPwrg=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Getto%20warszawskie",
-        "place_id":"ChIJp-XwyIXMHkcRwOEWRHuH_Zw"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9927355,52.2341338]},"properties":{
-        "name":"Ghetto Wall — Waliców","walk":"small-ghetto","order":5,"theme":"ghetto","status":"fragment","date":"1940",
-        "blurb":"Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjB11QnayTJbAbZpW7kW0A_uPzOhvj0qkse_9PAOGO-rLYYTiLc_zDu5uS3zoA8YgevpuXXsJLdBnEc51JD8Q_3I7YkFLwqZJybB97PPE30s5-33v_MKcnNUncecE1fUZYtsthZwNJI8zf54k7Z4LuNZIg=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20wall","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Mur%20getta%20warszawskiego",
-        "place_id":"ChIJqUv4IurNHkcR6KYmpOyqdO8"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9895072,52.2373961]},"properties":{
-        "name":"The Memory Footbridge","walk":"small-ghetto","order":6,"theme":"ghetto","status":"gone","date":"1942",
-        "blurb":"Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjDv7__Hm72muB4w_jJ9KQzEh12mu9QckMxYWd5kpTwR-8pWgu0g6z2aJba_G3Enj7X3Al3QGm8zeWgygQi7sE00-mNpZ-BdSKxFVJ9CSiHP7JUgSPU0jFhPYUJoW-pqf-kVQiaajqmMSl9-cWw=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ch%C5%82odna%20Street%20ghetto%20footbridge","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=K%C5%82adka%20nad%20ulic%C4%85%20Ch%C5%82odn%C4%85",
-        "place_id":"ChIJg4NSv4bMHkcRQKzDqdHjN8I"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[20.9945,52.2346]},"properties":{
-        "name":"Prosta 51 — sewer escape (approx.)","walk":"small-ghetto","order":7,"theme":"ghetto","status":"gone","date":"10 May 1943",
-        "blurb":"Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — refine on site.",
-        "photo":null,
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20Uprising","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Powstanie%20w%20getcie%20warszawskim",
-        "place_id":null}},
+  "metadata": {
+    "walks": {
+      "small-ghetto": {
+        "label": "Small Ghetto — survivals & seams",
+        "color": "#8c3b4a"
+      },
+      "praga": {
+        "label": "Praga — surviving pre-war Warsaw",
+        "color": "#7a6a3c"
+      },
+      "uprising-srodmiescie": {
+        "label": "Uprising — 1944 sites",
+        "color": "#3f5e78"
+      },
+      "food": {
+        "label": "Restaurants",
+        "color": "#ff7a1a"
+      },
+      "sights": {
+        "label": "Sights",
+        "color": "#2f7d84"
+      },
+      "base": {
+        "label": "Base",
+        "color": "#c9a227"
+      }
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.00097,
+          52.2361165
+        ]
+      },
+      "properties": {
+        "name": "Nożyk Synagogue",
+        "walk": "small-ghetto",
+        "order": 1,
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "1902",
+        "blurb": "The only surviving pre-war synagogue in Warsaw. The Germans stripped it and used it as a stable; it reopened in 1983. Closed Saturdays; lunch break 13:30–14:00.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA-pN0oAErm9czNTe9OZOrlbWEYF2y477AdVgNPgQdpFl9SSNrkR5OFDKJKA8bqBNJ2eL_qUkzRp0sz1dIus4VqIzB8O0cXnowHzAZmjug6w4VYQVdfDm6IuHRvMhZMlVmGMShwuqz6rWxZnUM=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Synagoga%20No%C5%BCyk%C3%B3w",
+        "place_id": "ChIJsVd1DonMHkcRCDpFLJXw440"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0033177,
+          52.2354096
+        ]
+      },
+      "properties": {
+        "name": "All Saints Church",
+        "walk": "small-ghetto",
+        "order": 2,
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "1883",
+        "blurb": "Stood inside the ghetto boundary on Grzybowski Square and ministered to baptised Jews. Its cellars and grounds sheltered people in hiding.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAyl7D23pj_ibhhy1TDsXM--kIyI_00-jzk8EKn9r2a-6hxM3Kl5uFqFx0Iz3xlSDfiIrOgBNfAv5bE9juJ7991PgkC8b-tnVXkKGvIjIRklHSl4Tcr7Afsv6CvYVOOXfJv44vtDqRnf3351A=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%2C%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ko%C5%9Bci%C3%B3%C5%82%20Wszystkich%20%C5%9Awi%C4%99tych%20w%20Warszawie",
+        "place_id": "ChIJ-ZnF2IvMHkcRtdrJTKeAS1g"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0052525,
+          52.2365106
+        ]
+      },
+      "properties": {
+        "name": "Próżna Street",
+        "walk": "small-ghetto",
+        "order": 3,
+        "theme": "ghetto",
+        "status": "survives",
+        "date": "pre-1900",
+        "blurb": "The rare street with original Jewish tenements standing on both sides. Look for Ghetto Uprising bullet holes; several buildings are under long renovation.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDePI78_ykB1ACuyWfZhDd4L1M1MKQSQy3hrBKJ7Ej_BPNJ-NkOuFc5JUS1f93TJJcDGQbp_-4heiYxh4bPa-3FfJQrwbgYSfVuDsXvKGhZ26lPLa0kWcYKwWpZkHZYc0HavHLpYhjK8KtJBAU=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20Street",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Pr%C3%B3%C5%BCna%20w%20Warszawie",
+        "place_id": "ChIJp8DML4rMHkcRersX820kLOY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9986541,
+          52.2307601
+        ]
+      },
+      "properties": {
+        "name": "Ghetto Wall — Sienna 55 / Złota 62",
+        "walk": "small-ghetto",
+        "order": 4,
+        "theme": "ghetto",
+        "status": "fragment",
+        "date": "1940",
+        "blurb": "Genuine surviving wall fragment in a courtyard. Two bricks were removed for Yad Vashem and the US Holocaust Memorial Museum. Courtyard gate opens weekday afternoons (~16:00), Sat 09:00–13:00, and Sunday.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDq6HhBd_uBCsavvuEsdayJu5FZPGZKfeMnwuT1TPwcW5GuanTJ7xaxldb9ABzwWg86WnIJagKFrVkaduiHIyglvpHJieXmZVxo7u6dMgIHXpKmtTGKmez9l4mtsucADuTdkLuTbvwv2LPwrg=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Getto%20warszawskie",
+        "place_id": "ChIJp-XwyIXMHkcRwOEWRHuH_Zw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9927355,
+          52.2341338
+        ]
+      },
+      "properties": {
+        "name": "Ghetto Wall — Waliców",
+        "walk": "small-ghetto",
+        "order": 5,
+        "theme": "ghetto",
+        "status": "fragment",
+        "date": "1940",
+        "blurb": "Wall fragment set against a bombed-out pre-war building, now hemmed by a high-rise. The ghetto border is traced in the pavement nearby.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjB11QnayTJbAbZpW7kW0A_uPzOhvj0qkse_9PAOGO-rLYYTiLc_zDu5uS3zoA8YgevpuXXsJLdBnEc51JD8Q_3I7YkFLwqZJybB97PPE30s5-33v_MKcnNUncecE1fUZYtsthZwNJI8zf54k7Z4LuNZIg=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20wall",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Mur%20getta%20warszawskiego",
+        "place_id": "ChIJqUv4IurNHkcR6KYmpOyqdO8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9895072,
+          52.2373961
+        ]
+      },
+      "properties": {
+        "name": "The Memory Footbridge",
+        "walk": "small-ghetto",
+        "order": 6,
+        "theme": "ghetto",
+        "status": "gone",
+        "date": "1942",
+        "blurb": "Marks the wooden footbridge over Aryan Chłodna Street that linked the two halves of the ghetto — the 'bridge of sighs'. The bridge is gone; two posts and a pavement inscription remain.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDv7__Hm72muB4w_jJ9KQzEh12mu9QckMxYWd5kpTwR-8pWgu0g6z2aJba_G3Enj7X3Al3QGm8zeWgygQi7sE00-mNpZ-BdSKxFVJ9CSiHP7JUgSPU0jFhPYUJoW-pqf-kVQiaajqmMSl9-cWw=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ch%C5%82odna%20Street%20ghetto%20footbridge",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=K%C5%82adka%20nad%20ulic%C4%85%20Ch%C5%82odn%C4%85",
+        "place_id": "ChIJg4NSv4bMHkcRQKzDqdHjN8I"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9945,
+          52.2346
+        ]
+      },
+      "properties": {
+        "name": "Prosta 51 — sewer escape (approx.)",
+        "walk": "small-ghetto",
+        "order": 7,
+        "theme": "ghetto",
+        "status": "gone",
+        "date": "10 May 1943",
+        "blurb": "Optional extension ~10 min west of the footbridge. Manhole where surviving ŻOB fighters climbed out of the sewers after the Ghetto Uprising. Coordinates are approximate — refine on site.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Ghetto%20Uprising",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Powstanie%20w%20getcie%20warszawskim",
+        "place_id": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0392656,
+          52.2516096
+        ]
+      },
+      "properties": {
+        "name": "Praga Museum of Warsaw",
+        "walk": "praga",
+        "order": 1,
+        "theme": "prewar",
+        "status": "survives",
+        "date": "18th–19th c. houses",
+        "blurb": "Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCyMzFyu9RIfOJev8n5fH6S-chn8qM56YiWvP906kgLKu1eV_90HgqxANQxb31vMcCGs0gOBVG_Bsq2M6CPZiIIQIAXhyY1gdefoy4mmwFNgCI4_yFgP6PG_TPVZLaS1Qz6KHiPqgA20P6seA=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Praga%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Muzeum%20Warszawskiej%20Pragi",
+        "place_id": "ChIJz3gHi0fMHkcRK4C61nMG5vY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0398623,
+          52.2516423
+        ]
+      },
+      "properties": {
+        "name": "Bazar Różyckiego",
+        "walk": "praga",
+        "order": 2,
+        "theme": "prewar",
+        "status": "survives",
+        "date": "1880s",
+        "blurb": "One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCatvCNaMojn4YvHdPGQsNuXgAzwlWPvvX6j0HOLyuHUomtazNO4PkEYh-ViA53snSbO5ijdvGnEdslLyk5YPR28icb1Sea6YPbD-Fk9w7ourgCxsGFtgMpn7H1JGfoC-CC2obX0-1r7d29rnCD3mtFog=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
+        "place_id": "ChIJC5xcFADNHkcRSqCF96QjswA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0407218,
+          52.2534636
+        ]
+      },
+      "properties": {
+        "name": "Ząbkowska Street",
+        "walk": "praga",
+        "order": 3,
+        "theme": "prewar",
+        "status": "survives",
+        "date": "late 19th c.",
+        "blurb": "Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAikblv2BUKZXH_bhON733I7OS9T6pcYjoD9zhH8A50JQQUAaWiXRVEPflPeO8G_O20aYaTpzOve4hF3rt-Uv6P5eMqpWrLbNUiFNoSIFEzna4nsAcxQSvPrtV-PSck1lPMEhfMCtuAKj-ksQ=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Z%C4%85bkowska%20w%20Warszawie",
+        "place_id": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0447327,
+          52.2555643
+        ]
+      },
+      "properties": {
+        "name": "Centrum Praskie Koneser",
+        "walk": "praga",
+        "order": 4,
+        "theme": "prewar",
+        "status": "survives",
+        "date": "1897",
+        "blurb": "Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBxVKeZAtfm75JXbgTAnASwLPQSlJGPsRR_JFWP5LEvdoUiGX21WCCqRnNn7x09wKMoXT78VSjVbFmnoxsP509APQ2VFY2yfLrmFPLGhqnHrFTx9pVWjogtSQvU4WKUYTzNRr_HOW4SjeoFVYHSy0-D_Q=s4800-w800-h600",
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Praga%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Centrum%20Praskie%20Koneser",
+        "place_id": "ChIJXy0-HzjMHkcRmLHJOhBhixU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.017716,
+          52.2232811
+        ]
+      },
+      "properties": {
+        "name": "Mała PAST-a (Piękna 19)",
+        "walk": "uprising-srodmiescie",
+        "order": 1,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "captured 23 Aug 1944",
+        "blurb": "The 'little PASTa' — a second telephone exchange the Germans held as a strongpoint. Insurgents fought for it from 4 August and finally took it on the 23rd. Its big sister on Zielna gets the fame; this one saw just as brutal a fight.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=PAST%20building%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ma%C5%82a%20PAST-a",
+        "place_id": "ChIJofDcl-_MHkcRsRqeZtYCi54"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0112385,
+          52.2263793
+        ]
+      },
+      "properties": {
+        "name": "Poznańska Street",
+        "walk": "uprising-srodmiescie",
+        "order": 2,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "late 19th c.",
+        "blurb": "One of the Śródmieście streets that came through the Uprising with its pre-war tenements still standing. Scan the façades for bullet and shrapnel scars left unrepaired.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Uprising",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Powstanie%20warszawskie",
+        "place_id": "ChIJ1cpSi-3MHkcR2TmR_oQHI8c"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0121316,
+          52.2328758
+        ]
+      },
+      "properties": {
+        "name": "Kino Palladium",
+        "walk": "uprising-srodmiescie",
+        "order": 3,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "1920s",
+        "blurb": "Cinema where insurgents screened the Uprising's own newsreels to audiences during the fighting — footage shot days earlier on these very streets. The venue survives on Złota.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Uprising",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Powstanie%20warszawskie",
+        "place_id": "ChIJURr9vfTMHkcRc4oXRurlzbc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.012645,
+          52.2357087
+        ]
+      },
+      "properties": {
+        "name": "Prudential — plac Powstańców Warszawy",
+        "walk": "uprising-srodmiescie",
+        "order": 4,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "1934",
+        "blurb": "Pre-war Warsaw's tallest building. An insurgent raising the flag here became one of the Uprising's iconic photographs; days later the tower took a direct hit from the Germans' giant Karl-Gerät siege mortar — and still stood. Rebuilt, now a hotel.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Prudential%20House%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Prudential%20%28Warszawa%29",
+        "place_id": "ChIJIbpZNPXMHkcRK-TQEAofKVY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0063606,
+          52.2362898
+        ]
+      },
+      "properties": {
+        "name": "PAST-a Tower",
+        "walk": "uprising-srodmiescie",
+        "order": 5,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "captured 20 Aug 1944",
+        "blurb": "The Polish Telephone Company's high-rise, held by the Germans as a fortress commanding the district. Insurgents stormed and captured it on 20 August 1944 after flooding the stairwell with petrol and setting it alight — one of the Uprising's signature victories.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=PAST%20building%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Gmach%20PAST%20w%20Warszawie",
+        "place_id": "ChIJKd8lSIrMHkcRx-gDdEcC2i4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0171742,
+          52.2387804
+        ]
+      },
+      "properties": {
+        "name": "Church of the Holy Cross",
+        "walk": "uprising-srodmiescie",
+        "order": 6,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "1696 · burned 1944",
+        "blurb": "On Krakowskie Przedmieście, wrecked in the fighting and then dynamited by the Germans. The wartime photo of its toppled 'Sursum Corda' Christ statue lying in the rubble, still clutching the cross, became one of the Uprising's defining images. Rebuilt; Chopin's heart rests in a pillar inside.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Holy%20Cross%20Church%2C%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ko%C5%9Bci%C3%B3%C5%82%20%C5%9Bw.%20Krzy%C5%BCa%20w%20Warszawie",
+        "place_id": "ChIJ3V9Vyl_MHkcR8kXRF_SzpXA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0062552,
+          52.2447376
+        ]
+      },
+      "properties": {
+        "name": "Reduta Banku Polskiego",
+        "walk": "uprising-srodmiescie",
+        "order": 7,
+        "theme": "uprising",
+        "status": "survives",
+        "date": "held Aug–Sep 1944",
+        "blurb": "The Bank of Poland — a fortress in the northern fighting, held by insurgents through weeks of siege. Its shell-torn brick halls survive and are now an events venue you can step into (Tue–Fri afternoons).",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bank%20of%20Poland%20Warsaw%20Uprising",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Reduta%20Banku%20Polskiego",
+        "place_id": "ChIJoQfQh2TMHkcRgzwuAymE2v8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0059007,
+          52.249386
+        ]
+      },
+      "properties": {
+        "name": "Uprising Monument — the sewer manhole",
+        "walk": "uprising-srodmiescie",
+        "order": 8,
+        "theme": "uprising",
+        "status": "gone",
+        "date": "unveiled 1989",
+        "blurb": "The city's central Uprising memorial. Its most haunting figures descend into a sewer manhole — the exact way fighters escaped the doomed Old Town in 1944. Stand at the manhole and picture the crawl through the dark.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Uprising%20Monument",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Pomnik%20Powstania%20Warszawskiego",
+        "place_id": "ChIJR4WJUGXMHkcR_qFXPuIUv8s"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0096483,
+          52.2492773
+        ]
+      },
+      "properties": {
+        "name": "Mały Powstaniec (Little Insurgent)",
+        "walk": "uprising-srodmiescie",
+        "order": 9,
+        "theme": "uprising",
+        "status": "gone",
+        "date": "1983",
+        "blurb": "A small bronze boy in an oversized helmet, set on the Old Town walls — for the child couriers and messengers of 1944. The most quietly devastating monument in Warsaw.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Little%20Insurrectionist",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Pomnik%20Ma%C5%82ego%20Powsta%C5%84ca",
+        "place_id": "ChIJHXahgW_MHkcR39Ie0_ccop8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9834784,
+          52.2386518
+        ]
+      },
+      "properties": {
+        "name": "Wola Massacre Memorial",
+        "walk": "uprising-srodmiescie",
+        "order": 10,
+        "theme": "uprising",
+        "status": "gone",
+        "date": "5–7 Aug 1944",
+        "blurb": "Beyond the centre, in Wola. In the first days of August 1944 the Germans murdered tens of thousands of civilians here in mass executions. The memorial lists the addresses and the death tolls, street by street.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Wola%20massacre",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Rze%C5%BA%20Woli",
+        "place_id": "ChIJc0H1oYHMHkcR8pizpaPcsvc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9518248,
+          52.2580688
+        ]
+      },
+      "properties": {
+        "name": "Gloria Victis — Powązki graves",
+        "walk": "uprising-srodmiescie",
+        "order": 11,
+        "theme": "uprising",
+        "status": "gone",
+        "date": "1946",
+        "blurb": "Beyond the centre. The insurgents' resting place — 'Glory to the Vanquished'. Ranks of Home Army graves, including the Batalion Zośka boys from 'Stones for the Rampart', gather around a black granite monument.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Gloria%20Victis%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Gloria%20Victis%20%28pomnik%29",
+        "place_id": "ChIJBwAAAJfLHkcRSlri16oSakQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0250599,
+          52.2057363
+        ]
+      },
+      "properties": {
+        "name": "Dworkowa — sewer executions",
+        "walk": "uprising-srodmiescie",
+        "order": 12,
+        "theme": "uprising",
+        "status": "gone",
+        "date": "27 Sep 1944",
+        "blurb": "Beyond the centre, in Mokotów. Where ~140 insurgents who crawled out of the sewers were captured and shot at the end of September 1944. A quiet slope-side memorial most tourists never reach.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Uprising%20Mokot%C3%B3w",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Zbrodnia%20na%20Dworkowej",
+        "place_id": "ChIJrzEjaifNHkcRt8UYvVUWnJA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9958502,
+          52.2317805
+        ]
+      },
+      "properties": {
+        "name": "Home base — Pańska 57",
+        "walk": "base",
+        "order": 0,
+        "theme": "base",
+        "status": "base",
+        "date": "the Airbnb",
+        "blurb": "Home base for the trip. Western Śródmieście — walking distance to the Uprising Museum (~15 min) and the Palace of Culture.",
+        "photo": null,
+        "read_en": null,
+        "read_pl": null,
+        "place_id": "ChIJIVedrI_MHkcRwbd8mxkdTpI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0121706,
+          52.2497893
+        ]
+      },
+      "properties": {
+        "name": "Old Town Market Square",
+        "walk": "sights",
+        "order": 1,
+        "theme": "sights",
+        "status": "see",
+        "date": "UNESCO-listed rebuild",
+        "blurb": "The heart of the Old Town — colourful burgher houses and the Mermaid statue. Every façade was rebuilt from rubble after 1945; the reconstruction itself is UNESCO-listed. Cafés and benches all around.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Old%20Town%20Market%20Place%2C%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Rynek%20Starego%20Miasta%20w%20Warszawie",
+        "place_id": "ChIJe1cDa2_MHkcRm2tifS9days"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0141275,
+          52.2477436
+        ]
+      },
+      "properties": {
+        "name": "Royal Castle",
+        "walk": "sights",
+        "order": 2,
+        "theme": "sights",
+        "status": "see",
+        "date": "closed Mon · opens 10:00",
+        "blurb": "The kings' seat on Castle Square, blown up by the Germans and painstakingly rebuilt. Grand state rooms and the Canaletto cityscapes that guided Warsaw's reconstruction. Wed free entry.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Royal%20Castle%2C%20Warsaw",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Zamek%20Kr%C3%B3lewski%20w%20Warszawie",
+        "place_id": "ChIJB1RFG2bMHkcRvslJ-0ahGSA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9810185,
+          52.2323936
+        ]
+      },
+      "properties": {
+        "name": "Warsaw Uprising Museum",
+        "walk": "sights",
+        "order": 3,
+        "theme": "sights",
+        "status": "see",
+        "date": "closed Tue · 10:00–18:00",
+        "blurb": "The essential Uprising museum — immersive and moving; do it fresh in the morning. Book online, take the audioguide, allow 2–2½ h. ~15 min from the flat.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Uprising%20Museum",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Muzeum%20Powstania%20Warszawskiego",
+        "place_id": "ChIJiaL1OYPMHkcRJcZiOrY2hqk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9695691,
+          52.2513694
+        ]
+      },
+      "properties": {
+        "name": "Stare Powązki (Powązki Cemetery)",
+        "walk": "sights",
+        "order": 4,
+        "theme": "sights",
+        "status": "see",
+        "date": "open 7:00–20:00",
+        "blurb": "Poland's most storied historic cemetery — the Avenue of the Meritorious, centuries of sculpted tombs under huge old trees. A slow, shaded, atmospheric walk.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pow%C4%85zki%20Cemetery",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Cmentarz%20Pow%C4%85zkowski",
+        "place_id": "ChIJ581PWJvLHkcR6C8pO-8oLFs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9535878,
+          52.2585454
+        ]
+      },
+      "properties": {
+        "name": "Wojskowe Powązki (Military Cemetery)",
+        "walk": "sights",
+        "order": 5,
+        "theme": "sights",
+        "status": "see",
+        "date": "open 8:00–20:00",
+        "blurb": "The nation's military resting place — Gloria Victis and rank on rank of Home Army and Uprising graves (Szpilman of 'The Pianist' among them). ~15 min from Old Powązki.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pow%C4%85zki%20Military%20Cemetery",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Cmentarz%20Wojskowy%20na%20Pow%C4%85zkach",
+        "place_id": "ChIJ0XNtRaPLHkcRXqSfvLf4ezk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0328941,
+          52.2146733
+        ]
+      },
+      "properties": {
+        "name": "Łazienki Park (Royal Baths)",
+        "walk": "sights",
+        "order": 6,
+        "theme": "sights",
+        "status": "see",
+        "date": "Chopin concerts Sun 12:00 & 16:00",
+        "blurb": "Warsaw's loveliest park — the Palace on the Isle, the Chopin monument, roaming peacocks, endless benches. Free Chopin concerts by the monument on summer Sundays (12:00 & 16:00).",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=%C5%81azienki%20Park",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=%C5%81azienki%20Kr%C3%B3lewskie",
+        "place_id": "ChIJ435ebh7NHkcRcaqhXGG2Vow"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.005995,
+          52.231838
+        ]
+      },
+      "properties": {
+        "name": "Palace of Culture & Science",
+        "walk": "sights",
+        "order": 7,
+        "theme": "sights",
+        "status": "see",
+        "date": "deck 10:00–20:00 (open Mon)",
+        "blurb": "Stalin's 'gift' skyscraper, love-it-or-hate-it, with a 30th-floor terrace for a 360° panorama. Cheap ticket, 5 min from the flat — best at dusk.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Palace%20of%20Culture%20and%20Science",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Pa%C5%82ac%20Kultury%20i%20Nauki",
+        "place_id": "ChIJSS5pkozMHkcRwi0fMeV66cI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0113074,
+          52.2541811
+        ]
+      },
+      "properties": {
+        "name": "Multimedia Fountain Park",
+        "walk": "sights",
+        "order": 8,
+        "theme": "sights",
+        "status": "see",
+        "date": "Fri & Sat eve ~21:30",
+        "blurb": "Riverside by the New Town — a water-light-laser show on Friday & Saturday summer evenings. A gentle, crowd-pleasing night out; pair with a Vistula boulevard stroll.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20multimedia%20fountain",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Multimedialny%20Park%20Fontann",
+        "place_id": "ChIJh0QLCW7MHkcRBpU8uKhlEU8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0905084,
+          52.1651749
+        ]
+      },
+      "properties": {
+        "name": "Wilanów Palace",
+        "walk": "sights",
+        "order": 9,
+        "theme": "sights",
+        "status": "see",
+        "date": "~20 min south",
+        "blurb": "The 'Polish Versailles' — baroque royal palace and formal gardens that survived the war intact. A grand half-day if the folks have energy for one more.",
+        "photo": null,
+        "read_en": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Wilan%C3%B3w%20Palace",
+        "read_pl": "https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Pa%C5%82ac%20w%20Wilanowie",
+        "place_id": "ChIJ6xic6UAtGUcRIVWoCEyUf1A"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0225998,
+          52.2034618
+        ]
+      },
+      "properties": {
+        "name": "Mezze hummus & falafel",
+        "walk": "food",
+        "order": 1,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Middle Eastern · vegan",
+        "area": "Mokotów · Różana",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDANZ3gXmHqyd0xYW--lImZDGP54oV9ALnhGuOTeOMIzi4tdL_Tkmfx6kiWfMiXxdEp3GAY0664SHm94LIOJlMI4XtNMPZmzC4qcCdgHVjDQUovL4LdI5pO-l-PuvLHyf-iYH7WJYb4Og4o=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.mezze.com.pl/",
+        "place_id": "ChIJC-Kg8ifNHkcRrwCjA51n2dE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0100882,
+          52.2044179
+        ]
+      },
+      "properties": {
+        "name": "Yes Butcher! Shop & Bistro",
+        "walk": "food",
+        "order": 2,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Steakhouse",
+        "area": "Mokotów · Niepodległości",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCOOgU_RT_FVaBiMkWA4QMPqBvrpgWLF5M61IhSYyPeIZgWASuWSBfVvhA0jwTJkehbFiaiULYPWFm_3yCq9jpFdduFr89Xn8QvrdxQu92IoEQ_imYZtEh0txj844b4nFAC34prgXoR23j0lrd_JhNaRw=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://yesbutcher.pl/",
+        "place_id": "ChIJy9VvsuPNHkcR8zw7DfjuqvQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0312641,
+          52.205911
+        ]
+      },
+      "properties": {
+        "name": "CUORE Italian Street Food",
+        "walk": "food",
+        "order": 3,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Italian street food",
+        "area": "Mokotów · Belwederska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAtQznV2uTdHl1BCQzmfXGPVSLLVBjZ2CPoARTWVDswRs50_tI7-91zQqRo4u6xhujWdd5ebuTKAdJVmxI46RVQJzX1RcLV4gaaUP_pDMWCGETeBvHaB0-LhW0yXRFpmoTSyIstxvgDc1wRRA=s4800-w800-h600",
+        "instagram": null,
+        "website": null,
+        "place_id": "ChIJRXqWJivNHkcRP1Zq2v6cYaE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0121424,
+          52.2018732
+        ]
+      },
+      "properties": {
+        "name": "Lokal na Rybę",
+        "walk": "food",
+        "order": 4,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Seafood · fish",
+        "area": "Mokotów · Różana",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCRRS9gZuBughu_HFokHrtjhRJrCf1YTyEsqGT7ORRW0BQ8Ly-lW7jhWcqbySA1Da0Tgx6RmcK1GKX73GMn27dsuDS3vqmBnkEIFy54XVZRTFyd19LKenrA6Ba5CGltbK9ipHa_L90_sGyctDNpO2NwOw=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://lokalnarybe.com/",
+        "place_id": "ChIJ3SWHMdfMHkcRnlMt8aIGou4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.021189,
+          52.2071272
+        ]
+      },
+      "properties": {
+        "name": "Pan od Kawy",
+        "walk": "food",
+        "order": 5,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Coffee roaster",
+        "area": "Mokotów · Narbutta",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAkcxIt6ZRgSXzQWD8yZXjFesqvRKXcmu1g4GAAwwwlshnpwYrIvsBfID2JA-nEZobqtRgWWMF8YfCCh-sS2nM8jbVlkRnIC59tomOChkL-JBVukPNHO9IbYT56AHt6cwq1qhw3O6cM4KJjmaKtCEI1Cw=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://panodkawy.pl/",
+        "place_id": "ChIJR2sLfCLNHkcRO97S82T-Irg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.022027,
+          52.20643
+        ]
+      },
+      "properties": {
+        "name": "KoreaTown",
+        "walk": "food",
+        "order": 6,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Korean",
+        "area": "Mokotów · Puławska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAGXrIHpTUnpMyUI-bNwe5IJKfvOTKtZDK19t9LWyV0XU1tFyCewXc4IBAw-c_pWZzJN6KBAFAuzhGe8bf86bPg5sCVeyYt8MTb0i-WEFBkwfLzPRP1aZDSfUOrPPBdYuCJqREbfkBy8Nm-3w=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.facebook.com/KoreaTown-Rest-117795462061812/",
+        "place_id": "ChIJmbJjgNjMHkcRMxAO7FlPaSI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0111552,
+          52.2267735
+        ]
+      },
+      "properties": {
+        "name": "Señor Lucas taquería",
+        "walk": "food",
+        "order": 7,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Mexican · tacos",
+        "area": "Śródmieście · Poznańska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjASH7KfGIzqgUAmzU0cRwHoMbeyg4__K_s7s45P5ieybqt4rfoVXS_c4De_EELK7s50sLxPMuUz0vLA_pgzcmwXulGuhOSyPAYWr3yeEaqflCq0sCST3D_On4Lb48K7dlVswxYF_XIn3bEll9Au9dFKYQ=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.facebook.com/senorlucasmexican/",
+        "place_id": "ChIJ2emK2U3NHkcRxodT1bJbaCc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0225768,
+          52.2046832
+        ]
+      },
+      "properties": {
+        "name": "Roger That Foods",
+        "walk": "food",
+        "order": 8,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Burgers · bar",
+        "area": "Mokotów · Puławska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD3DsUJGc5DN-AA9xgJezKqlpxuy2d1Q4LDiBDyun5aBPilOOelXFIpbAk7jR4rUkLgUKMudsOnfV5UU9hhEy7Yh6Ly6KSJ27pkKpuzS6-bPot_TZRO4z-rsXgNGm6bDVdJLYgwvtGuF39YNqC7_l_e=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://rogerthatfoods.pl/",
+        "place_id": "ChIJj2SsDzTNHkcRP6jbuUf0pI0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9946813,
+          52.2392815
+        ]
+      },
+      "properties": {
+        "name": "Śledzie z Bornholmu",
+        "walk": "food",
+        "order": 9,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Fish deli · bistro",
+        "area": "Śródmieście · Elektoralna",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCSHCTEyi9DBcjsNK-dTULDvhsKsfJ2eGlKUK5POUH8WrROjvh_yHlW5g3ne9sRNk8a9ODenzQzRr0AoNHmzUjtdWPEShllKVCx-IqRZzEDSW3--JBjOhIK2qbJ6UoGMGj0pADzTfW2FPYI5aV_L_q8=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://sledziezbornholmu.pl/",
+        "place_id": "ChIJ_RiGoVDNHkcR1RuULu-fLwU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0178569,
+          52.2290207
+        ]
+      },
+      "properties": {
+        "name": "BAKEN piekarnia",
+        "walk": "food",
+        "order": 10,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Bakery · brunch",
+        "area": "Śródmieście · Żurawia",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBheSD6WpTnWwHKsrffy69x2UiBM9nj2CYgpfZFVC8ABVxugN-mAiyu_9R3XSQEiAJEl1MYrk3kPcunC6QpFxTzSgwXIOLsBIEagRjkbjc_d5YpxdqkemVwi9KzYMYtALXGaah-MfBapO6FyQw=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://www.baken.pl/",
+        "place_id": "ChIJx1tgRlXNHkcRBZrSOvQw6uA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9993123,
+          52.173204
+        ]
+      },
+      "properties": {
+        "name": "Ruben Grill & Deli",
+        "walk": "food",
+        "order": 11,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Grill · steak",
+        "area": "Sadyba · Obrzeżna",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDLvVMzf09tD177IB6tSbPLrt32wJXVlLgbxoe0TlaMKi96NOqSqSLurZQ-gvQNOTy5gVSGMd_z2GGxN5Es4ksBWjuOkobCXLYwKl9emRPIj5UowXS3k56nUK7N339AejsR9iapWPAvdYkt5Qi7QG72Cw=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.facebook.com/rubengrilldeli/",
+        "place_id": "ChIJBcxgSEgzGUcR5kUL8aV6EKc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9755265,
+          52.2303668
+        ]
+      },
+      "properties": {
+        "name": "RAMENOWNIA",
+        "walk": "food",
+        "order": 12,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Ramen",
+        "area": "Wola · Giełdowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCa-citxRtl2CblILTZLCKQycsWD1FY1P_DOM2RyP0SOwy0G5GXa-YF6aQ6rFljvzunC2BvoyBBYXzuZ1i_Pyi55QTS0odCbGRvsL35WadcUS2ly_trXK7CdkJadReFBZm3LCT3D5NzLNEXrRWIb2Wt=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://ramenownia.pl/",
+        "place_id": "ChIJyaDa9G7NHkcRe2OAAmgOHfA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0684024,
+          52.22526
+        ]
+      },
+      "properties": {
+        "name": "Santorini",
+        "walk": "food",
+        "order": 13,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Greek",
+        "area": "Saska Kępa · Egipska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBC_iFEe5yJkQQE7_luVImRS2gNKmIUZvha0ZTFAb-_0ezJpIcnf9Iylhveh207SHtoZdVcDEJPAfhoVjyC961TLWQZ2WvSn7xZgpbL_qRSf1NqFynsZG3RSZ1x5v59v0kMxF8ZrR03_Zylyg=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.kregliccy.pl/santorini",
+        "place_id": "ChIJRQniQgrNHkcReQ9B5H5m8qU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0082213,
+          52.2365175
+        ]
+      },
+      "properties": {
+        "name": "Włoski Strajk",
+        "walk": "food",
+        "order": 14,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Italian · sharing",
+        "area": "Śródmieście · Marszałkowska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDfZn0-8OSs5fVLUn2Su_NLxOxrx2SI6ho0sAd4TiI3ZDPpaKMC4rDVuLGKnTUtCsk4U2kAeDrTeOXnPYatMuACETBmAqImEUauqTgbezC29ruIlf2FH9qayYYqaeD7ci8ceKS7ULRFPkDpVg=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://wloskistrajk.goodresto.app/",
+        "place_id": "ChIJ_x7ejgrNHkcRVXsvaeDhoTs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0421942,
+          52.2647523
+        ]
+      },
+      "properties": {
+        "name": "Epicurien Bistro & Deli",
+        "walk": "food",
+        "order": 15,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Bistro · brunch",
+        "area": "Praga · Szwedzka",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAstTrMnYAhdMGzXPveDv67e7Lwna4o4bARkWNoZCtSoa9cbBjQ-aeCZ0OhKwqUjdMiR4vMK72gVDI7EkhQ8UVg1BS5rgVY6OS6003j5CjGHJO2ibnGdaFI2Jp86HD2Yr0g-L8GYmgX9JOV988=s4800-w388-h600",
+        "instagram": "https://www.instagram.com/epi.bistro.deli/",
+        "website": null,
+        "place_id": "ChIJz1qnTDTNHkcRUf3M4HPs58M"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.99176,
+          52.1885119
+        ]
+      },
+      "properties": {
+        "name": "MELIO Pizzeria",
+        "walk": "food",
+        "order": 16,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Pizza · Neapolitan",
+        "area": "Mokotów · Racjonalizacji",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAGAPh7DfbyjgiBhhnvsrpccwi5Aoz2Xw3elhF3uEoWVCg7qewXWLKsJ9XcvMZccZwVB-vfTYX3pecdMfWq5N7eN1-iSq_A52AKVkPcuQHpKzLEjKRAIl8jsTrtQoXG5xjGjub5Nh0TfnAlgQ=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://melio.choiceqr.com/",
+        "place_id": "ChIJu34WKGUzGUcRS6vcGs_xpb8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0188351,
+          52.2080659
+        ]
+      },
+      "properties": {
+        "name": "kontakt wino & bistro",
+        "walk": "food",
+        "order": 17,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Wine bar · bistro",
+        "area": "Mokotów · Sandomierska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAqnjdELj7RHx6_ctbRONcwP7GaNYuweten2DbzDByhNePC7zNgiAf84UAqZLfZL_2I3OnZdJAZhEe-cri2LnVUFzLzaiH9iOdilgjToZVlcI5i2shlfvVlsNTBU0wziyn2w_q6BkAstkYrn1M=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://kontakt.wine/",
+        "place_id": "ChIJRYjOeS7NHkcRGeaDEBNZQlQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9973006,
+          52.205657
+        ]
+      },
+      "properties": {
+        "name": "Izumi Sushi",
+        "walk": "food",
+        "order": 18,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Sushi · Japanese",
+        "area": "Mokotów · Biały Kamień",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCk96DDNO6WbDn6_BxZdoOGZIarA0CCFgByoMkraQDt_0feL7EiM9IBOwSxDQmrTyze6AILOwWQLUY2zuRrlnmoTnyeRPZIYB853ELy8rM_7fx7ocsaR8GBHfgzYH-gz7Hx0d67VvTlx2m4Zmc=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.izumisushi.eu/",
+        "place_id": "ChIJB6sMAebMHkcRpwxRI8hupSk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0344784,
+          52.255985
+        ]
+      },
+      "properties": {
+        "name": "TOAST",
+        "walk": "food",
+        "order": 19,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Brunch · desserts",
+        "area": "Praga · Targowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCO3Byy9ZxX-GBisLaq_clSrSRft1OqiWZ2Gy7Jh283agySBmErjPcaPmK1ONsmbQK4GHj5uUoalqs3e1Mja2g5gZznybmgWdos1HvA0F6t-ERQVH1YetGNFNY0b8oEe4Rmc1EHRqToBPML=s4800-w800-h600",
+        "instagram": "https://www.instagram.com/toast_warsaw",
+        "website": null,
+        "place_id": "ChIJFwfuO4rNHkcRaSk2NtJ7JEw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0152867,
+          52.2335328
+        ]
+      },
+      "properties": {
+        "name": "Dom Otwarty",
+        "walk": "food",
+        "order": 20,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Moroccan",
+        "area": "Śródmieście · W. Górskiego",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDUCW3oyAJGl-ZSze2vwlZK8MjaqHeVHPuIXH2LZZo7gFuPPnxmOZSaI7J0PFWzY7HptGfcpNFnT12dQw2-UXHKrzLeQupDmTlUkAjlqLiRT0bfCXxvDL-y3zFeRAP8dz2IRKTaDQ5V6XQcdhkkMUFk=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://domotwartywarszawa.pl/",
+        "place_id": "ChIJP4cdEgDNHkcRzfMQ1faYwNg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0134302,
+          52.230627
+        ]
+      },
+      "properties": {
+        "name": "HAECHI",
+        "walk": "food",
+        "order": 21,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Korean street food",
+        "area": "Śródmieście · Widok",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDdWQmUvCXmWFHr_f8dEDlvuGnjNCrzNCExmAPOTocvK4x6BPT4cm8FAR4CpVg5gQvb0aSlaI9LM4holWXDbN8PH48ctsJpDOH8riWiX62nDQARinXnud9V6cl5skUEHGyx9UTMKtw81ES_2to=s4800-w800-h600",
+        "instagram": null,
+        "website": null,
+        "place_id": "ChIJ3YQUdNXNHkcRAzIbAVh3tUc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0167885,
+          52.2292053
+        ]
+      },
+      "properties": {
+        "name": "Meatologia — Krucza",
+        "walk": "food",
+        "order": 22,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Steak · sandwiches",
+        "area": "Śródmieście · Krucza",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA4n4dVkEcYzjIOUPLCn4DYRcB2YoauxZglpvdi4_qLWEhnkK_FhOe6CMAUHUtEOlIVXdtMX5ZU2cRb1f66gslb3breOwJUlQpdxhH0IapGAlmRovnoivBVKITU3y6ifqyygqluZow5q9k43kA=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://meatologia.pl/",
+        "place_id": "ChIJE7vnHdDNHkcRKH_Nm5Q_z4o"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0145465,
+          52.222241
+        ]
+      },
+      "properties": {
+        "name": "Meatologia — Koszykowa",
+        "walk": "food",
+        "order": 23,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Steakhouse",
+        "area": "Śródmieście · Koszykowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAoPLyxR6fPB9O1FXEWhT-2Lqr8Wme3K8bNN9mh6B_2iStib8ruZCkb1efjD7tP-6XCd3H0ANJfhkpCKfKnHibDm4UYxlunUw6okmPThUrmBp14eyuhmyTicggCQqQbestkLRQZDM-JRXfGXMjxQqIfDw=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://meatologia.pl/",
+        "place_id": "ChIJrdoiPMDNHkcRBVz2uNkFrSQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0530401,
+          52.2354056
+        ]
+      },
+      "properties": {
+        "name": "René Cucina",
+        "walk": "food",
+        "order": 24,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Italian",
+        "area": "Saska Kępa · Francuska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDgcZ5U4Z9GEQwa5HJEzf75aojWI3UU28rJMv6-SUPNNLtT3I51erU08rB6EAobyNlIzNU3bNSZnKwJwKtKZ-P2ydxSf9Z4iULO8FfF2c0qVIo-5FksU2XP-7spG3v-x65kgYj5VC38cc2UK3icnusxJw=s4800-w800-h600",
+        "instagram": "https://www.instagram.com/rene.cucina",
+        "website": null,
+        "place_id": "ChIJs8tILrfNHkcRlmA_c0Z-gF8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0075552,
+          52.2436074
+        ]
+      },
+      "properties": {
+        "name": "Rusiko",
+        "walk": "food",
+        "order": 25,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Georgian",
+        "area": "Śródmieście · Wierzbowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDClECH6cI1cpcKyrPAqT2w9kPqDKzQRu-ha-Xf9PlPJh-9EEk-aEKEnPqRvAyESyYRpnYNkD_lVtayzkkpM3AwVAiQIBSgkcvfzJv6W_YnrCkgZCQnbeRRL753f6GYybczA3mH9XhJ2q0z=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://www.rusiko.pl/",
+        "place_id": "ChIJ4eujiPrMHkcRT6UkCG0NOSs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9869889,
+          52.2354975
+        ]
+      },
+      "properties": {
+        "name": "WYRAJ",
+        "walk": "food",
+        "order": 26,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Modern Polish · Slavic",
+        "area": "Wola · Krochmalna",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAgkcQ0vT-LUH_QQPpNLzph_7sUA18LPcTZhWp9MY9MmQhVwSB_pCrn_jyCnC2y0fvHpVZOV9aYDGBYLsyWMCNqX6X0SfJKJ9DDg0fH-JdNscIWAaaJ49IkYdhc6ttvHh1AU3dqJUNjYeRTKOyFkQsF1Q=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.wyraj.net/",
+        "place_id": "ChIJt5KXq3nNHkcRJuEjEjsFf_4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0176306,
+          52.2274211
+        ]
+      },
+      "properties": {
+        "name": "UKI UKI — Krucza",
+        "walk": "food",
+        "order": 27,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Ramen · Japanese",
+        "area": "Śródmieście · Krucza",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCwrhB2bOAlVpXYhFC0_7c7VfpJyCqbeeBd-hXx7TUggMIAfFfrO2z0dG3ppedgZCpA1qF1knVhXrAwyvc2eWz6uODgq1wEOcrzt0yX90p9G9WXcu9K85Ss5bKZIOie_5RIjIUwjdkeg1oJrg=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.facebook.com/ukiuki.udon/",
+        "place_id": "ChIJY3tPpfHMHkcRuNFaGlmtFHA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0138848,
+          52.2326521
+        ]
+      },
+      "properties": {
+        "name": "UKI UKI — Zgoda",
+        "walk": "food",
+        "order": 28,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Ramen · udon",
+        "area": "Śródmieście · Zgoda",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjB4CUchNiiQe0TLYOC8DysneqbcDe6yZaLuTA5tuwbraiKi5sCDTlLRtZqydHLNCKWpwoZ2CtUIji02tPfE2NUjn4IeeqnGW8-FB8NlgK6Cr8WqQTxEWBm8JTr2EBzkU6YFzyS2vsTSB3JV=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://ukiuki.goodresto.app/",
+        "place_id": "ChIJv1VMzePNHkcRIsOck5l9F-Q"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0433115,
+          52.2609144
+        ]
+      },
+      "properties": {
+        "name": "Peaches",
+        "walk": "food",
+        "order": 29,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Vegan",
+        "area": "Praga · Stalowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDCeYiguiVejpmgz9_-OsRru4gpUCju16AAjrEcSdOlOAcNcw00pK1aasWF-Z3gjcGj7aPnbnYPHPx8koHnM1JwhHdLuO3401kzAtUyTme2IKa5kSvG1nWaY4koC6Kd_mz7BGImHsfTRoGsWTpjXFnXtg=s4800-w800-h600",
+        "instagram": "https://www.instagram.com/peaches_gastrogirls",
+        "website": null,
+        "place_id": "ChIJk0leL3PNHkcRm9xqdaJWsLw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0040463,
+          52.1874859
+        ]
+      },
+      "properties": {
+        "name": "My Food China",
+        "walk": "food",
+        "order": 30,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Chinese",
+        "area": "Mokotów · Garażowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAD7lLfU1VnyrrXEgjLaTaCYYet_IMTOvaIV7JA3UMOAfyVVIjWOd_bBqdVzw42qaiE7OM23psTTtMQNBcbzizUj9LZAhtXikmEXm27sqzyI2zbgA4WHU4K61Z-ztc9tosSTuuY_gZVdF2hj30=s4800-w800-h600",
+        "instagram": null,
+        "website": null,
+        "place_id": "ChIJ8yrXnykzGUcRi5h6SHB7Fus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0435081,
+          52.2610404
+        ]
+      },
+      "properties": {
+        "name": "Trójka Kielichów",
+        "walk": "food",
+        "order": 31,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Café · bistro",
+        "area": "Praga · Stalowa",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjB4n1M1RHa9HpOLRc_VnGATQKAkhMFpqv01_DGGELIb_BytkRMZBKzJelor68oE8OftO3QwfYaGGHzPAK3PGTHoBn-if8RoU4vV3u7tqtHFp2yliTKAheqtawnzIlmAxgvZhmoVa0dlJRv24tY=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://www.trojkakielichow.pl/",
+        "place_id": "ChIJBzRJT2jNHkcR93llQaYCb-8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0550028,
+          52.2315377
+        ]
+      },
+      "properties": {
+        "name": "AHAAN",
+        "walk": "food",
+        "order": 32,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Thai",
+        "area": "Saska Kępa · Zwycięzców",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDU02HwG_PMeuwC5nuBttewLpPQAft-AaNLjZQBC3D4IEyEUrj_7G1LKwKBSMZeaDCfG0Xq8F9B-fZiSeHkvUkMXiZ1ew9PUQ4q72HUmgFM703d69G4dXHp-yBTHa7-KPKiqg2H8rlwCJ7N17GmeTDueA=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://www.ahaan.pl/",
+        "place_id": "ChIJzQ0VQADNHkcRKFfbovvhTLw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0529639,
+          52.2366943
+        ]
+      },
+      "properties": {
+        "name": "Jeju Korea",
+        "walk": "food",
+        "order": 33,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Korean",
+        "area": "Saska Kępa · Francuska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBQtWECWH4ILbP8Opl3P3OqgNpgYgFLT55eyIzqSg1QzbQte4YVsiVL0dSYf5qCnXCSjaid-4sf0ZWV6Cl9NogonloTSOSESNrLhHYGUou0tku-Z49OVFe2lRz1_FL0xOggoFfSDHivqs_oMSOGQFoz=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://fb.com/jejukoreawarszawa",
+        "place_id": "ChIJSUA9iTvNHkcRr99WPdG1__E"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0553713,
+          52.233202
+        ]
+      },
+      "properties": {
+        "name": "Chałka Kawiarnia Bistro",
+        "walk": "food",
+        "order": 34,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Café · brunch",
+        "area": "Saska Kępa · Francuska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBUAuH84EHaeo_X2cAVRjGAp8_eeAoc1IlUddPUzPL3yv-y9cnYHFLI9RNBAWKulGoOZR-vGrgFAjRl0LPP6bT5NXYiV4TKeI1yd0uMBKgm9Qv7mPFlXZIdJnMQWmTQpsetRc_gSvfkbfSMWIWpY2VW=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://www.facebook.com/profile.php?id=61555674361494",
+        "place_id": "ChIJE4e9DwDNHkcRJhbdyYpZUAg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0444205,
+          52.2549655
+        ]
+      },
+      "properties": {
+        "name": "Koneser Grill",
+        "walk": "food",
+        "order": 35,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Grill · steak",
+        "area": "Praga · Ząbkowska",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBd3Iq9auVc0IL9T7enI2w8N1fUy01yjpR-ujQoEw9tz0p9l2LK8VmrMJ-O_TSnmgfkAl2H6xsnKgViikbL2fz6egmqgFMVGFa9Ban2nHITTmig6Ky-ISIf8R0s6I1ok7Fgmb02hrPfzinv1Q=s4800-w800-h600",
+        "instagram": null,
+        "website": "http://www.konesergrillwarszawa.pl/",
+        "place_id": "ChIJ89TOehPNHkcRNg6oWZfnLq4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0298321,
+          52.2603313
+        ]
+      },
+      "properties": {
+        "name": "Trzy Kruki",
+        "walk": "food",
+        "order": 36,
+        "theme": "food",
+        "status": "eat",
+        "cuisine": "Café · specialty coffee",
+        "area": "Praga · pl. Hallera",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBRFJGycZ2pwAnsdJBHoXwMsdKq3LoysSALFo2CooVGY0LYDewaOdEHHyoVf-8HxwDmtaioFkIBuFgl3Cg9rUEvyC9KIrJ930j_2c7EYVAuoa8C5MDHQLW3qd5SLvMmSDy7SB3tTdRSmGpvCQ=s4800-w800-h600",
+        "instagram": null,
+        "website": "https://trzykruki.pl/",
+        "place_id": "ChIJ8Qt5SzjNHkcRa-f7H4mePbc"
+      }
+    }
+  ]
+};
+  const THEME={ghetto:"#8c3b4a",uprising:"#3f5e78",prewar:"#7a6a3c",food:"#ff7a1a",sights:"#0a84c2",base:"#e0a400"};
+  const INK="#1c1c1e";
+  const FEATURES=EMBEDDED.features||[];
+  const WALKS=(EMBEDDED.metadata&&EMBEDDED.metadata.walks)||{};
+  const idx={};
+  const keyOf=p=>p.walk+":"+p.order;
 
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0392656,52.2516096]},"properties":{
-        "name":"Praga Museum of Warsaw","walk":"praga","order":1,"theme":"prewar","status":"survives","date":"18th–19th c. houses",
-        "blurb":"Built into three of the oldest surviving houses on the right bank, with preserved backyard Jewish prayer rooms in the cellars. Best orientation to why Praga was never levelled. Free on Thursdays.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCyMzFyu9RIfOJev8n5fH6S-chn8qM56YiWvP906kgLKu1eV_90HgqxANQxb31vMcCGs0gOBVG_Bsq2M6CPZiIIQIAXhyY1gdefoy4mmwFNgCI4_yFgP6PG_TPVZLaS1Qz6KHiPqgA20P6seA=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Praga%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Muzeum%20Warszawskiej%20Pragi",
-        "place_id":"ChIJz3gHi0fMHkcRK4C61nMG5vY"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0398623,52.2516423]},"properties":{
-        "name":"Bazar Różyckiego","walk":"praga","order":2,"theme":"prewar","status":"survives","date":"1880s",
-        "blurb":"One of Warsaw's oldest markets, trading since the 1880s and a fixture of pre-war Praga life. Vintage stalls run Thursday–Sunday.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjCatvCNaMojn4YvHdPGQsNuXgAzwlWPvvX6j0HOLyuHUomtazNO4PkEYh-ViA53snSbO5ijdvGnEdslLyk5YPR28icb1Sea6YPbD-Fk9w7ourgCxsGFtgMpn7H1JGfoC-CC2obX0-1r7d29rnCD3mtFog=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Bazar%20R%C3%B3%C5%BCyckiego",
-        "place_id":"ChIJC5xcFADNHkcRSqCF96QjswA"}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0407218,52.2534636]},"properties":{
-        "name":"Ząbkowska Street","walk":"praga","order":3,"theme":"prewar","status":"survives","date":"late 19th c.",
-        "blurb":"Walk its full length: cobbles, unrestored facades, ghost signs. The Pianist ghetto scenes were shot on nearby Stalowa and Środkowa. Duck through gateways here and on 11 Listopada to find wartime courtyard shrines.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjAikblv2BUKZXH_bhON733I7OS9T6pcYjoD9zhH8A50JQQUAaWiXRVEPflPeO8G_O20aYaTpzOve4hF3rt-Uv6P5eMqpWrLbNUiFNoSIFEzna4nsAcxQSvPrtV-PSck1lPMEhfMCtuAKj-ksQ=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Ulica%20Z%C4%85bkowska%20w%20Warszawie",
-        "place_id":null}},
-      { "type":"Feature","geometry":{"type":"Point","coordinates":[21.0447327,52.2555643]},"properties":{
-        "name":"Centrum Praskie Koneser","walk":"praga","order":4,"theme":"prewar","status":"survives","date":"1897",
-        "blurb":"Former vodka distillery, its red-brick industrial architecture preserved and reused. End point — food, coffee, and the Polish Vodka Museum.",
-        "photo":"https://lh3.googleusercontent.com/place-photos/AG9NLjBxVKeZAtfm75JXbgTAnASwLPQSlJGPsRR_JFWP5LEvdoUiGX21WCCqRnNn7x09wKMoXT78VSjVbFmnoxsP509APQ2VFY2yfLrmFPLGhqnHrFTx9pVWjogtSQvU4WKUYTzNRr_HOW4SjeoFVYHSy0-D_Q=s4800-w800-h600",
-        "read_en":"https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Praga%20Warsaw","read_pl":"https://pl.wikipedia.org/wiki/Special:Search?go=Go&search=Centrum%20Praskie%20Koneser",
-        "place_id":"ChIJXy0-HzjMHkcRmLHJOhBhixU"}}
-    ]
+  const TRIPS={
+    trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga & the Uprising trail",walks:["small-ghetto","uprising-srodmiescie","praga"]},
+    trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["sights"]},
+    food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]}
   };
+  let curTrip="trip1";
 
-  const THEME = { ghetto:"#8c3b4a", uprising:"#3f5e78", prewar:"#7a6a3c" };
-  const INK = "#211f1c";
-  const FEATURES = EMBEDDED.features || [];
-  const WALKS = (EMBEDDED.metadata && EMBEDDED.metadata.walks) || {};
-  const markerIndex = {};
-  const keyOf = p => p.walk + ":" + p.order;
+  const map=L.map("map",{zoomControl:false,scrollWheelZoom:true,tap:true}).setView([52.238,21.01],13);
+  L.control.zoom({position:"topright"}).addTo(map);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:20,
+    attribution:'&copy; OpenStreetMap &copy; CARTO'}).addTo(map);
+  const stopLayer=L.layerGroup().addTo(map);
+  const routeLayer=L.layerGroup().addTo(map);
 
-  let curWalk = "all";
-  const themeOn = new Set(["ghetto","uprising","prewar"]);
-  const statusOn = new Set(["survives","fragment","gone"]);
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+  function dist(a,b){const R=6371000,r=Math.PI/180;const x=(b[1]-a[1])*r*Math.cos((a[0]+b[0])/2*r),y=(b[0]-a[0])*r;return Math.sqrt(x*x+y*y)*R}
+  function walkDir(p,lat,lng){let u="https://www.google.com/maps/dir/?api=1&destination="+lat+","+lng+"&travelmode=walking";if(p.place_id)u+="&destination_place_id="+encodeURIComponent(p.place_id);return u}
 
-  const map = L.map("map", { zoomControl:false, scrollWheelZoom:true, tap:true })
-    .setView([52.245,20.995],13);
-  L.control.zoom({ position:"topright" }).addTo(map);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    subdomains:"abcd", maxZoom:20,
-    attribution:'&copy; OpenStreetMap &copy; CARTO'
-  }).addTo(map);
-
-  const stopLayer = L.layerGroup().addTo(map);
-  const routeLayer = L.layerGroup().addTo(map);
-
-  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
-  function directionsUrl(p,lat,lng){
-    let u="https://www.google.com/maps/dir/?api=1&destination="+lat+","+lng+"&travelmode=walking";
-    if(p.place_id) u+="&destination_place_id="+encodeURIComponent(p.place_id);
-    return u;
-  }
   function pinIcon(p){
-    const color=THEME[p.theme]||INK;
-    const cls="pin pin-"+p.status+(p.order===1?" pin-start":"");
-    return L.divIcon({ className:"", html:'<div class="'+cls+'" style="--c:'+color+'">'+esc(p.order)+'</div>',
-      iconSize:[30,30], iconAnchor:[15,15], popupAnchor:[0,-16] });
-  }
-  function popupHtml(p,lat,lng){
-    const wl=(WALKS[p.walk]&&WALKS[p.walk].label)||p.walk||"";
-    const start=p.order===1;
-    const img=p.photo?'<img class="pop-img" src="'+esc(p.photo)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.style.display=\'none\'">':'';
-    const ol=esc(wl)+" · Stop "+esc(p.order)+(start?' · <span class="start">Start here</span>':'');
-    return '<div class="pop">'+img+'<div class="pop-body">'
-      +'<div class="pop-order">'+ol+'</div>'
-      +'<div class="pop-name">'+esc(p.name)+'</div>'
-      +'<div class="pop-tags"><span class="tag">'+esc(p.theme)+'</span><span class="tag status-'+esc(p.status)+'">'+esc(p.status)+'</span></div>'
-      +'<p class="pop-blurb">'+esc(p.blurb)+'</p>'
-      +'<p class="pop-date">'+esc(p.date||"")+'</p>'
-      +'<div class="pop-reads">'
-      +(p.read_en?'<a class="btn btn-read" href="'+esc(p.read_en)+'" target="_blank" rel="noopener"><span class="flag">🇬🇧</span> English</a>':'')
-      +(p.read_pl?'<a class="btn btn-read" href="'+esc(p.read_pl)+'" target="_blank" rel="noopener"><span class="flag">🇵🇱</span> Polski</a>':'')
-      +'</div>'
-      +'<a class="btn btn-go" href="'+esc(directionsUrl(p,lat,lng))+'" target="_blank" rel="noopener">Walk here ↗</a>'
-      +'</div></div>';
+    const c=THEME[p.theme]||INK;
+    if(p.theme==="base")return L.divIcon({className:"",html:'<div class="home" style="--c:'+c+'">⌂</div>',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-17]});
+    if(p.theme==="food")return L.divIcon({className:"",html:'<div class="dot" style="--c:'+c+'"></div>',iconSize:[15,15],iconAnchor:[8,8],popupAnchor:[0,-8]});
+    const cls="pin "+(p.status==="fragment"?"fragment":p.status==="gone"?"gone":"")+(p.order===1?" start":"");
+    return L.divIcon({className:"",html:'<div class="'+cls.trim()+'" style="--c:'+c+'">'+esc(p.order)+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
   }
 
-  function visible(){
-    return FEATURES.filter(f=>{
-      const p=f.properties;
-      if(curWalk!=="all" && p.walk!==curWalk) return false;
-      if(!themeOn.has(p.theme)) return false;
-      if(!statusOn.has(p.status)) return false;
-      return true;
-    });
+  function popupHtml(p,lat,lng){
+    const img=p.photo?'<img class="pop-img" src="'+esc(p.photo)+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.style.display=\'none\'">':'';
+    if(p.theme==="food"){
+      const ig=p.instagram?'<a class="btn sub" href="'+esc(p.instagram)+'" target="_blank" rel="noopener">Instagram</a>':(p.website?'<a class="btn sub" href="'+esc(p.website)+'" target="_blank" rel="noopener">Website</a>':'');
+      return '<div>'+img+'<div class="pop-b"><div class="pop-k">'+esc(p.cuisine||"")+'</div><div class="pop-name">'+esc(p.name)+'</div>'
+        +'<div class="pop-meta">'+esc(p.area||"")+'</div><div class="btns">'+ig
+        +'<a class="btn primary'+(ig?'':' full')+'" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
+    }
+    const wl=(WALKS[p.walk]&&WALKS[p.walk].label)||"";
+    const start=p.order===1?' · <span class="start">Start</span>':'';
+    const reads=(p.read_en?'<a class="btn sub" href="'+esc(p.read_en)+'" target="_blank" rel="noopener">🇬🇧 English</a>':'')
+      +(p.read_pl?'<a class="btn sub" href="'+esc(p.read_pl)+'" target="_blank" rel="noopener">🇵🇱 Polski</a>':'');
+    return '<div>'+img+'<div class="pop-b"><div class="pop-k">'+esc(wl)+(p.order?' · Stop '+esc(p.order):'')+start+'</div>'
+      +'<div class="pop-name">'+esc(p.name)+'</div>'
+      +(p.blurb?'<div class="pop-blurb">'+esc(p.blurb)+'</div>':'')
+      +(p.date?'<div class="pop-meta">'+esc(p.date)+'</div>':'')
+      +'<div class="btns">'+reads+'<a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Walk here ↗</a></div></div></div>';
+  }
+
+  function tripFeatures(){
+    const ws=TRIPS[curTrip].walks;
+    return FEATURES.filter(f=>ws.includes(f.properties.walk));
   }
 
   function render(){
-    stopLayer.clearLayers(); routeLayer.clearLayers();
-    for(const k in markerIndex) delete markerIndex[k];
-    const shown=visible();
+    stopLayer.clearLayers();routeLayer.clearLayers();
+    for(const k in idx)delete idx[k];
+    const shown=tripFeatures();
 
+    // route lines for the historical walks only
     const byWalk={};
-    shown.forEach(f=>{ const w=f.properties.walk; (byWalk[w]=byWalk[w]||[]).push(f); });
+    shown.forEach(f=>{const w=f.properties.walk;(byWalk[w]=byWalk[w]||[]).push(f)});
     Object.entries(byWalk).forEach(([w,feats])=>{
-      if(feats.length<2) return;
-      const pts=feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0))
-        .map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
-      L.polyline(pts,{ color:(WALKS[w]&&WALKS[w].color)||INK, weight:2.5, opacity:.5, dashArray:"1 7", lineCap:"round" }).addTo(routeLayer);
+      if(w==="food"||w==="sights"||feats.length<2)return;
+      const c=(WALKS[w]&&WALKS[w].color)||INK;
+      const pts=feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
+      for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])<=1200)L.polyline([pts[i],pts[i+1]],{color:c,weight:2.5,opacity:.5,dashArray:"1 7",lineCap:"round"}).addTo(routeLayer);
     });
 
-    shown.forEach(f=>{
-      const p=f.properties, lat=f.geometry.coordinates[1], lng=f.geometry.coordinates[0];
-      const m=L.marker([lat,lng],{ icon:pinIcon(p) })
-        .bindPopup(popupHtml(p,lat,lng),{ maxWidth:280, autoPanPadding:[16,80] })
-        .addTo(stopLayer);
-      markerIndex[keyOf(p)]=m;
+    // base always
+    const all=shown.concat(FEATURES.filter(f=>f.properties.theme==="base"));
+    all.forEach(f=>{
+      const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
+      const m=L.marker([lat,lng],{icon:pinIcon(p)}).bindPopup(popupHtml(p,lat,lng),{maxWidth:280,autoPanPadding:[16,90]}).addTo(stopLayer);
+      idx[keyOf(p)]=m;
     });
-
-    document.getElementById("stops-n").textContent=shown.length;
-    buildItinerary(shown);
-    fitToShown(shown);
+    fitTo(shown);
+    buildSheet();
   }
 
-  function fitToShown(shown){
-    if(!shown.length) return;
+  function fitTo(shown){
+    if(!shown.length)return;
     const b=L.latLngBounds(shown.map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]));
-    if(b.isValid()) map.fitBounds(b,{ paddingTopLeft:[30,40], paddingBottomRight:[30,110] });
+    if(b.isValid())map.fitBounds(b,{paddingTopLeft:[26,30],paddingBottomRight:[26,110]});
   }
 
-  function buildItinerary(shown){
-    const box=document.getElementById("itinerary"); box.innerHTML="";
-    const byWalk={};
-    shown.forEach(f=>{ const w=f.properties.walk; (byWalk[w]=byWalk[w]||[]).push(f); });
-    Object.keys(WALKS).filter(w=>byWalk[w]).forEach(w=>{
-      if(Object.keys(byWalk).length>1){
-        const h=document.createElement("div"); h.className="route-head";
-        h.textContent=(WALKS[w]&&WALKS[w].label)||w; box.appendChild(h);
-      }
-      const ol=document.createElement("ul"); ol.id="itinerary"; ol.style.cssText="list-style:none;margin:0;padding:0";
-      byWalk[w].slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).forEach(f=>{
-        const p=f.properties, color=THEME[p.theme]||INK;
-        const li=document.createElement("li");
-        const btn=document.createElement("button"); btn.type="button"; btn.className="itin";
-        btn.innerHTML='<span class="itin-n" style="--c:'+color+'">'+esc(p.order)+'</span><span class="itin-name">'+esc(p.name)+'</span>'+(p.order===1?'<span class="itin-start">Start</span>':'');
-        btn.addEventListener("click",()=>{ closeSheet(); flyTo(keyOf(p)); });
-        li.appendChild(btn); ol.appendChild(li);
+  function flyTo(key){const m=idx[key];if(!m)return;closeSheet();map.flyTo(m.getLatLng(),16,{duration:.5});setTimeout(()=>m.openPopup(),330)}
+
+  /* --- sheet content per trip --- */
+  const ITIN=[
+    ["Day 1 · Fri — arrive & ease in","Train in, drop bags at Pańska 57, then a gentle Old Town evening: Castle Square → Old Town Market Square (the Mermaid) → Barbican & city walls → the Little Insurgent."],
+    ["Day 2 · Sat — remembrance","Morning at the Warsaw Uprising Museum (book online, ~2½ h). Afternoon at Powązki — Stare Powązki, then the Military Cemetery (Gloria Victis, the Uprising graves)."],
+    ["Day 3 · Sun — royal Warsaw & Chopin","Royal Castle interiors + Holy Cross Church (Chopin's heart), then Łazienki Park timed to the free Sunday Chopin concert (12:00 & 16:00 by the monument)."]
+  ];
+
+  function areaOf(p){return (p.area||"").split(" · ")[0]||"Other"}
+  const AREA_ORDER=["Śródmieście","Wola","Mokotów","Sadyba","Saska Kępa","Praga"];
+
+  function buildSheet(){
+    const b=document.getElementById("sheet-body");
+    const t=TRIPS[curTrip];
+    let h='<div class="sheet-title">'+esc(t.label)+'</div><div class="sheet-sub">'+esc(t.sub)+'</div>';
+    const shown=tripFeatures();
+
+    if(curTrip==="food"){
+      const groups={};shown.forEach(f=>{const a=areaOf(f.properties);(groups[a]=groups[a]||[]).push(f)});
+      const order=AREA_ORDER.filter(a=>groups[a]).concat(Object.keys(groups).filter(a=>!AREA_ORDER.includes(a)));
+      h+='<div class="cardlist">';
+      order.forEach(a=>{
+        h+='<div class="grouphd">'+esc(a)+'</div>';
+        groups[a].sort((x,y)=>x.properties.name.localeCompare(y.properties.name)).forEach(f=>{h+=foodCard(f)});
       });
-      box.appendChild(ol);
-    });
+      h+='</div>';
+    } else if(curTrip==="trip2"){
+      h+='<div class="cardlist">';
+      ITIN.forEach(d=>{h+='<div class="cnote"><div class="day">'+esc(d[0])+'</div>'+d[1]+'</div>'});
+      h+='<div class="grouphd">All sights</div>';
+      shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).forEach(f=>{h+=placeCard(f)});
+      h+='</div>';
+    } else {
+      const byWalk={};shown.forEach(f=>{const w=f.properties.walk;(byWalk[w]=byWalk[w]||[]).push(f)});
+      h+='<div class="cardlist">';
+      t.walks.forEach(w=>{if(!byWalk[w])return;h+='<div class="grouphd">'+esc((WALKS[w]&&WALKS[w].label)||w)+'</div>';
+        byWalk[w].sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).forEach(f=>{h+=placeCard(f)})});
+      h+='</div>';
+    }
+    b.innerHTML=h;
+    b.querySelectorAll("[data-key]").forEach(el=>el.addEventListener("click",e=>{
+      if(e.target.closest("a"))return; flyTo(el.getAttribute("data-key"));
+    }));
   }
 
-  function flyTo(key){
-    const m=markerIndex[key]; if(!m) return;
-    map.flyTo(m.getLatLng(),16,{ duration:.55 });
-    setTimeout(()=>m.openPopup(),380);
+  function foodCard(f){
+    const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
+    const link=p.instagram?'<a class="chip" href="'+esc(p.instagram)+'" target="_blank" rel="noopener">Instagram</a>':(p.website?'<a class="chip ghost" href="'+esc(p.website)+'" target="_blank" rel="noopener">Website</a>':'');
+    return '<div class="card" data-key="'+esc(keyOf(p))+'">'
+      +(p.photo?'<img class="thumb" src="'+esc(p.photo)+'" loading="lazy" alt="" onerror="this.style.visibility=\'hidden\'">':'<div class="thumb"></div>')
+      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.cuisine||"")+' · '+esc((p.area||"").split(" · ")[1]||"")+'</div>'
+      +'<div class="cact">'+link+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
+  }
+  function placeCard(f){
+    const p=f.properties,c=THEME[p.theme]||INK;
+    const badge=p.theme==="sights"?'<div class="badge" style="background:'+c+'">'+esc(p.order)+'</div>'
+      :'<div class="badge" style="background:'+c+'">'+esc(p.order)+'</div>';
+    return '<div class="card" data-key="'+esc(keyOf(p))+'">'+badge
+      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.date||p.area||"")+'</div></div></div>';
   }
 
-  /* nav bar: route segmented control */
+  /* nav */
   document.getElementById("seg").addEventListener("click",e=>{
-    const b=e.target.closest("button"); if(!b) return;
-    [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===b));
-    curWalk=b.dataset.walk; render();
+    const btn=e.target.closest("button");if(!btn)return;
+    [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===btn));
+    curTrip=btn.dataset.trip;render();
   });
-
-  /* chips (theme + status filters) */
-  function chipHandler(container,set,attr){
-    document.getElementById(container).addEventListener("click",e=>{
-      const b=e.target.closest(".chip"); if(!b) return;
-      const v=b.dataset[attr]; b.classList.toggle("on");
-      if(set.has(v)) set.delete(v); else set.add(v);
-      render();
-    });
-  }
-  chipHandler("theme-chips",themeOn,"theme");
-  chipHandler("status-chips",statusOn,"status");
-
-  /* bottom sheet */
-  const sheet=document.getElementById("sheet"), backdrop=document.getElementById("backdrop");
-  function openSheet(){ sheet.classList.add("open"); backdrop.classList.add("open"); sheet.setAttribute("aria-hidden","false"); }
-  function closeSheet(){ sheet.classList.remove("open"); backdrop.classList.remove("open"); sheet.setAttribute("aria-hidden","true"); }
-  document.getElementById("stops-btn").addEventListener("click",openSheet);
+  const sheet=document.getElementById("sheet"),backdrop=document.getElementById("backdrop");
+  function openSheet(){sheet.classList.add("open");backdrop.classList.add("open");sheet.scrollTop=0;sheet.setAttribute("aria-hidden","false")}
+  function closeSheet(){sheet.classList.remove("open");backdrop.classList.remove("open");sheet.setAttribute("aria-hidden","true")}
+  document.getElementById("list-btn").addEventListener("click",openSheet);
   backdrop.addEventListener("click",closeSheet);
+  map.on("click",closeSheet);
 
   /* lightbox */
-  const lb=document.getElementById("lightbox"), lbImg=lb.querySelector("img");
-  document.addEventListener("click",e=>{ if(e.target.classList&&e.target.classList.contains("pop-img")){ lbImg.src=e.target.src; lb.classList.add("open"); } });
-  lb.addEventListener("click",()=>{ lb.classList.remove("open"); lbImg.src=""; });
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ lb.classList.remove("open"); closeSheet(); } });
+  const lb=document.getElementById("lb"),lbi=lb.querySelector("img");
+  document.addEventListener("click",e=>{if(e.target.classList&&e.target.classList.contains("pop-img")){lbi.src=e.target.src;lb.classList.add("open")}});
+  lb.addEventListener("click",()=>{lb.classList.remove("open");lbi.src=""});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){lb.classList.remove("open");closeSheet()}});
 
-  /* go */
   render();
-  function fixSize(){ map.invalidateSize(); }
-  setTimeout(fixSize,250); setTimeout(fixSize,800);
-  window.addEventListener("load",fixSize);
-  window.addEventListener("resize",fixSize);
-  window.addEventListener("orientationchange",()=>setTimeout(fixSize,300));
+  function fix(){map.invalidateSize()}
+  setTimeout(fix,250);setTimeout(fix,800);window.addEventListener("resize",fix);window.addEventListener("orientationchange",()=>setTimeout(fix,300));
   </script>
 </body>
 </html>
