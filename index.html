@@ -763,6 +763,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #lb img{max-width:100%;max-height:100%;border-radius:8px}
     #lb .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:18px;font-size:30px;color:#fff;background:none;border:0;cursor:pointer}
     .leaflet-container{font-family:var(--font)}
+    #locate{position:absolute;z-index:15;right:12px;bottom:calc(76px + var(--saf));width:44px;height:44px;border-radius:50%;
+      background:#fff;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 10px rgba(0,0,0,.22);display:flex;align-items:center;
+      justify-content:center;cursor:pointer;font-size:20px;color:var(--blue);line-height:1}
+    #locate.follow{background:var(--blue);color:#fff}
+    .medot{width:16px;height:16px;border-radius:50%;background:#1a73e8;border:2.5px solid #fff;
+      box-shadow:0 0 0 2px rgba(26,115,232,.35),0 1px 5px rgba(0,0,0,.4)}
   </style>
 </head>
 <body>
@@ -770,6 +776,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <div id="map"></div>
 
   <div id="backdrop"></div>
+  <button id="locate" aria-label="My location">◎</button>
   <div id="sheet" class="sheet" aria-hidden="true">
     <div class="grip"></div>
     <div id="sheet-body"></div>
@@ -2614,7 +2621,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const trip=btn.dataset.trip;
     if(trip===curTrip && sheet.classList.contains("open")){closeSheet();return;}
     [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===btn));
-    curTrip=trip;render();openSheet();
+    curTrip=trip;render();openSheet();following=false;updLoc();
   });
   const sheet=document.getElementById("sheet"),backdrop=document.getElementById("backdrop");
   function openSheet(){sheet.classList.add("open");backdrop.classList.add("open");sheet.scrollTop=0;sheet.setAttribute("aria-hidden","false")}
@@ -2629,6 +2636,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){lb.classList.remove("open");closeSheet()}});
 
   render();
+
+  /* live location — auto-locate on load, follow until you pan */
+  let meMarker=null,meCircle=null,following=true;
+  const locBtn=document.getElementById("locate");
+  const meIcon=L.divIcon({className:"",html:'<div class="medot"></div>',iconSize:[16,16],iconAnchor:[8,8]});
+  function updLoc(){locBtn.classList.toggle("follow",following)}
+  function startLoc(){map.locate({watch:true,enableHighAccuracy:true,maximumAge:10000,timeout:20000})}
+  map.on("locationfound",e=>{
+    if(!meMarker){
+      meMarker=L.marker(e.latlng,{icon:meIcon,interactive:false,zIndexOffset:1000}).addTo(map);
+      meCircle=L.circle(e.latlng,{radius:e.accuracy,color:"#1a73e8",weight:1,fillColor:"#1a73e8",fillOpacity:.12,interactive:false}).addTo(map);
+    }else{meMarker.setLatLng(e.latlng);meCircle.setLatLng(e.latlng).setRadius(e.accuracy);}
+    if(following)map.setView(e.latlng,Math.max(map.getZoom(),15),{animate:true});
+  });
+  map.on("locationerror",()=>{following=false;updLoc()});
+  map.on("dragstart",()=>{following=false;updLoc()});
+  locBtn.addEventListener("click",()=>{
+    following=!following;updLoc();
+    if(following){meMarker?map.setView(meMarker.getLatLng(),Math.max(map.getZoom(),15)):startLoc()}
+  });
+  updLoc();startLoc();
+
   function fix(){map.invalidateSize()}
   setTimeout(fix,250);setTimeout(fix,800);window.addEventListener("resize",fix);window.addEventListener("orientationchange",()=>setTimeout(fix,300));
   </script>
