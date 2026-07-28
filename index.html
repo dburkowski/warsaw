@@ -734,6 +734,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .pin.gone{background:#fff;color:var(--c);border:2px dashed var(--c)}
     .pin.start{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c),0 1px 5px rgba(0,0,0,.35)}
     .dot{width:15px;height:15px;border-radius:50%;background:var(--c);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+    .cam{width:26px;height:26px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+    .cam svg{width:26px;height:26px;fill:#d0342c;stroke:#fff;stroke-width:1.3}
+    .cam svg circle{fill:#fff;stroke:none}
     .home{width:32px;height:32px;border-radius:50%;background:var(--base);color:#fff;border:2px solid #fff;
       display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 0 0 2px var(--base),0 2px 7px rgba(0,0,0,.4)}
 
@@ -786,6 +789,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <button data-trip="trip1" class="on">Jul 31–Aug 8</button>
       <button data-trip="trip2">Aug 21–23</button>
       <button data-trip="food">Restaurants</button>
+      <button data-trip="warcam">WarCam</button>
     </div></div>
   </nav>
 
@@ -832,6 +836,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       "stay2": {
         "label": "Where I'm staying",
         "color": "#e0a400"
+      },
+      "warcam": {
+        "label": "WarCam",
+        "color": "#d0342c"
       }
     }
   },
@@ -1659,7 +1667,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Coffee roaster",
         "area": "Mokotów · Narbutta",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAkcxIt6ZRgSXzQWD8yZXjFesqvRKXcmu1g4GAAwwwlshnpwYrIvsBfID2JA-nEZobqtRgWWMF8YfCCh-sS2nM8jbVlkRnIC59tomOChkL-JBVukPNHO9IbYT56AHt6cwq1qhw3O6cM4KJjmaKtCEI1Cw=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjC-KVBS5W1VLRRI51Eq6i-eUnN0zRZGLsDDQqdM8zobr_V_72t8D1W_V1VqKJmUwlnJ1hJ_n1ta1nmytLmOoTKWYlSA9UE-QOmivYGXmNC6m2wDj-bRVdFn44FjzMTNFPT5NeAdv4TosGKw4r3qHlRZBA=s4800-w800-h600",
         "instagram": null,
         "website": "http://panodkawy.pl/",
         "place_id": "ChIJR2sLfCLNHkcRO97S82T-Irg",
@@ -1731,7 +1739,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Burgers · bar",
         "area": "Mokotów · Puławska",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD3DsUJGc5DN-AA9xgJezKqlpxuy2d1Q4LDiBDyun5aBPilOOelXFIpbAk7jR4rUkLgUKMudsOnfV5UU9hhEy7Yh6Ly6KSJ27pkKpuzS6-bPot_TZRO4z-rsXgNGm6bDVdJLYgwvtGuF39YNqC7_l_e=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjC0tkVYTWZAgpMs5hL_5GTaAYTvty3uvhEE_4SMZznmUninX5rLe_jja-nrJpmF7UPzYhfBFanb9YXoxV1Ft7Wd89cIRPdowQyjgXDg8o8mUZYE5XqDDe8FOP2oHT79SEE0UwsjCXRODieVN1ibLaXm=s4800-w800-h600",
         "instagram": null,
         "website": "https://rogerthatfoods.pl/",
         "place_id": "ChIJj2SsDzTNHkcRP6jbuUf0pI0",
@@ -1779,7 +1787,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Bakery · brunch",
         "area": "Śródmieście · Żurawia",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBheSD6WpTnWwHKsrffy69x2UiBM9nj2CYgpfZFVC8ABVxugN-mAiyu_9R3XSQEiAJEl1MYrk3kPcunC6QpFxTzSgwXIOLsBIEagRjkbjc_d5YpxdqkemVwi9KzYMYtALXGaah-MfBapO6FyQw=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCxsa6Qjlr3LLt88Gwjgj-YnKEsKJNosZ3Ni7QAj7DbrJx16yoGzeIBg5EitmZ6_YEOCYOcEXAPUrngqyEBsY1GocIxEHkBbKPsjVN_1V_RFwTMgB0I2CB6TT8yKjaaXOcPd3YzphIwpfhu94Q=s4800-w800-h600",
         "instagram": null,
         "website": "http://www.baken.pl/",
         "place_id": "ChIJx1tgRlXNHkcRBZrSOvQw6uA",
@@ -1803,7 +1811,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Grill · steak",
         "area": "Sadyba · Obrzeżna",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDLvVMzf09tD177IB6tSbPLrt32wJXVlLgbxoe0TlaMKi96NOqSqSLurZQ-gvQNOTy5gVSGMd_z2GGxN5Es4ksBWjuOkobCXLYwKl9emRPIj5UowXS3k56nUK7N339AejsR9iapWPAvdYkt5Qi7QG72Cw=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBtD4h4NJKEKXgV7ljMNdAARxYLH8-peaLyoPSGlkvFRjpOp-C-TX-asBFQNXHBWOHkCMYgkohu6jRojYHzF1CQMeSwp5BlHnl0ug1U5Rpqp_XGRiKEhaMmXn1qLTMRHxGcczoVQFgRJV3RcLO4g_JZIQ=s4800-w800-h600",
         "instagram": null,
         "website": "https://www.facebook.com/rubengrilldeli/",
         "place_id": "ChIJBcxgSEgzGUcR5kUL8aV6EKc",
@@ -1899,7 +1907,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Bistro · brunch",
         "area": "Praga · Szwedzka",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAstTrMnYAhdMGzXPveDv67e7Lwna4o4bARkWNoZCtSoa9cbBjQ-aeCZ0OhKwqUjdMiR4vMK72gVDI7EkhQ8UVg1BS5rgVY6OS6003j5CjGHJO2ibnGdaFI2Jp86HD2Yr0g-L8GYmgX9JOV988=s4800-w388-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjC7jan3DJpVPDfHx6eX6k2fAmYsnIhHZoFU9dYeUucA1o5j-TRxes7W3h17v8fHv1gJEnmhY4Xpg2_RpQCzZXrhRK0eK4zQkwjmvG4rlteq9nprdK1Y8mqEVA8wNNhkZFo8y5MQCsWEsac1Npw=s4800-w388-h600",
         "instagram": "https://www.instagram.com/epi.bistro.deli/",
         "website": null,
         "place_id": "ChIJz1qnTDTNHkcRUf3M4HPs58M",
@@ -1947,7 +1955,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Wine bar · bistro",
         "area": "Mokotów · Sandomierska",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAqnjdELj7RHx6_ctbRONcwP7GaNYuweten2DbzDByhNePC7zNgiAf84UAqZLfZL_2I3OnZdJAZhEe-cri2LnVUFzLzaiH9iOdilgjToZVlcI5i2shlfvVlsNTBU0wziyn2w_q6BkAstkYrn1M=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDPIYDldoMZjWOLzZBwpF7vF6E_4rVyqhrafnEdJVxBYtTE_t2qagrsMkw2vw3cMm2VDeCVtQESfq09GUya_mEnw_wdPm0vEBs39Nf_wKJ10G0tB-ENsj8s5-lwlfKgnv4DXxvjHZ7NzlWHZac=s4800-w800-h600",
         "instagram": null,
         "website": "http://kontakt.wine/",
         "place_id": "ChIJRYjOeS7NHkcRGeaDEBNZQlQ",
@@ -2019,7 +2027,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Moroccan",
         "area": "Śródmieście · W. Górskiego",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDUCW3oyAJGl-ZSze2vwlZK8MjaqHeVHPuIXH2LZZo7gFuPPnxmOZSaI7J0PFWzY7HptGfcpNFnT12dQw2-UXHKrzLeQupDmTlUkAjlqLiRT0bfCXxvDL-y3zFeRAP8dz2IRKTaDQ5V6XQcdhkkMUFk=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAIOySlHKvwNrR-dUqQvsuGirNGocDRELQ7yDK_WCSI1ICztyiXZt30T1ur5qwdp9FqPOQCHiEutXKszy9RjE0pimKccUSe2azgEb32oSbmrYOXd4VxKa5PqqfiFaNPvUZc6MwsB_jeLxdobx5i-Xn4=s4800-w800-h600",
         "instagram": null,
         "website": "https://domotwartywarszawa.pl/",
         "place_id": "ChIJP4cdEgDNHkcRzfMQ1faYwNg",
@@ -2091,7 +2099,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Steakhouse",
         "area": "Śródmieście · Koszykowa",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAoPLyxR6fPB9O1FXEWhT-2Lqr8Wme3K8bNN9mh6B_2iStib8ruZCkb1efjD7tP-6XCd3H0ANJfhkpCKfKnHibDm4UYxlunUw6okmPThUrmBp14eyuhmyTicggCQqQbestkLRQZDM-JRXfGXMjxQqIfDw=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD4-434-JD2cZJxUBwlAQhh_S8nka7TVxy8TelHoslStLfOj-fNXd_ubIaKyp7w5X76YG2NN_dCScvBe7ZcqdDnync4dqcHbdeoGhQpjEqjzH-8k13-sHr5wb0cRaFd669HPQejqjQH9jmbnmXkK7samw=s4800-w800-h600",
         "instagram": null,
         "website": "http://meatologia.pl/",
         "place_id": "ChIJrdoiPMDNHkcRBVz2uNkFrSQ",
@@ -2139,7 +2147,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Georgian",
         "area": "Śródmieście · Wierzbowa",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDClECH6cI1cpcKyrPAqT2w9kPqDKzQRu-ha-Xf9PlPJh-9EEk-aEKEnPqRvAyESyYRpnYNkD_lVtayzkkpM3AwVAiQIBSgkcvfzJv6W_YnrCkgZCQnbeRRL753f6GYybczA3mH9XhJ2q0z=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCIcnqSKgJ4Q_UIXgpISTfpJ55on33BWEwwsjTWlMfPQ2RwA-xg7GlSFIBTrhmkvr7MdESQklrxZkSDbAprgwcQ2S0bbD2ip0GsKCZvAzZpzaemaNMFxn_rKwb6Kk7vJfAOz-qmI3hTBvR6=s4800-w800-h600",
         "instagram": null,
         "website": "http://www.rusiko.pl/",
         "place_id": "ChIJ4eujiPrMHkcRT6UkCG0NOSs",
@@ -2163,7 +2171,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Modern Polish · Slavic",
         "area": "Wola · Krochmalna",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAgkcQ0vT-LUH_QQPpNLzph_7sUA18LPcTZhWp9MY9MmQhVwSB_pCrn_jyCnC2y0fvHpVZOV9aYDGBYLsyWMCNqX6X0SfJKJ9DDg0fH-JdNscIWAaaJ49IkYdhc6ttvHh1AU3dqJUNjYeRTKOyFkQsF1Q=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA0JsXBv43LQL1u0AYtJ6AaMsv8c1TvX_6_g9p9I-bo7Ezs5UMjGtrZ8XSuC6knU7jGzMjowUyV3cSgIP6ItJhCeeaXg5HxbH30rJXuzOUiBq_0ee7K1Q5qbfvBxNZcRCdvQHWf6DG3qQsZ7Gdt1DJmnA=s4800-w800-h600",
         "instagram": null,
         "website": "https://www.wyraj.net/",
         "place_id": "ChIJt5KXq3nNHkcRJuEjEjsFf_4",
@@ -2187,7 +2195,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Ramen · Japanese",
         "area": "Śródmieście · Krucza",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCwrhB2bOAlVpXYhFC0_7c7VfpJyCqbeeBd-hXx7TUggMIAfFfrO2z0dG3ppedgZCpA1qF1knVhXrAwyvc2eWz6uODgq1wEOcrzt0yX90p9G9WXcu9K85Ss5bKZIOie_5RIjIUwjdkeg1oJrg=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDOpwwJf7IpaIxPCGFBSn0r0RdPRNr56FVyGS9jY3Z_oHucIaHQIF-u7u2JMcPqmtWsXrekMiaRFGI96pVO-eTOfxW5vl2p3js_5VSolf5cWtthRa0v5S1C0_DdYKDbshi1YkKV-wCUVxJXTQ=s4800-w800-h600",
         "instagram": null,
         "website": "https://www.facebook.com/ukiuki.udon/",
         "place_id": "ChIJY3tPpfHMHkcRuNFaGlmtFHA",
@@ -2211,7 +2219,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Ramen · udon",
         "area": "Śródmieście · Zgoda",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjB4CUchNiiQe0TLYOC8DysneqbcDe6yZaLuTA5tuwbraiKi5sCDTlLRtZqydHLNCKWpwoZ2CtUIji02tPfE2NUjn4IeeqnGW8-FB8NlgK6Cr8WqQTxEWBm8JTr2EBzkU6YFzyS2vsTSB3JV=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCkL8BObyhrpdY6HKDwsP_5wiidyQzdEoD7xJeZSJKeTa9oIG7dFzr37VMhYrIUVqb1Pfk5s-InK58aKMIyvIYa1_5BdhApvb6eUMhAMtY3FVQGrDEm7LIEbvtA9qlzKiHApysGq0gPRPJ_=s4800-w800-h600",
         "instagram": null,
         "website": "https://ukiuki.goodresto.app/",
         "place_id": "ChIJv1VMzePNHkcRIsOck5l9F-Q",
@@ -2235,7 +2243,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Vegan",
         "area": "Praga · Stalowa",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDCeYiguiVejpmgz9_-OsRru4gpUCju16AAjrEcSdOlOAcNcw00pK1aasWF-Z3gjcGj7aPnbnYPHPx8koHnM1JwhHdLuO3401kzAtUyTme2IKa5kSvG1nWaY4koC6Kd_mz7BGImHsfTRoGsWTpjXFnXtg=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAiTyypkRXUCofdxiMF5Ncvrx8fhYxK9PTe9gSGi_zCZDwpgIW-KzVfaGchSmZI3NH13RpLFxMgaAzts9huC8veu-cbt75bX13w90xY6hVmiLwtuMaFgZzAlYtpcRq1q2OpjU9wRSzjBWl2sbKgM29H5Q=s4800-w800-h600",
         "instagram": "https://www.instagram.com/peaches_gastrogirls",
         "website": null,
         "place_id": "ChIJk0leL3PNHkcRm9xqdaJWsLw",
@@ -2259,7 +2267,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Chinese",
         "area": "Mokotów · Garażowa",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAD7lLfU1VnyrrXEgjLaTaCYYet_IMTOvaIV7JA3UMOAfyVVIjWOd_bBqdVzw42qaiE7OM23psTTtMQNBcbzizUj9LZAhtXikmEXm27sqzyI2zbgA4WHU4K61Z-ztc9tosSTuuY_gZVdF2hj30=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBENvt43BEcfNOU5UOIYd5BR3OkdkFfSM3KxOIiPuC4x3u6WGAQ3NLcDuVErGUpgINDHmDAhnNmY8Cs1-bvX8kAcFaaMkPRFUTpqrKU5opTHOOXPk7KpRyl3dfnXj3mdINxkbn7Onsx0qC8hOI=s4800-w800-h600",
         "instagram": null,
         "website": null,
         "place_id": "ChIJ8yrXnykzGUcRi5h6SHB7Fus",
@@ -2403,7 +2411,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "status": "eat",
         "cuisine": "Café · specialty coffee",
         "area": "Praga · pl. Hallera",
-        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBRFJGycZ2pwAnsdJBHoXwMsdKq3LoysSALFo2CooVGY0LYDewaOdEHHyoVf-8HxwDmtaioFkIBuFgl3Cg9rUEvyC9KIrJ930j_2c7EYVAuoa8C5MDHQLW3qd5SLvMmSDy7SB3tTdRSmGpvCQ=s4800-w800-h600",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAWVyHZZOehjHhfKAD5c-kCPk2rKmY6AMODb4Q4uIoN5UeW47kqDM1tBF5BfzPGpNheEvNgwiaf-f0j4kmOos1-pdX-7dO3GtQe5SRmwCVoah4CFOYfHZYFI-dwGoq_hLfeVcnlNS6ZhUqncg=s4800-w800-h600",
         "instagram": null,
         "website": "https://trzykruki.pl/",
         "place_id": "ChIJ8Qt5SzjNHkcRa-f7H4mePbc",
@@ -2449,6 +2457,1480 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "date": "Airbnb · Jul 31–Aug 8",
         "place_id": "ChIJ39jD52TMHkcRV6tdZFpXQhI"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9986541,
+          52.2307601
+        ]
+      },
+      "properties": {
+        "name": "Ghetto Wall — Sienna 55 / Złota 62",
+        "walk": "warcam",
+        "order": 1,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Original boundary wall of the Warsaw Ghetto.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCAMiohIIVtZrAJSiCo-37lHRAud0b7DMNmaUDgcVyoKt4GA-Td_0Iv3ehVD5lNCfKXumXAaI854x2LG2ewdV0wHbC-efR_30j_LZ7aTX411FWalVA91QmTSRlmtYjptC93NPa6YlAHrvRATA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Fragments%20of%20the%20ghetto%20walls%20in%20Warsaw",
+        "place_id": "ChIJp-XwyIXMHkcRwOEWRHuH_Zw",
+        "wikiq": "Fragments of the ghetto walls in Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.00097,
+          52.2361165
+        ]
+      },
+      "properties": {
+        "name": "Nożyk Synagogue",
+        "walk": "warcam",
+        "order": 2,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The only pre-war synagogue in Warsaw that survived.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBeOXe8sQOFyJQmKZQiL57Ku6FZ4H6y23zcrQ2so00v7B-G1T8cYsQQG0OzqgLbdUoaxsaHktktbnWOojMf88Mug3rj2Wpc90GVp1eH1_cJeJ-sqlomD5_3pwD6t3SdImGUeL4F-PS9Y6uC6j4=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=No%C5%BCyk%20Synagogue",
+        "place_id": "ChIJsVd1DonMHkcRCDpFLJXw440",
+        "wikiq": "Nożyk Synagogue"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0407218,
+          52.2534636
+        ]
+      },
+      "properties": {
+        "name": "Ząbkowska Street, Praga",
+        "walk": "warcam",
+        "order": 3,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Cobbled pre-war street the war spared.",
+        "photo": null,
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Z%C4%85bkowska%20Street%2C%20Praga",
+        "place_id": "EhxaxIVia293c2thLCBXYXJzemF3YSwgUG9sYW5kIi4qLAoUChIJTa29-EfMHkcR3Xzm2aVq8K4SFAoSCV_-40VEzB5HEbnhJOPCK-tu",
+        "wikiq": "Ząbkowska Street, Praga"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0062552,
+          52.2447376
+        ]
+      },
+      "properties": {
+        "name": "Reduta Banku Polskiego — Bielańska 10",
+        "walk": "warcam",
+        "order": 4,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Conserved bullet-scarred Uprising ruins, seen from the street.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDkEywKtB7b3xWsjsfqjSUDUyYtPzE39DTSXdXzeoR2A1tE8G4UxyLRyMuC3ScryHRdNEcQo4WRh7xP6VHZhkxDlfYtNIIQHwuQaP7IIeE_UosSuHRN9_LnuRkOx6UclV46J1beaixwNwryQGOG4Nn9qQ=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bank%20Polski%20building%20Warsaw",
+        "place_id": "ChIJoQfQh2TMHkcRgzwuAymE2v8",
+        "wikiq": "Bank Polski building Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9927355,
+          52.2341338
+        ]
+      },
+      "properties": {
+        "name": "Waliców — brewery wall & ghetto boundary",
+        "walk": "warcam",
+        "order": 5,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Bullet-marked brewery wall that was the ghetto edge.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCKbI3sDHuoSDog6875Tvlz7j0oGw1t5-xrQRkrdUOyt0RSGUw8RJhF2bv7ubbihaE6Afwd9CDAZB2cxZkbrOAhSnzMe4VKQdsqBzhNo_XG8CLA5_66QXEjk1Eg9YX1M_KotNerC0IWJbLVf-05xBuMXg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Fragments%20of%20the%20ghetto%20walls%20in%20Warsaw",
+        "place_id": "ChIJqUv4IurNHkcR6KYmpOyqdO8",
+        "wikiq": "Fragments of the ghetto walls in Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0075308,
+          52.2232886
+        ]
+      },
+      "properties": {
+        "name": "Wilcza 72",
+        "walk": "warcam",
+        "order": 6,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Restored tenement with war pockmarks kept under glass.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAAY7SMsGkZkcXoaoqBTruo3thQnNDEaKdhTm7jBeESf1P0e6BvF6hfgRAc9cGsw7AdmACi-2yaICN4p3-Qvvc0XTUUe2k9EHIIzIOVs_HvDsrxrv6LLqYzmtLYM3p3g9FJpuMKbuTdQNtK9A=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJxx9CXOzMHkcRb5-cKUZVIyY",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9695691,
+          52.2513694
+        ]
+      },
+      "properties": {
+        "name": "Stare Powązki",
+        "walk": "warcam",
+        "order": 7,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The great old necropolis, genuinely untouched.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCXkJ1YYKFx3rtfNUorgiach0PUzfL7mowrUsJ_h_TEjmCGqLdj60FEz07_ZFswJM8WWtbSgLsC5jTZOqHor17y-P-GObMyFJgzBAi7fX7VpuH1CiMOAnnfCL0AaFoNd29Y2xKC18kSuE5ybwBPIe9t=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pow%C4%85zki%20Cemetery",
+        "place_id": "ChIJ581PWJvLHkcR6C8pO-8oLFs",
+        "wikiq": "Powązki Cemetery"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9766719,
+          52.244514
+        ]
+      },
+      "properties": {
+        "name": "Jewish Cemetery, Okopowa",
+        "walk": "warcam",
+        "order": 8,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Vast surviving pre-war Jewish burial ground.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCeOl_d__RItie_cUtZIKayg7SlUjPfntPjQ0wqdXz5-Clm4rz2ILQ9E2bl1glq_iIi99okCIfFUSljLQHphl4RU_UstkOmeISBcJ-cEnvBrT5ZXW1YvxBXKsr7ZwI0yh2EOvhwaZt5VJl_hNCUD0qY=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Jewish%20Cemetery",
+        "place_id": "ChIJfVXf5IHLHkcRBxYHPqcs_9g",
+        "wikiq": "Warsaw Jewish Cemetery"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0052525,
+          52.2365106
+        ]
+      },
+      "properties": {
+        "name": "Próżna Street",
+        "walk": "warcam",
+        "order": 9,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The last original ghetto tenements, left unrebuilt.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD5dYiWor2UGDqCXUv4PwEkAnb2s7h0RQXB1RcWjji2nxmfIBnMB5b1RM-L-15E2doJ7z7UF6NpMQtYV0a0nDMNGwVUD9VQbH08F2I-dPFlSfw8ReH-ve1kICt5TykD7JRvfymxtP-Tn3zGXL4=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pr%C3%B3%C5%BCna%20street",
+        "place_id": "ChIJp8DML4rMHkcRersX820kLOY",
+        "wikiq": "Próżna street"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0112962,
+          52.2409499
+        ]
+      },
+      "properties": {
+        "name": "Tomb of the Unknown Soldier",
+        "walk": "warcam",
+        "order": 10,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Sole surviving fragment of the razed Saxon Palace.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAf2SIPgyopjnE8xwlq7JB690G8577A561l1Ug4IZtYlAyCrqoNffH7iaPrhnPPPeP1h-zc_bp0bdGkvPO6RF2XUyvfw8XkluEVEkmARh3yyRSreHGL1MoOP9LlYwgXNtg256j-dQ4OSDxd=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Tomb%20of%20the%20Unknown%20Soldier%20Warsaw",
+        "place_id": "ChIJu_KNI2HMHkcRV73k56s6qh4",
+        "wikiq": "Tomb of the Unknown Soldier Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9890571,
+          52.2522722
+        ]
+      },
+      "properties": {
+        "name": "Umschlagplatz",
+        "walk": "warcam",
+        "order": 11,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Memorial on the deportation railway-siding ground.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA5Q4YasBEFvoq8DXkCncNRt09AxF5dD-KCj5QENMyn8FVSoRql-pM93SLBoUv78dLt57EPvqQzGCodaa4fEgTePgSsMjZ9lQ7_418HvF--CCo67uHrPxqeu4upBRjL6JY8PgEIueNdDB7X-w=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Umschlagplatz",
+        "place_id": "ChIJKb8_uYfLHkcRopvrXwqqIJk",
+        "wikiq": "Umschlagplatz"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9923498,
+          52.2515319
+        ]
+      },
+      "properties": {
+        "name": "Miła 18",
+        "walk": "warcam",
+        "order": 12,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Mound over the ŻOB command bunker where Anielewicz died.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDJpcDMtuihZcS0N43uFIsfeqY0EmRMPR7hB1uKWJNq_Bq1NMs9v_PSLH_ZMpYQLcf9OCge_VS4llaMEQqsG3uqhWzfNdNnKdNR4wuRB4lILJggni1_f6m8GOaYaEJFLrJ84M7uHrSaAxl3Zw=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Mi%C5%82a%2018",
+        "place_id": "ChIJh2A5I3jMHkcRF5lT-ABxPek",
+        "wikiq": "Miła 18"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.990894,
+          52.2462
+        ]
+      },
+      "properties": {
+        "name": "Pawiak Prison",
+        "walk": "warcam",
+        "order": 13,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Surviving gate and the bronze-cast dead elm.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAOHm0DEt4ntidKcYrKq8BfSTFKL4slBF3Wn_Y-qcHKh40QkM9VLEFfO8IyJPG8V6dfy1sJbhj4oVg5cPDJkIVufVq5Bc1y6XuHfPIDfs0T9lvr5i26um9QL7fTHw22A7b2HlIXy6J21eTt84MZ5hLsGg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Pawiak",
+        "place_id": "ChIJ71cc237MHkcRBfxAPIwreqo",
+        "wikiq": "Pawiak"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0063606,
+          52.2362898
+        ]
+      },
+      "properties": {
+        "name": "PAST-a Tower — Zielna 37",
+        "walk": "warcam",
+        "order": 14,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Tallest pre-war building; fierce Uprising battle site.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDnHA-i8B_t4nCYVyrlnbQC9vbXkKM34Cum4s0iuqz5n9tlNzcHT6sng5CYyTSNF55boZ7kt58Ndto7EoRPQI1UnkDlP6aMP1jjeBdQdzJq6qhv6IratWkWnxoBj80X5rLd6tWURTI08WY_Hg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=PASTA%20building%20Warsaw",
+        "place_id": "ChIJKd8lSIrMHkcRx-gDdEcC2i4",
+        "wikiq": "PASTA building Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9970625,
+          52.2332876
+        ]
+      },
+      "properties": {
+        "name": "Twarda 28",
+        "walk": "warcam",
+        "order": 15,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1911 survivor tenement among the Rondo ONZ towers.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDR-w_iknSfPX8Q9uN19Y3Jj4jkKrxWJbgcvmtP_jCCKplMkvnt1SqSQdX03pNrBuRVjffulZFYFJGqV-Z-sEESx8q_FzDPwmiDHM4fdeIxI87CU60D3N7ZS3tnecwn75xG5LJdT0SFm70eGBE=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJb2YhII_MHkcRM0-srldfLKo",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.999183,
+          52.2184016
+        ]
+      },
+      "properties": {
+        "name": "Kotwica graffiti — Filtrowa 57",
+        "walk": "warcam",
+        "order": 16,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Surviving wartime 'Fighting Poland' anchor.",
+        "photo": null,
+        "wiki": null,
+        "place_id": "ChIJK1olsurMHkcRcWkn53E2XVw",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0133776,
+          52.2472527
+        ]
+      },
+      "properties": {
+        "name": "Sigismund's Column",
+        "walk": "warcam",
+        "order": 17,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The original 1644 column; broken shaft laid by the castle wall.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAgDjW-eEyOtMpy5j7z4x7QYcss4IjqaPVsFxifsP7ZFbb-dqLiTq8TM-vHTjZ6e5yRw_nwvNgieTGCoPIPh6p-LJhpr9YzRw8MS3nK81HZKMXpge_CYHMP7LKBWYYMJ8HZmmHkx4-_s-sJ=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Sigismund%27s%20Column",
+        "place_id": "ChIJl0PPDmbMHkcRqKNALL1qbmA",
+        "wikiq": "Sigismund's Column"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9910542,
+          52.2324797
+        ]
+      },
+      "properties": {
+        "name": "Norblin Factory",
+        "walk": "warcam",
+        "order": 18,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Industrial survivor with machines and a scarred wall.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDOK-qBMsQzt1-r3jHpxH4CdQZzGNzLK-2I302k_3GDMhbCpiTTHzjROKPJMXVUrlSnNMKxJnKF-O9QB5dSNTbSEAGI-l02RCeCw5iS5Kfg5MOGInZuzyDFHXpw9VTS1UPo3GLW5QQm4f8JyA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Norblin%20Factory",
+        "place_id": "ChIJYXcHb4XMHkcROsgHzar0-Sg",
+        "wikiq": "Norblin Factory"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0133138,
+          52.2486939
+        ]
+      },
+      "properties": {
+        "name": "St. John's Archcathedral",
+        "walk": "warcam",
+        "order": 19,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Gothic core with a Goliath-tank track in the wall.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA4gEtu7srvC5fTWa4Xi9qOcMKcgx212-3wDETzf1Z6NuAZUulr2kmbIp42ilpAln5f4uJoQan0abLnHG0Ogahe7OnDvNCDgY9UWlaOf1vQQYTAy1mh77cVobAUD-KTYhEEQKLxdao81LAsznE=s4800-w800-h533",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=St.%20John%27s%20Archcathedral%20Warsaw",
+        "place_id": "ChIJ2xzwsmjMHkcRes5q1ZmuQL0",
+        "wikiq": "St. John's Archcathedral Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0009754,
+          52.2672631
+        ]
+      },
+      "properties": {
+        "name": "Warsaw Citadel",
+        "walk": "warcam",
+        "order": 20,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1830s Tsarist fortress; Gate of Execution, Pavilion X.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBFjdEj-b3YWWetgiwktieGtURTnbatzPS9y6BmuOKYaAxOkCNjjN9HSCcNOh4dwul791EIMeSOJ3gb2Bgw1VQW70NwmKVGUJ-c0GoC7DptOcjKIDKY23OmD4fPl2aYFUfNffj4Xlp6aIrg8w=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Citadel",
+        "place_id": "ChIJUyeOqFHLHkcRTyvhbq5dd0U",
+        "wikiq": "Warsaw Citadel"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.995278,
+          52.221667
+        ]
+      },
+      "properties": {
+        "name": "Filtry Lindleya",
+        "walk": "warcam",
+        "order": 21,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1886 Victorian brick waterworks (heritage-day tours).",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAsCpCeXU8rF3QQZbTSvn0xk90EEt2MpAnmZcrN0aRo7bDAJN_gbo3LY1g6uyHq01NGSo-sD00jxOBfOzig1vR0CM-5jtFMQ7f9xI3E4dhI8N7w6EBfV6OOhW-jaKW8pwgjXMLxGzo5_j6y2g=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Filters",
+        "place_id": "ChIJqZUQT5TMHkcRroB-Aep8p24",
+        "wikiq": "Warsaw Filters"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9973431,
+          52.2388775
+        ]
+      },
+      "properties": {
+        "name": "Hala Mirowska",
+        "walk": "warcam",
+        "order": 22,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1901 market hall, patched but standing.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBuQpNtQKwcZhswpvwSzq-wz9Ew81NMapB7oCfRX92RvEgH0LEZEooBLOlleQw5bP8_NbKERtQKIQgFAIrdSwEkMjZ8Qrg_lJDxuNHh5PWC6_umPkbN7N3YYd4AuwBORg8DU9WiI82U3TFA1IvK6OtbUA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Mirowski%20Halls",
+        "place_id": "ChIJ8YumCojMHkcRYTohOBROLvc",
+        "wikiq": "Mirowski Halls"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0447327,
+          52.2555643
+        ]
+      },
+      "properties": {
+        "name": "Koneser, Praga",
+        "walk": "warcam",
+        "order": 23,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "19th-c red-brick vodka works, survived and reborn.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAUA9E1jiIQANEO3c4AqTAeV1JrOe3brLXcOTrFl3nPH9US-ArZIWk7wzFAlTmpDYCnLDitDjLfvw-BPc4f2Hq_9xVVgD0YNt-RhGOQ0_z_VpwSzROJ6Gp7bsk2PAz7qLm4QWMa5dbTefPCWKPnvfSPFw=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Koneser%20Vodka%20Distillery",
+        "place_id": "ChIJXy0-HzjMHkcRmLHJOhBhixU",
+        "wikiq": "Koneser Vodka Distillery"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0388732,
+          52.2530901
+        ]
+      },
+      "properties": {
+        "name": "Praga courtyard shrine — Ząbkowska 5",
+        "walk": "warcam",
+        "order": 24,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "A WWII backyard chapel behind the tenements.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjB7-GJdJSZ4NHWu2BVx-299VmAqzjtjI20sj2y7RtXJBE41G4skPSb1sz9t9PjDBqqRMUI1fBUrZYjQfOdsC9fVZUX1JsxoCzCklKmCd-SomiMRiI-56IOt4pGAJgOUibzvLUB2sPBGdy0=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJxUJiLr7NHkcRre3sY-NyFKc",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.015665,
+          52.2434369
+        ]
+      },
+      "properties": {
+        "name": "Carmelite Church",
+        "walk": "warcam",
+        "order": 25,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "One of the few churches that survived nearly intact.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAiMNdxP_8MrMVgLtEUDWRa7_dctIUxdp0zM20VWMov86LpR1xWql6iTQs6jvfFzhXtnkAsXW0uoFHzrLl_oUpA1aCNhrcgt2F2pX6VNqGtiIKqacoda-N8jqbGCEmHE3U6LGt53hiuWaaVWw=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Carmelite%20Church%20Warsaw",
+        "place_id": "ChIJ_eImPWfMHkcRwYpuqx3kq_0",
+        "wikiq": "Carmelite Church Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0158816,
+          52.2422304
+        ]
+      },
+      "properties": {
+        "name": "Hotel Bristol",
+        "walk": "warcam",
+        "order": 26,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Grand belle-époque survivor of 1901.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBGS2hsRVWzbcBbtfif0dO31JQI5bzqG_aYwKrU46lONrh14Ismz67ihtPUpUdEbvxR9jBh14BqtxlR9jnEFj9JxJJCu4fDSDV7aFqHjzYVRfxmqUVK828t46BYCVOYAoZIA4BMpjHznBzjqwTyxo9z9A=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Hotel%20Bristol%20Warsaw",
+        "place_id": "ChIJl_eTtGDMHkcR3g3LsUh-yw4",
+        "wikiq": "Hotel Bristol Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0390091,
+          52.2517395
+        ]
+      },
+      "properties": {
+        "name": "Bazar Różyckiego",
+        "walk": "warcam",
+        "order": 27,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The old covered market, faded and authentic.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAU37ddKFsTcmuHlzmmaakIPlk3Er1mohN4Bu50H2es5fey_7ZtfJUkhxsB-OUM_PTzxOyoqoJZxTuuvBisJlvnko69t6HQTg0aQDoEfNfjHqQLKaRzc6k76X4YNI0B3xjFZc975npVAYgn=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=R%C3%B3%C5%BCycki%20Bazaar",
+        "place_id": "ChIJbc6wVEbMHkcRgkSKLMvx0HA",
+        "wikiq": "Różycki Bazaar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0419468,
+          52.2526
+        ]
+      },
+      "properties": {
+        "name": "Brzeska Street, Praga",
+        "walk": "warcam",
+        "order": 28,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Raw, unretouched pre-war decay.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDhFpabg0Bu71ma_Kv_zBMj1E8UgcYAvaqHPGxrBmgFb0z98e5omSi4e9DCwEvOZJZPZ_jU3Q8Zzb8FoDY12BETY5DBETjYISCkBn-QaD-IX0Lam9AgjBznW_pV59Vh7ytC6_2iyYGE_ica=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJc_2kwkfMHkcRSVpxP8DddWI",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0415667,
+          52.2480314
+        ]
+      },
+      "properties": {
+        "name": "Sprzeczna & Jagiellońska, Praga",
+        "walk": "warcam",
+        "order": 29,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Streets rich in surviving bullet scars.",
+        "photo": null,
+        "wiki": null,
+        "place_id": "ChIJYVUFs0jMHkcR3601sukFUcY",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0332662,
+          52.2548798
+        ]
+      },
+      "properties": {
+        "name": "Orthodox Cathedral of St. Mary Magdalene",
+        "walk": "warcam",
+        "order": 30,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Golden domes that survived, 1869.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBdGeQBl7Tl8jq780yMoqJ5IOHXaPcguMtLu9WRNhJ6GPYE2_cXs8c3UnIdBaGFm3_oC9XI7D8d5P8FEu7-Lr75O6DjoTtxZnaxuIBnEah2A-AP1WSWyFksbG8kL2ieOcJ5fllDlB_gwkONFAqVdmgv=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=St.%20Mary%20Magdalene%20Orthodox%20Church%20Warsaw",
+        "place_id": "ChIJfxjek0DMHkcRWftE95c7gCI",
+        "wikiq": "St. Mary Magdalene Orthodox Church Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0112385,
+          52.2263793
+        ]
+      },
+      "properties": {
+        "name": "Poznańska Street",
+        "walk": "warcam",
+        "order": 31,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Cluster of surviving pre-war tenements.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD51TYK5jL0eyxHVG_a6swm1Fkh56MIXV9jZ2aq6uHcKH6hD2_v_A2TDyqtwDXxVERVq8vuHtlGEvwhkjIOprU7RIANZ2SrryX3EAngRIDc2acbd8FMl9KBuCgdWGTFgxA8vfl7ZQP7Ddkp6_s=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJ1cpSi-3MHkcR2TmR_oQHI8c",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0084628,
+          52.2288029
+        ]
+      },
+      "properties": {
+        "name": "Hoser tenement & Fotoplastikon",
+        "walk": "warcam",
+        "order": 32,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1905 Art-Nouveau survivor; antique 3-D photo rotunda.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBSKZV4D0eO-vE3z5loflaNm2cPbyxzzvkb0iCZGe4vZUemACiYMyryeUgLOskxWO-bjNFmZP6zsZ1Yj5bAanyf6S5AtRmjaf7s8UTbdd-17vsiT3Zs-98x_kUToZE78iooZIohtCTv5gyPGA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Photoplasticon",
+        "place_id": "ChIJP2uNw_LMHkcREZlWWL9tFv8",
+        "wikiq": "Warsaw Photoplasticon"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0033177,
+          52.2354096
+        ]
+      },
+      "properties": {
+        "name": "All Saints Church, Plac Grzybowski",
+        "walk": "warcam",
+        "order": 33,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The ghetto's edge 'Aryan island' church.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCb8CAVoZoVdAlXi1i9MC4UgGaq1jX43-adOzzoO81u9h8vOwqKdebsU7Vr0CgG2xW3Jrba28u89FYhFYgdfuhZyvYXKT9WvyVUgYUVuK8jqp_x7QW00254VI22dSDHcd1K9rl4g6CFNgZ8ag=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=All%20Saints%20Church%20Warsaw",
+        "place_id": "ChIJ-ZnF2IvMHkcRtdrJTKeAS1g",
+        "wikiq": "All Saints Church Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0099894,
+          52.220656
+        ]
+      },
+      "properties": {
+        "name": "Warsaw Polytechnic — Main Hall",
+        "walk": "warcam",
+        "order": 34,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Grand surviving 1901 atrium.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAhM4nsH6nsW5E2_45vPHNNqkO3cC-7kNPloy7X9V2Vu8ap4qmpCXcUlC_KCBzSYrTooBWZRgk5xaGuh5zwgUVFaDoslirZxTBd-Bhuj2b6dSqS4QugeWm6IHPybridH3h5fjw9LEGTdKBGJ6b9AwG5Ow=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20University%20of%20Technology",
+        "place_id": "ChIJGVrIUenMHkcRkSvEAxUOK3E",
+        "wikiq": "Warsaw University of Technology"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0174269,
+          52.2397282
+        ]
+      },
+      "properties": {
+        "name": "University of Warsaw — Main Gate",
+        "walk": "warcam",
+        "order": 35,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The old campus core and neo-baroque portal.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAoPkLSJJLFxe5mrrpHuIRIuElyQ2DT9ypNH07oXAKSuL6spWbmkxR_dSz68EJ0M3B4b4qHuQ-Wp3Gf-3XIu9O-HqOkws1z3hBW2SqtUCj7TgH2VRWkV5O2uzLNnvuNG7HR_0MpaPo7bl_mUgUPNrx7=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=University%20of%20Warsaw",
+        "place_id": "ChIJ3UobBwDNHkcRXGcGN2nR4Rc",
+        "wikiq": "University of Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0276429,
+          52.2131463
+        ]
+      },
+      "properties": {
+        "name": "Belweder Palace",
+        "walk": "warcam",
+        "order": 36,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The classicist residence that survived the war.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAYw1DRO5QB3g1RkQrONFLf8BY_ulet-YUuYUJsHWVkClNuWSrbHcoi5T6CNtL7AoaHXCk_L_uZcqmNocx635gFRe91WVYMxYEalli3vANfascvhFd7dIwj7IeCetAnz1pUX91peyJaWgjS=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Belweder",
+        "place_id": "ChIJnQiEEeDMHkcRoWef23m4iVo",
+        "wikiq": "Belweder"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0905084,
+          52.1651749
+        ]
+      },
+      "properties": {
+        "name": "Wilanów Palace",
+        "walk": "warcam",
+        "order": 37,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "One of the few royal residences not destroyed.",
+        "photo": null,
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Wilan%C3%B3w%20Palace",
+        "place_id": "ChIJ6xic6UAtGUcRIVWoCEyUf1A",
+        "wikiq": "Wilanów Palace"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0300247,
+          52.2164029
+        ]
+      },
+      "properties": {
+        "name": "Łazienki — Old Orangery",
+        "walk": "warcam",
+        "order": 38,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Surviving 18th-c wing and court theatre.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjC3MQqtRp5NZC6WvslLhaxGJ4MCSFqRsaUG3htXOxQdP6BMxoifSfYZs81pdargMNxeNQKZcKZ41NSMowpxBVXDTYV_RMwancM9e7vbWroPeIH1_H_XWHSg0nXQiFSTss4uBOsI6s3doicM=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=%C5%81azienki%20Park",
+        "place_id": "ChIJC6FY6OPMHkcRxf0bIZKgAUI",
+        "wikiq": "Łazienki Park"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0284115,
+          52.1890908
+        ]
+      },
+      "properties": {
+        "name": "Królikarnia",
+        "walk": "warcam",
+        "order": 39,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Palladian villa in its ravine park.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAAFIzDapFqEHCYQmbHKooBB0C76NUniQxow9STqIAsVXWCEvWbjv6BH6CbrzCC8G6NQJhA0wxP8s9oVP5RU3JEcUJpDgU0lO_qbEA9wf_KFFhMvZrdJ-H0HQWkOQndqzcJY1t7oabjWV72bPiRmFB2fA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Kr%C3%B3likarnia",
+        "place_id": "ChIJyZwzIi3NHkcRG5ZZuI1rjwM",
+        "wikiq": "Królikarnia"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0326975,
+          52.2194598
+        ]
+      },
+      "properties": {
+        "name": "Historic gas lamps — Agrykola",
+        "walk": "warcam",
+        "order": 40,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Original lanterns still lit by hand.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDMRutg1pKiUK_WPLHtS1Aa9ch3vm8gyEZOgw038mJy0720nuFfsxzjk_EjMiaWJDPEPaoKsneV3SfhhNL62BD690XsQ4ylgHoADm8a1YZr2eJEJRu0KqCFwrKg8fFPCmlwtITHVN2gvD8s4Q=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Historic%20gas%20lamps%20%E2%80%94%20Agrykola",
+        "place_id": "ChIJa37gouXNHkcRgfgEtj3sgb8",
+        "wikiq": "Historic gas lamps — Agrykola"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.011999,
+          52.25029
+        ]
+      },
+      "properties": {
+        "name": "Museum of Warsaw — Old Town houses",
+        "walk": "warcam",
+        "order": 41,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Original Gothic cellars behind rebuilt facades.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAT2woYE8Kgnq1w9BrjhINGZbwJz9fH7VgRGdfZtM6-bFl_fKLAMMDzUVq8Qq3UfHEA2-q6tc371L4bFUdC4Wh8O6AZC7IdccrqMkiaTZ5DD0hloVI4NHWtY3Cc1J-Ch6WHLykfHjPaTmo9=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Museum%20of%20Warsaw",
+        "place_id": "ChIJK_8GDW_MHkcRypAzvYlI3cY",
+        "wikiq": "Museum of Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0112915,
+          52.2495412
+        ]
+      },
+      "properties": {
+        "name": "Fukier / Baryczków tenement",
+        "walk": "warcam",
+        "order": 42,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Old Market Square house with salvaged portal.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDOmZjmRWd1Fn12SpEHbyVCItNNnlFqc32IEk4WdnU1Ph7IlnJYsu5rFTMK-tNM5piEIWBdIuAA2I4YhDCeRkCIQo-yXd_ZSg3q6iIkoY0t2TsnysPaJTYosM8UZTs93v9v-JkA4OQW4gf2=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Old%20Town%20Market%20Place%20Warsaw",
+        "place_id": "ChIJC1rMb2_MHkcRGpLT1OkcDDw",
+        "wikiq": "Old Town Market Place Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.970538,
+          52.2413013
+        ]
+      },
+      "properties": {
+        "name": "Evangelical-Augsburg Cemetery",
+        "walk": "warcam",
+        "order": 43,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Protestant necropolis with bullet-marked tombs.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBcAorcQVpFutEAoP4Wm9_szoCuMuJmT-tbTiWIwKL6gOOKl1q1YwHDNlqGKHLC1h1dhOalT0QJN2Tq09wOQjpBcTWfG0Q1S10IssHsAdpbblQuziiy0vUjLMirjrGYZ3iJkwcMW8wd1XdFptpzvaCoNA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Evangelical%20Reformed%20Cemetery%20Warsaw",
+        "place_id": "ChIJU5gfGnnLHkcRWp4jcLdjegs",
+        "wikiq": "Evangelical Reformed Cemetery Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9651246,
+          52.2528673
+        ]
+      },
+      "properties": {
+        "name": "Muslim (Tatar) Cemetery, Wola",
+        "walk": "warcam",
+        "order": 44,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Quiet, hidden old ground behind a high wall.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDtwGkhZZKOnxiX3RAMFhIZE4SOiaBslH4NUKLfNhpIm3owBgBGZ5mCrOZGZJ24WwabFDjhgtAuUIuKv1Z-DYQKl0tBt58d6DhQ9f6vDgEj3Yo4JIXp5qSgHTb_1doWxPY1A018RD00OiqCvg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Muslim%20Caucasian%20Cemetery%20Warsaw",
+        "place_id": "ChIJb6IX4ZvLHkcRwAoKe29W8U4",
+        "wikiq": "Muslim Caucasian Cemetery Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.994226,
+          52.2497577
+        ]
+      },
+      "properties": {
+        "name": "Monument to the Ghetto Heroes",
+        "walk": "warcam",
+        "order": 45,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1948, partly from stone the Nazis brought for their own.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDi8Dmy4LeFjLcsbVbgp4EyckeMa4lPjs1BJozYlXCr6e0H220Sytw08uWrV99GblXnFVhTWykLTYd-CiZnVfal7hnyiIFw7kwuf4CATQTNMrluxXYYb1p9a_8uXmTRYSi6UACvaB4uBUzt=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Monument%20to%20the%20Ghetto%20Heroes",
+        "place_id": "ChIJgf0yWcTemkcRRwyip4N5RXw",
+        "wikiq": "Monument to the Ghetto Heroes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0096483,
+          52.2492773
+        ]
+      },
+      "properties": {
+        "name": "The Little Insurgent",
+        "walk": "warcam",
+        "order": 46,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "On the Old Town walls.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBqpRLZr0YG9spqSdccLoeaAGCRVJfffC-K5UAf1IzY04rJ1cZqz5OEOU7yTJZXtRrXALVmEqNUgs4UYTJQ8sI_An3ucukI9y5zwJzTPk_j7pLWvunZ3_QX4cU9Pivn7FdCgPcDqqkuEt6ZPRg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=The%20Little%20Insurgent",
+        "place_id": "ChIJHXahgW_MHkcR39Ie0_ccop8",
+        "wikiq": "The Little Insurgent"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.012645,
+          52.2357087
+        ]
+      },
+      "properties": {
+        "name": "Prudential (Hotel Warszawa)",
+        "walk": "warcam",
+        "order": 47,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The interwar 'skyscraper' of the siege photos.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAaKgU7v6TJhyLh4czHzU-dTXb1wTsYzLrFczW4yLFcE6QgXBGf-7Uc6wQiWkVQwhgEw2V282kXclRC0POllCeUDYMuVZY5SIgMdql7-nrHkOtZ61I1tHzG5TQsjGZuJz_JNZO2nITbjscLqg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Prudential%20House%20Warsaw",
+        "place_id": "ChIJIbpZNPXMHkcRK-TQEAofKVY",
+        "wikiq": "Prudential House Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0200664,
+          52.2312162
+        ]
+      },
+      "properties": {
+        "name": "BGK — Al. Jerozolimskie 7",
+        "walk": "warcam",
+        "order": 48,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Monumental interwar modernism that stood.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDn_UanNmvbAxOcNIcdvp7gCpVvfW2P6m69C57H8b2C-fvSJVtfzd4Jc6Od3fdhmboDCnzn34XoQOHRVLQ032u6vNNO1Ok-PxkDoW_-D4bgSxtOnu6NHzmxEezXQtt6gJ8GL84x8XpE-D-89AKNzyEH=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Bank%20Gospodarstwa%20Krajowego",
+        "place_id": "ChIJ9V4rwfbMHkcRPim4NCE8QrU",
+        "wikiq": "Bank Gospodarstwa Krajowego"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0158989,
+          52.2409291
+        ]
+      },
+      "properties": {
+        "name": "Dom bez Kantów",
+        "walk": "warcam",
+        "order": 49,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1930s corner-less landmark on the Royal Route.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA9UZae28Ootfs2eNOJsXuY4c688WOQo3oatEXrJ4maBHp4qIWaAKZAwoN2llVBEM3QeScEpZ_JPNYiNkFABvwMqm-I2ThIIO4WvVVmlANsAcGBWSoqFqeUId6_Bql4qAtIEgLu_OTUK3J-MPFMqz5D=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Dom%20bez%20Kant%C3%B3w",
+        "place_id": "ChIJncE1RLzNHkcRlZrOdhtycKk",
+        "wikiq": "Dom bez Kantów"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9862739,
+          52.2688189
+        ]
+      },
+      "properties": {
+        "name": "WSM Żoliborz — plac Wilsona",
+        "walk": "warcam",
+        "order": 50,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1920s–30s modernist social housing, intact.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD8nWzyv98ASaEOADt4cKVKCCyNvdJ5dy4Xw4TQkM9O5mZ1ahbPuQrW3bt2cCmENwEO9Y3nQI7r82_Djh6BnvhozJwUrWiqGf4IJ_SA4bXD-xzaDTMyswj8Bdau9vEsoAFbXv3e5TV01UyBYA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Housing%20Cooperative",
+        "place_id": "ChIJ_6NFCvLLHkcRE6MRKNxRGTM",
+        "wikiq": "Warsaw Housing Cooperative"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0538615,
+          52.2347299
+        ]
+      },
+      "properties": {
+        "name": "Saska Kępa villas — Francuska",
+        "walk": "warcam",
+        "order": 51,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Leafy interwar modernist survivors.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAGt6ToMoTMF2gbALBOdh645ItjQBu-8cb3mPn35y499BaGXRj4jcrEf-40q6lPQWQs3-HoEgBfUJ1kWIXMhtDWPAkXwnc-3hJ_9TtzS83GwqZaui_a2UWqE97u8jY_AMjeqhM-3l3lPZ3DToc=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJ-1Y98avNHkcRHp0HiuJf1-0",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.002593,
+          52.2189405
+        ]
+      },
+      "properties": {
+        "name": "Kolonia Staszica, Ochota",
+        "walk": "warcam",
+        "order": 52,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Garden-city villas from the 1920s.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjC8L3RCHPHP1DhpQRobd8XhV7vDA15f7KAKGLXm8aIYJhYxsZ2bJxP1kQbokGSrA1dgFPUa1bAdkZ7ByqmZ8I47GvShhdjRHOShK7Q9hT_GLVe_go5wW-675NMhLm1NZHtpXsqsEy2MmGGVKQ=s4800-w800-h600",
+        "wiki": null,
+        "place_id": "ChIJVcqu7-rMHkcRc3vIeveqEYU",
+        "wikiq": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.019312,
+          52.2427918
+        ]
+      },
+      "properties": {
+        "name": "Wiadukt Markiewicza",
+        "walk": "warcam",
+        "order": 53,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Ornate 1905 viaduct down to the river.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAvkuVrJzMtsEAfb6IOZ_FpAk2bpg1uU_jAheuGj8XmcJv5BtS-FyRUwZX98hkBabfTvKrdCRuZTlOhRYQcgPexIDhBlQ-hFoJjtZCbmNr6UMvJWABK-lC7dkJWO6P-o2nqIp9Wre6ye7cpOA=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Markiewicz%20Viaduct",
+        "place_id": "ChIJXUoc7F3MHkcRziqfJCEK_nI",
+        "wikiq": "Markiewicz Viaduct"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0308163,
+          52.2517865
+        ]
+      },
+      "properties": {
+        "name": "St. Florian's Cathedral, Praga",
+        "walk": "warcam",
+        "order": 54,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Neo-Gothic spires the Germans blew up, rebuilt.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAL8sODr4CVqLQdCa-jJLUBwypkNDYzHwHNwEvbjN7cTr02inTh4BONVUlztcpg3pKKyKva-OnWliS6Jxd7fNHjX8l9WGG63t9PG9v__D7V31C444zxPwyFiFmfm8Hj53AlFgHiVM9gttAxomk=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=St.%20Michael%20and%20St.%20Florian%20Cathedral%20Warsaw",
+        "place_id": "ChIJp9SoP0HMHkcRIsNy0XJbYc0",
+        "wikiq": "St. Michael and St. Florian Cathedral Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0392656,
+          52.2516096
+        ]
+      },
+      "properties": {
+        "name": "Praga Museum — Targowa 50/52",
+        "walk": "warcam",
+        "order": 55,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Among the oldest surviving right-bank houses.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAPawFuV5h0nMtYUnnWQB8dDmQD-oh3YPn0k0P9KiX4tVo84hhv3sEl5hSqsjQmPvU-Wi4kRPx-Nv7MpQLO2sgiLx4BMb-2VP4PpTMaRbeYulMbIIuqKffxAkO7_y6btCHtmwZxVNNh3C3M4Q=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Praga%20Museum",
+        "place_id": "ChIJz3gHi0fMHkcRK4C61nMG5vY",
+        "wikiq": "Warsaw Praga Museum"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9410367,
+          52.2460307
+        ]
+      },
+      "properties": {
+        "name": "Bazar na Kole",
+        "walk": "warcam",
+        "order": 56,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Old flea-market spirit lingering.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBZMNjB97ABPhPBnBI0klO6p0mO42bQw8dZtwoIzFTDS70903QHEmzLEAEg-IWTdqbAO1WLrlE65atoZm4uxgYUDPjGu-L0_ho0QKiFLIa8mbPlQv1vuk0tmLLDwkPa_q2amUOGT6VQxqBM_yw=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Ko%C5%82o%20Bazaar",
+        "place_id": "ChIJ_e9XQgnLHkcRdRgrDyZoqik",
+        "wikiq": "Koło Bazaar"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9931729,
+          52.2590939
+        ]
+      },
+      "properties": {
+        "name": "Warszawa Gdańska station",
+        "walk": "warcam",
+        "order": 57,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Surviving pre-war station, later a 1968 emigration site.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCphj4KVJcb88sFQZlTGEGUiD9LAZyrzyPXM6Xca8QYgnAfA7NEFwwOeIkrScLaLSJiF5d7WieFhx238KClCouCKWR32G6wfg--8aCAznUfqi_Oa79Qcbch3qeqI0Rn83je-KnIqLurWrhckg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warszawa%20Gda%C5%84ska%20railway%20station",
+        "place_id": "ChIJST2TNorLHkcR-i-8U9J3fyE",
+        "wikiq": "Warszawa Gdańska railway station"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0216406,
+          52.2490677
+        ]
+      },
+      "properties": {
+        "name": "Śląsko-Dąbrowski Bridge",
+        "walk": "warcam",
+        "order": 58,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Built on the surviving Kierbedź bridge pillars.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAz5C1TgAkEwLqKUnvi8kJG91dm6a5FAJ2LTQ4zud7JH3DN0FHFe9iHn7gKgVqnPiNQ6umsuxRv1NXbYUq0KcbT1GHUgm0jVEpZgCkrMnMzOZ1ytHhPM-P5jXWEZ8fv3_eH7c1o0-Q_p2wp1Q=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=%C5%9Al%C4%85sko-D%C4%85browski%20Bridge",
+        "place_id": "ChIJO3XGMWjMHkcRmjNV-3c_jSU",
+        "wikiq": "Śląsko-Dąbrowski Bridge"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0115229,
+          52.2393277
+        ]
+      },
+      "properties": {
+        "name": "Zachęta",
+        "walk": "warcam",
+        "order": 59,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "1900 gallery, a survivor and assassination site.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCixH3OfQF9SKJMXuH2m1Ijw0oGfu7RUOQo14EcVAZfRq3XqBwJBCSiGYl4x5obEKqkfJT_hpb16YdL3qilxrp7j-u9K1oPoxCa6izLi_vCgxz6Ndc_7vGn8vLaevDgCsNzU4wNlX5TDpIz3-I=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Zach%C4%99ta",
+        "place_id": "ChIJVVTZTmDMHkcRnl0OAlZ2awk",
+        "wikiq": "Zachęta"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0242024,
+          52.2321071
+        ]
+      },
+      "properties": {
+        "name": "National Museum",
+        "walk": "warcam",
+        "order": 60,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Monumental late-interwar building that stood.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDvkufLUePRYj1fUGx_1vL3e2FvuqSI4c_EjT0E5tazh7lXC7rk03W6t9UuvK9YHDUFygJluxA8G1K8QphhI7beW8naoxjO2C223CgEobhy1UCoKXheOGbwQRk9ZhP5MZ5pmtEmrscetxTlPoRHNXPCnA=s4800-w800-h482",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=National%20Museum%20Warsaw",
+        "place_id": "ChIJK6UEcvfMHkcR0iGDJoZsIgc",
+        "wikiq": "National Museum Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0179062,
+          52.2380673
+        ]
+      },
+      "properties": {
+        "name": "Copernicus Monument",
+        "walk": "warcam",
+        "order": 61,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Looted by the Germans, recovered and returned.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDxuVJvw8QS7Cdnk39i8m41z0U8eQUD0nKOFzcSFh4hRqqGujJS92QGD0COJ2RoJWpk_reHEE5e8U-0F1boDpx641ufr1OaUs5qaFZaemSDvS3GhQcLu_d9lYoGm2OJkJprCTtCxAmlvtHRlyceH2q2zw=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Nicolaus%20Copernicus%20Monument%20Warsaw",
+        "place_id": "ChIJZQUBpV_MHkcRZRuGJpgFlRQ",
+        "wikiq": "Nicolaus Copernicus Monument Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0281415,
+          52.2147012
+        ]
+      },
+      "properties": {
+        "name": "Chopin Monument, Łazienki",
+        "walk": "warcam",
+        "order": 62,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Original destroyed; recast in 1958 from the mould.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAUpJ0WFWAhseHkg9t2NHX6tR46O13HoVM01YL5Hc3znsVPUbwHKiBMr7dIeOHjzNozzxRWU2ahD9QS2obft7DXK-jrtbt6lTfRi92ulp47iCNSn3Em5H3xtDMqfehY40zzBO_6jzGsUK9O9w=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Chopin%20Monument%20Warsaw",
+        "place_id": "ChIJ3wQ0SuDMHkcR1AvCsuqqTkA",
+        "wikiq": "Chopin Monument Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9897152,
+          52.2683716
+        ]
+      },
+      "properties": {
+        "name": "Fort Sokolnickiego",
+        "walk": "warcam",
+        "order": 63,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "19th-c brick fort of the outer ring.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBYphEWwGw-J9I1wIvq0XU9VOjMhKUBHDmjSsmwnkzgnVZaJ5Geln7048Hckrkl1XOq5lub0bSRXlv5-ILpHIdFmyBgjaa2ojoggNIZS2dV9pixz1_3wbE5u6qz1beREsnpksoYglIOWkWu=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Sokolnicki%20Fort",
+        "place_id": "ChIJZemxNPLLHkcRiVHZslrdh_A",
+        "wikiq": "Sokolnicki Fort"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9675785,
+          52.2265925
+        ]
+      },
+      "properties": {
+        "name": "Warsaw Gasworks Museum",
+        "walk": "warcam",
+        "order": 64,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Surviving industrial complex, Wola.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjD8c8mu2J3SYwO7vxgpkZzGrEBYr1l7ktR48KAC1FLQaknWXIvL368SYzBKfX3dLZMZ4nBpY8gtQIU6z5SXIOUl4Tf1kR06yRXqZKCePmElpbpUNcZvMTMDsHhnm9-4MZSIZBVUsxWtqKi6ZAJcNkSN=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Gasworks%20Museum%20Warsaw",
+        "place_id": "ChIJy1bv4WbLHkcRqTEguMBYVEA",
+        "wikiq": "Gasworks Museum Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0129857,
+          52.2476343
+        ]
+      },
+      "properties": {
+        "name": "City walls — Podwale",
+        "walk": "warcam",
+        "order": 65,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "Original medieval brickwork at the base.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDFr2IQiMQDLs9CRVk0rBbDSgI4Wo8cyokEap_EUxdAyHxsRu25oMlqASo_ZkSLPOdMJtI19FJcOGdd3f_ICEp-cDY_3BTxwdL_u9t6Zyzj6AhhZWPKPnS2noYVu61sGFBwrNunRwVLKguThvk=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Warsaw%20Barbican",
+        "place_id": "ChIJQTADCGbMHkcROsHEPQn-wos",
+        "wikiq": "Warsaw Barbican"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0141139,
+          52.2489231
+        ]
+      },
+      "properties": {
+        "name": "Kanonia",
+        "walk": "warcam",
+        "order": 66,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "The cracked bell and crooked narrow house.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjA6fHMNwt3wMnwPZbUnJMCDTQxqTpYlRUxWVrKzQ4S824k1DWMYtzKp5xHc9yRRdNArczTTiRx7FwJi3pupGzpPhnV_fTuqzTWcOfJKr2vywaw0QGqXHIRX9NshGwxzu7dH7weADxLuwEUeVg=s4800-w800-h600",
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Kanonia%20Warsaw",
+        "place_id": "ChIJmZ-esmjMHkcRpEaqnjmNmIg",
+        "wikiq": "Kanonia Warsaw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0528501,
+          52.2465526
+        ]
+      },
+      "properties": {
+        "name": "Kamionek Cemetery",
+        "walk": "warcam",
+        "order": 67,
+        "theme": "warcam",
+        "status": "warcam",
+        "blurb": "One of Warsaw's oldest burial grounds.",
+        "photo": null,
+        "wiki": "https://en.wikipedia.org/wiki/Special:Search?go=Go&search=Kamionek",
+        "place_id": "ChIJoT6doEzMHkcR9w-ja4_Y6Io",
+        "wikiq": "Kamionek"
+      }
     }
   ]
 };
@@ -2462,7 +3944,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const TRIPS={
     trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga & the Uprising trail",walks:["stay1","small-ghetto","uprising-srodmiescie","praga"]},
     trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["stay2","sights"]},
-    food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]}
+    food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]},
+    warcam:{label:"WarCam",sub:"Remnants of old Warsaw — ranked",walks:["warcam"]}
   };
   let curTrip="trip1";
 
@@ -2481,6 +3964,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const c=THEME[p.theme]||INK;
     if(p.theme==="base")return L.divIcon({className:"",html:'<div class="home" style="--c:'+c+'">⌂</div>',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-17]});
     if(p.theme==="food")return L.divIcon({className:"",html:'<div class="dot" style="--c:'+c+'"></div>',iconSize:[15,15],iconAnchor:[8,8],popupAnchor:[0,-8]});
+    if(p.theme==="warcam")return L.divIcon({className:"",html:'<div class="cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.1"/></svg></div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
     const cls="pin "+(p.status==="fragment"?"fragment":p.status==="gone"?"gone":"")+(p.order===1?" start":"");
     return L.divIcon({className:"",html:'<div class="'+cls.trim()+'" style="--c:'+c+'">'+esc(p.order)+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
   }
@@ -2498,6 +3982,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
       return '<div>'+img+'<div class="pop-b"><div class="pop-k">'+esc(p.cuisine||"")+'</div><div class="pop-name">'+esc(p.name)+'</div>'
         +'<div class="pop-meta">'+esc(p.area||"")+'</div><div class="btns">'+ig+gm
         +'<a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div></div>';
+    }
+    if(p.theme==="warcam"){
+      const wiki=p.wiki?'<a class="btn sub" href="'+esc(p.wiki)+'" target="_blank" rel="noopener">Wikipedia ↗</a>':'';
+      const fb=p.photo?' data-fb="'+esc(p.photo)+'"':'';
+      const imgW=(p.wikiq||p.photo)?'<img class="pop-img wimg" data-q="'+esc(p.wikiq||"")+'"'+fb+' alt="'+esc(p.name)+'" onerror="if(this.dataset.fb&&this.src!==this.dataset.fb){this.src=this.dataset.fb}else{this.style.display=\'none\'}">':'';
+      return '<div>'+imgW+'<div class="pop-b"><div class="pop-k">Old Warsaw · No. '+esc(p.order)+'</div>'
+        +'<div class="pop-name">'+esc(p.name)+'</div>'
+        +(p.blurb?'<div class="pop-blurb">'+esc(p.blurb)+'</div>':'')
+        +'<div class="btns">'+wiki+'<a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div></div>';
     }
     const wl=(WALKS[p.walk]&&WALKS[p.walk].label)||"";
     const start=p.order===1?' · <span class="start">Start</span>':'';
@@ -2524,7 +4017,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const byWalk={};
     shown.forEach(f=>{const w=f.properties.walk;(byWalk[w]=byWalk[w]||[]).push(f)});
     Object.entries(byWalk).forEach(([w,feats])=>{
-      if(w==="food"||w==="sights"||w.indexOf("stay")===0||feats.length<2)return;
+      if(w==="food"||w==="sights"||w==="warcam"||w.indexOf("stay")===0||feats.length<2)return;
       const c=(WALKS[w]&&WALKS[w].color)||INK;
       const pts=feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
       for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])<=1200)L.polyline([pts[i],pts[i+1]],{color:c,weight:2.5,opacity:.5,dashArray:"1 7",lineCap:"round"}).addTo(routeLayer);
@@ -2574,6 +4067,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
         groups[a].sort((x,y)=>x.properties.name.localeCompare(y.properties.name)).forEach(f=>{h+=foodCard(f)});
       });
       h+='</div>';
+    } else if(curTrip==="warcam"){
+      const cards=shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
+      h+='<div class="cardlist">';
+      cards.forEach(f=>{h+=warcamCard(f)});
+      h+='</div>';
     } else if(curTrip==="trip2"){
       h+='<div class="cardlist">';
       DAYS.forEach(dd=>{
@@ -2591,6 +4089,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       h+='</div>';
     }
     b.innerHTML=h;
+    fillWiki(b);
     b.querySelectorAll("[data-key]").forEach(el=>el.addEventListener("click",e=>{
       if(e.target.closest("a"))return; flyTo(el.getAttribute("data-key"));
     }));
@@ -2605,6 +4104,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
       +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.cuisine||"")+' · '+esc((p.area||"").split(" · ")[1]||"")+'</div>'
       +'<div class="cact">'+ig+gm+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
   }
+  function warcamCard(f){
+    const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
+    const wiki=p.wiki?'<a class="chip" href="'+esc(p.wiki)+'" target="_blank" rel="noopener">Wikipedia</a>':'';
+    return '<div class="card" data-key="'+esc(keyOf(p))+'">'
+      +((p.wikiq||p.photo)?'<img class="thumb wimg" data-q="'+esc(p.wikiq||"")+'"'+(p.photo?' data-fb="'+esc(p.photo)+'"':'')+' loading="lazy" alt="" onerror="if(this.dataset.fb&&this.src!==this.dataset.fb){this.src=this.dataset.fb}else{this.style.visibility=\'hidden\'}">':'<div class="thumb"></div>')
+      +'<div class="cbody"><div class="cname">'+esc(p.order)+'. '+esc(p.name)+'</div>'
+      +(p.blurb?'<div class="cmeta">'+esc(p.blurb)+'</div>':'')
+      +'<div class="cact">'+wiki+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
+  }
   function placeCard(f){
     const p=f.properties,c=THEME[p.theme]||INK;
     const badge=p.theme==="sights"?'<div class="badge" style="background:'+c+'">'+esc(p.order)+'</div>'
@@ -2617,9 +4125,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   document.getElementById("seg").addEventListener("click",e=>{
     const btn=e.target.closest("button");if(!btn)return;
     const trip=btn.dataset.trip;
-    if(trip===curTrip && sheet.classList.contains("open")){closeSheet();return;}
-    [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===btn));
-    curTrip=trip;render();openSheet();following=false;updLoc();
+    if(trip!==curTrip){
+      [...e.currentTarget.children].forEach(x=>x.classList.toggle("on",x===btn));
+      curTrip=trip;render();closeSheet();following=false;updLoc();
+    } else {
+      sheet.classList.contains("open")?closeSheet():openSheet();
+    }
   });
   const sheet=document.getElementById("sheet"),backdrop=document.getElementById("backdrop");
   function openSheet(){sheet.classList.add("open");backdrop.classList.add("open");sheet.scrollTop=0;sheet.setAttribute("aria-hidden","false")}
@@ -2629,8 +4140,35 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   /* lightbox */
   const lb=document.getElementById("lb"),lbi=lb.querySelector("img");
-  document.addEventListener("click",e=>{if(e.target.classList&&e.target.classList.contains("pop-img")){lbi.src=e.target.src;lb.classList.add("open")}});
+  document.addEventListener("click",e=>{if(e.target.classList&&e.target.classList.contains("pop-img")&&e.target.src){lbi.src=e.target.src;lb.classList.add("open")}});
   lb.addEventListener("click",()=>{lb.classList.remove("open");lbi.src=""});
+
+  /* WarCam images pulled live from Wikipedia (stable, unlike Google photo links) */
+  const wcCache={};
+  async function wikiThumb(q){
+    if(!q)return null;
+    if(q in wcCache)return wcCache[q];
+    for(const lang of ["en","pl"]){
+      try{
+        const r=await fetch("https://"+lang+".wikipedia.org/w/api.php?action=query&generator=search&gsrsearch="+encodeURIComponent(q)+"&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=640&format=json&origin=*");
+        const j=await r.json(),pg=j&&j.query&&j.query.pages;
+        if(pg){const k=Object.keys(pg)[0],t=pg[k]&&pg[k].thumbnail&&pg[k].thumbnail.source;if(t){wcCache[q]=t;return t;}}
+      }catch(e){}
+    }
+    wcCache[q]=null;return null;
+  }
+  function fillWiki(root){
+    (root||document).querySelectorAll("img.wimg:not([data-done])").forEach(img=>{
+      img.setAttribute("data-done","1");
+      const q=img.getAttribute("data-q"),fb=img.getAttribute("data-fb");
+      wikiThumb(q).then(src=>{
+        if(src){img.src=src;}
+        else if(fb){img.src=fb;}
+        else{img.style.visibility="hidden";}
+      });
+    });
+  }
+  map.on("popupopen",e=>{const el=e.popup.getElement();if(el)fillWiki(el);});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){lb.classList.remove("open");closeSheet()}});
 
   render();
