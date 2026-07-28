@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Warsaw</title>
   <style>/* required styles */
 
@@ -683,11 +683,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #nav{position:fixed;z-index:1200;left:10px;right:10px;top:calc(8px + env(safe-area-inset-top,0px));
       display:flex;align-items:center;gap:8px;padding:6px;border-radius:18px;
       background:#fff;border:1px solid rgba(0,0,0,.08);box-shadow:0 4px 20px rgba(0,0,0,.22)}
-    .segwrap{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-    .segwrap::-webkit-scrollbar{display:none}
+    .segwrap{flex:1;min-width:0;overflow:hidden}
     .seg{display:flex;width:100%;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
-    .seg button{flex:1;white-space:nowrap;border:0;background:none;border-radius:11px;padding:9px 10px;cursor:pointer;
-      font-family:var(--font);font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+    .seg button{flex:1;min-width:0;white-space:normal;line-height:1.12;border:0;background:none;border-radius:11px;padding:8px 4px;cursor:pointer;
+      font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink);letter-spacing:-.02em;text-align:center}
     .seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14)}
 
     .leaflet-top.leaflet-right{top:calc(10px + env(safe-area-inset-top,0px))}
@@ -718,9 +717,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .badge{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
       color:#fff;font-weight:600;font-size:15px}
     .cbody{flex:1;min-width:0}
-    .cname{font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+    .cname{font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.2;overflow-wrap:anywhere}
     .cmeta{color:var(--sec);font-size:13px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .cact{display:flex;gap:6px;margin-top:7px}
+    .cact{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
     .chip{font-size:12px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:8px;background:rgba(0,122,255,.1);color:var(--blue)}
     .chip.ghost{background:rgba(118,118,128,.12);color:var(--ink)}
     .cnote{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);
