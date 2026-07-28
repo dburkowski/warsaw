@@ -686,7 +686,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .segwrap{flex:1;min-width:0;overflow:hidden}
     .seg{display:flex;width:100%;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
     .seg button{flex:1;min-width:0;white-space:normal;line-height:1.12;border:0;background:none;border-radius:11px;padding:8px 4px;cursor:pointer;
-      font-family:var(--font);font-size:12px;font-weight:600;color:var(--ink);letter-spacing:-.02em;text-align:center}
+      font-family:var(--font);font-size:11px;font-weight:600;color:var(--ink);letter-spacing:-.02em;text-align:center}
     .seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14)}
 
     .leaflet-top.leaflet-right{top:calc(10px + env(safe-area-inset-top,0px))}
@@ -714,6 +714,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer}
     .card:active{background:#f7f7fa}
     .thumb{flex:0 0 auto;width:64px;height:64px;border-radius:10px;object-fit:cover;background:var(--sep)}
+    .rankbadge{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:#6f4e37;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
     .badge{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
       color:#fff;font-weight:600;font-size:15px}
     .cbody{flex:1;min-width:0}
@@ -737,6 +738,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .cam{width:26px;height:26px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
     .cam svg{width:26px;height:26px;fill:#d0342c;stroke:#fff;stroke-width:1.3}
     .cam svg circle{fill:#fff;stroke:none}
+    .cup{width:26px;height:26px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+    .cup svg{width:24px;height:24px;fill:#6f4e37;stroke:#fff;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+    .cup svg path[fill="none"]{stroke:#6f4e37;stroke-width:1.6}
+    .sym{width:30px;height:30px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+    .sym svg{width:28px;height:28px;overflow:visible}
+    .pinwrap{position:relative;width:26px;height:26px}
+    .foodpin{width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+    .rlabel{position:absolute;left:29px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1px;max-width:120px;background:rgba(255,255,255,.95);font-family:var(--font);line-height:1.15;padding:3px 6px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.3);pointer-events:none}
+    .rname{font-size:10px;font-weight:700;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rstars{font-size:9.5px;font-weight:700;color:#b8860b;white-space:nowrap}
+    .rstars em{font-style:normal;font-weight:500;color:#6b7280}
     .home{width:32px;height:32px;border-radius:50%;background:var(--base);color:#fff;border:2px solid #fff;
       display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 0 0 2px var(--base),0 2px 7px rgba(0,0,0,.4)}
 
@@ -790,6 +802,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <button data-trip="trip2">Aug 21–23</button>
       <button data-trip="food">Restaurants</button>
       <button data-trip="warcam">WarCam</button>
+      <button data-trip="coffee">Coffee Shops</button>
     </div></div>
   </nav>
 
@@ -840,6 +853,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       "warcam": {
         "label": "WarCam",
         "color": "#d0342c"
+      },
+      "coffee": {
+        "label": "Coffee Shops",
+        "color": "#6f4e37"
+      },
+      "pool": {
+        "label": "Swimming",
+        "color": "#1f8fb2"
       }
     }
   },
@@ -1420,7 +1441,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJe1cDa2_MHkcRm2tifS9days",
         "days": [
           1
-        ]
+        ],
+        "icon": "oldtown"
       }
     },
     {
@@ -1447,7 +1469,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "days": [
           1,
           3
-        ]
+        ],
+        "icon": "castle"
       }
     },
     {
@@ -1473,7 +1496,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJiaL1OYPMHkcRJcZiOrY2hqk",
         "days": [
           2
-        ]
+        ],
+        "icon": "kotwica"
       }
     },
     {
@@ -1499,7 +1523,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJ581PWJvLHkcR6C8pO-8oLFs",
         "days": [
           2
-        ]
+        ],
+        "icon": "cross"
       }
     },
     {
@@ -1525,7 +1550,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJ0XNtRaPLHkcRXqSfvLf4ezk",
         "days": [
           2
-        ]
+        ],
+        "icon": "cross"
       }
     },
     {
@@ -1551,7 +1577,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJ435ebh7NHkcRcaqhXGG2Vow",
         "days": [
           3
-        ]
+        ],
+        "icon": "park"
       }
     },
     {
@@ -1575,7 +1602,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.mezze.com.pl/",
         "place_id": "ChIJC-Kg8ifNHkcRrwCjA51n2dE",
-        "gmaps": "https://maps.google.com/?cid=15121231147941691567"
+        "gmaps": "https://maps.google.com/?cid=15121231147941691567",
+        "group": "Middle Eastern & Mediterranean",
+        "rating": 4.6,
+        "rating_count": 4256
       }
     },
     {
@@ -1599,7 +1629,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://yesbutcher.pl/",
         "place_id": "ChIJy9VvsuPNHkcR8zw7DfjuqvQ",
-        "gmaps": "https://maps.google.com/?cid=17630166440436514035"
+        "gmaps": "https://maps.google.com/?cid=17630166440436514035",
+        "group": "Meats, grill & steak",
+        "rating": 4.6,
+        "rating_count": 1015
       }
     },
     {
@@ -1623,7 +1656,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJRXqWJivNHkcRP1Zq2v6cYaE",
-        "gmaps": "https://maps.google.com/?cid=11628748331247359551"
+        "gmaps": "https://maps.google.com/?cid=11628748331247359551",
+        "group": "Italian & pizza",
+        "rating": 4.6,
+        "rating_count": 432
       }
     },
     {
@@ -1647,7 +1683,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://lokalnarybe.com/",
         "place_id": "ChIJ3SWHMdfMHkcRnlMt8aIGou4",
-        "gmaps": "https://maps.google.com/?cid=17195313624154723230"
+        "gmaps": "https://maps.google.com/?cid=17195313624154723230",
+        "group": "Seafood & fish",
+        "rating": 4.6,
+        "rating_count": 632
       }
     },
     {
@@ -1671,7 +1710,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://panodkawy.pl/",
         "place_id": "ChIJR2sLfCLNHkcRO97S82T-Irg",
-        "gmaps": "https://maps.google.com/?cid=13268447161727770171"
+        "gmaps": "https://maps.google.com/?cid=13268447161727770171",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.9,
+        "rating_count": 134
       }
     },
     {
@@ -1695,7 +1737,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/KoreaTown-Rest-117795462061812/",
         "place_id": "ChIJmbJjgNjMHkcRMxAO7FlPaSI",
-        "gmaps": "https://maps.google.com/?cid=2479600317475196979"
+        "gmaps": "https://maps.google.com/?cid=2479600317475196979",
+        "group": "Korean & East Asian",
+        "rating": 4.5,
+        "rating_count": 2356
       }
     },
     {
@@ -1719,7 +1764,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/senorlucasmexican/",
         "place_id": "ChIJ2emK2U3NHkcRxodT1bJbaCc",
-        "gmaps": "https://maps.google.com/?cid=2839620388698425286"
+        "gmaps": "https://maps.google.com/?cid=2839620388698425286",
+        "group": "Mexican",
+        "rating": 4.8,
+        "rating_count": 4821
       }
     },
     {
@@ -1743,7 +1791,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://rogerthatfoods.pl/",
         "place_id": "ChIJj2SsDzTNHkcRP6jbuUf0pI0",
-        "gmaps": "https://maps.google.com/?cid=10206551244426422335"
+        "gmaps": "https://maps.google.com/?cid=10206551244426422335",
+        "group": "Meats, grill & steak",
+        "rating": 4.6,
+        "rating_count": 661
       }
     },
     {
@@ -1767,7 +1818,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://sledziezbornholmu.pl/",
         "place_id": "ChIJ_RiGoVDNHkcR1RuULu-fLwU",
-        "gmaps": "https://maps.google.com/?cid=373693143722499029"
+        "gmaps": "https://maps.google.com/?cid=373693143722499029",
+        "group": "Seafood & fish",
+        "rating": 4.8,
+        "rating_count": 539
       }
     },
     {
@@ -1791,7 +1845,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.baken.pl/",
         "place_id": "ChIJx1tgRlXNHkcRBZrSOvQw6uA",
-        "gmaps": "https://maps.google.com/?cid=16206820034563185157"
+        "gmaps": "https://maps.google.com/?cid=16206820034563185157",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.4,
+        "rating_count": 1468
       }
     },
     {
@@ -1815,7 +1872,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/rubengrilldeli/",
         "place_id": "ChIJBcxgSEgzGUcR5kUL8aV6EKc",
-        "gmaps": "https://maps.google.com/?cid=12038256657093576166"
+        "gmaps": "https://maps.google.com/?cid=12038256657093576166",
+        "group": "Meats, grill & steak",
+        "rating": 4.6,
+        "rating_count": 454
       }
     },
     {
@@ -1839,7 +1899,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://ramenownia.pl/",
         "place_id": "ChIJyaDa9G7NHkcRe2OAAmgOHfA",
-        "gmaps": "https://maps.google.com/?cid=17302001183308669819"
+        "gmaps": "https://maps.google.com/?cid=17302001183308669819",
+        "group": "Japanese — sushi & ramen",
+        "rating": 4.7,
+        "rating_count": 1929
       }
     },
     {
@@ -1863,7 +1926,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.kregliccy.pl/santorini",
         "place_id": "ChIJRQniQgrNHkcReQ9B5H5m8qU",
-        "gmaps": "https://maps.google.com/?cid=11957732655803469689"
+        "gmaps": "https://maps.google.com/?cid=11957732655803469689",
+        "group": "Middle Eastern & Mediterranean",
+        "rating": 4.6,
+        "rating_count": 3326
       }
     },
     {
@@ -1887,7 +1953,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://wloskistrajk.goodresto.app/",
         "place_id": "ChIJ_x7ejgrNHkcRVXsvaeDhoTs",
-        "gmaps": "https://maps.google.com/?cid=4296963873441807189"
+        "gmaps": "https://maps.google.com/?cid=4296963873441807189",
+        "group": "Italian & pizza",
+        "rating": 4.6,
+        "rating_count": 1621
       }
     },
     {
@@ -1911,7 +1980,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/epi.bistro.deli/",
         "website": null,
         "place_id": "ChIJz1qnTDTNHkcRUf3M4HPs58M",
-        "gmaps": "https://maps.google.com/?cid=14116511539453033809"
+        "gmaps": "https://maps.google.com/?cid=14116511539453033809",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.4,
+        "rating_count": 367
       }
     },
     {
@@ -1935,7 +2007,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://melio.choiceqr.com/",
         "place_id": "ChIJu34WKGUzGUcRS6vcGs_xpb8",
-        "gmaps": "https://maps.google.com/?cid=13809709704212687691"
+        "gmaps": "https://maps.google.com/?cid=13809709704212687691",
+        "group": "Italian & pizza",
+        "rating": 4.9,
+        "rating_count": 698
       }
     },
     {
@@ -1959,7 +2034,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://kontakt.wine/",
         "place_id": "ChIJRYjOeS7NHkcRGeaDEBNZQlQ",
-        "gmaps": "https://maps.google.com/?cid=6071513186065180185"
+        "gmaps": "https://maps.google.com/?cid=6071513186065180185",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.6,
+        "rating_count": 513
       }
     },
     {
@@ -1983,7 +2061,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.izumisushi.eu/",
         "place_id": "ChIJB6sMAebMHkcRpwxRI8hupSk",
-        "gmaps": "https://maps.google.com/?cid=3000926532577332391"
+        "gmaps": "https://maps.google.com/?cid=3000926532577332391",
+        "group": "Japanese — sushi & ramen",
+        "rating": 4.6,
+        "rating_count": 5611
       }
     },
     {
@@ -2007,7 +2088,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/toast_warsaw",
         "website": null,
         "place_id": "ChIJFwfuO4rNHkcRaSk2NtJ7JEw",
-        "gmaps": "https://maps.google.com/?cid=5486646388826974569"
+        "gmaps": "https://maps.google.com/?cid=5486646388826974569",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.7,
+        "rating_count": 1754
       }
     },
     {
@@ -2031,7 +2115,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://domotwartywarszawa.pl/",
         "place_id": "ChIJP4cdEgDNHkcRzfMQ1faYwNg",
-        "gmaps": "https://maps.google.com/?cid=15618651693624914893"
+        "gmaps": "https://maps.google.com/?cid=15618651693624914893",
+        "group": "Middle Eastern & Mediterranean",
+        "rating": 4.8,
+        "rating_count": 693
       }
     },
     {
@@ -2055,7 +2142,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJ3YQUdNXNHkcRAzIbAVh3tUc",
-        "gmaps": "https://maps.google.com/?cid=5167167367336899075"
+        "gmaps": "https://maps.google.com/?cid=5167167367336899075",
+        "group": "Korean & East Asian",
+        "rating": 4.7,
+        "rating_count": 1811
       }
     },
     {
@@ -2079,7 +2169,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://meatologia.pl/",
         "place_id": "ChIJE7vnHdDNHkcRKH_Nm5Q_z4o",
-        "gmaps": "https://maps.google.com/?cid=10002283204914806568"
+        "gmaps": "https://maps.google.com/?cid=10002283204914806568",
+        "group": "Meats, grill & steak",
+        "rating": 4.6,
+        "rating_count": 1648
       }
     },
     {
@@ -2103,7 +2196,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://meatologia.pl/",
         "place_id": "ChIJrdoiPMDNHkcRBVz2uNkFrSQ",
-        "gmaps": "https://maps.google.com/?cid=2642774989005544453"
+        "gmaps": "https://maps.google.com/?cid=2642774989005544453",
+        "group": "Meats, grill & steak",
+        "rating": 4.7,
+        "rating_count": 212
       }
     },
     {
@@ -2127,7 +2223,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/rene.cucina",
         "website": null,
         "place_id": "ChIJs8tILrfNHkcRlmA_c0Z-gF8",
-        "gmaps": "https://maps.google.com/?cid=6881639071668461718"
+        "gmaps": "https://maps.google.com/?cid=6881639071668461718",
+        "group": "Italian & pizza",
+        "rating": 4.6,
+        "rating_count": 689
       }
     },
     {
@@ -2151,7 +2250,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.rusiko.pl/",
         "place_id": "ChIJ4eujiPrMHkcRT6UkCG0NOSs",
-        "gmaps": "https://maps.google.com/?cid=3114535379242624335"
+        "gmaps": "https://maps.google.com/?cid=3114535379242624335",
+        "group": "Middle Eastern & Mediterranean",
+        "rating": 4.7,
+        "rating_count": 5153
       }
     },
     {
@@ -2175,7 +2277,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.wyraj.net/",
         "place_id": "ChIJt5KXq3nNHkcRJuEjEjsFf_4",
-        "gmaps": "https://maps.google.com/?cid=18338381958941499686"
+        "gmaps": "https://maps.google.com/?cid=18338381958941499686",
+        "group": "Modern Polish",
+        "rating": 4.7,
+        "rating_count": 889
       }
     },
     {
@@ -2199,7 +2304,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/ukiuki.udon/",
         "place_id": "ChIJY3tPpfHMHkcRuNFaGlmtFHA",
-        "gmaps": "https://maps.google.com/?cid=8076270629987996088"
+        "gmaps": "https://maps.google.com/?cid=8076270629987996088",
+        "group": "Japanese — sushi & ramen",
+        "rating": 4.7,
+        "rating_count": 10098
       }
     },
     {
@@ -2223,7 +2331,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://ukiuki.goodresto.app/",
         "place_id": "ChIJv1VMzePNHkcRIsOck5l9F-Q",
-        "gmaps": "https://maps.google.com/?cid=16435743463671907106"
+        "gmaps": "https://maps.google.com/?cid=16435743463671907106",
+        "group": "Japanese — sushi & ramen",
+        "rating": 4.5,
+        "rating_count": 1068
       }
     },
     {
@@ -2247,7 +2358,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": "https://www.instagram.com/peaches_gastrogirls",
         "website": null,
         "place_id": "ChIJk0leL3PNHkcRm9xqdaJWsLw",
-        "gmaps": "https://maps.google.com/?cid=13596462530786155675"
+        "gmaps": "https://maps.google.com/?cid=13596462530786155675",
+        "group": "Vegan",
+        "rating": 4.7,
+        "rating_count": 636
       }
     },
     {
@@ -2271,7 +2385,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": null,
         "place_id": "ChIJ8yrXnykzGUcRi5h6SHB7Fus",
-        "gmaps": "https://maps.google.com/?cid=16939862770583246987"
+        "gmaps": "https://maps.google.com/?cid=16939862770583246987",
+        "group": "Korean & East Asian",
+        "rating": 4.6,
+        "rating_count": 1648
       }
     },
     {
@@ -2295,7 +2412,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.trojkakielichow.pl/",
         "place_id": "ChIJBzRJT2jNHkcR93llQaYCb-8",
-        "gmaps": "https://maps.google.com/?cid=17253011610564655607"
+        "gmaps": "https://maps.google.com/?cid=17253011610564655607",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.2,
+        "rating_count": 283
       }
     },
     {
@@ -2319,7 +2439,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.ahaan.pl/",
         "place_id": "ChIJzQ0VQADNHkcRKFfbovvhTLw",
-        "gmaps": "https://maps.google.com/?cid=13568468248245786408"
+        "gmaps": "https://maps.google.com/?cid=13568468248245786408",
+        "group": "Korean & East Asian",
+        "rating": 4.4,
+        "rating_count": 1027
       }
     },
     {
@@ -2343,7 +2466,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://fb.com/jejukoreawarszawa",
         "place_id": "ChIJSUA9iTvNHkcRr99WPdG1__E",
-        "gmaps": "https://maps.google.com/?cid=17437856192483745711"
+        "gmaps": "https://maps.google.com/?cid=17437856192483745711",
+        "group": "Korean & East Asian",
+        "rating": 4.4,
+        "rating_count": 661
       }
     },
     {
@@ -2367,7 +2493,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://www.facebook.com/profile.php?id=61555674361494",
         "place_id": "ChIJE4e9DwDNHkcRJhbdyYpZUAg",
-        "gmaps": "https://maps.google.com/?cid=599077203067344422"
+        "gmaps": "https://maps.google.com/?cid=599077203067344422",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.3,
+        "rating_count": 220
       }
     },
     {
@@ -2391,7 +2520,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "http://www.konesergrillwarszawa.pl/",
         "place_id": "ChIJ89TOehPNHkcRNg6oWZfnLq4",
-        "gmaps": "https://maps.google.com/?cid=12551223848758414902"
+        "gmaps": "https://maps.google.com/?cid=12551223848758414902",
+        "group": "Meats, grill & steak",
+        "rating": 4.7,
+        "rating_count": 986
       }
     },
     {
@@ -2415,7 +2547,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "instagram": null,
         "website": "https://trzykruki.pl/",
         "place_id": "ChIJ8Qt5SzjNHkcRa-f7H4mePbc",
-        "gmaps": "https://maps.google.com/?cid=13203883994304472939"
+        "gmaps": "https://maps.google.com/?cid=13203883994304472939",
+        "group": "Cafés, brunch & wine bars",
+        "rating": 4.4,
+        "rating_count": 668
       }
     },
     {
@@ -3931,6 +4066,2062 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": "ChIJoT6doEzMHkcR9w-ja4_Y6Io",
         "wikiq": "Kamionek"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9816322,
+          52.270116
+        ]
+      },
+      "properties": {
+        "name": "Błysk Espresso Bar",
+        "walk": "coffee",
+        "order": 1,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Słowackiego · Żoliborz",
+        "rating": 5.0,
+        "rating_count": 441,
+        "place_id": "ChIJFy1NkbrLHkcRUNitASiUCJU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9913511,
+          52.2249495
+        ]
+      },
+      "properties": {
+        "name": "STILL Speciality Coffee",
+        "walk": "coffee",
+        "order": 2,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Al. Jerozolimskie · Ochota",
+        "rating": 5.0,
+        "rating_count": 313,
+        "place_id": "ChIJN6JX69fNHkcRqizCZ2Hkf50"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0387654,
+          52.2063569
+        ]
+      },
+      "properties": {
+        "name": "MOCCO Cafe",
+        "walk": "coffee",
+        "order": 3,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sielecka · Mokotów",
+        "rating": 5.0,
+        "rating_count": 187,
+        "place_id": "ChIJFSwQPPXNHkcR9_dBDndCEvs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9782305,
+          52.219529
+        ]
+      },
+      "properties": {
+        "name": "Klaro Coffee",
+        "walk": "coffee",
+        "order": 4,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Joteyki · Ochota",
+        "rating": 5.0,
+        "rating_count": 166,
+        "place_id": "ChIJLc1f8nDNHkcR0NvBJ3LCE3k"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.8954299,
+          52.3380197
+        ]
+      },
+      "properties": {
+        "name": "Maruda Cafe",
+        "walk": "coffee",
+        "order": 5,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Łomianki",
+        "rating": 4.9,
+        "rating_count": 479,
+        "place_id": "ChIJkwjA6la3HkcRQSkD0mvX1gQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.961484,
+          52.261729
+        ]
+      },
+      "properties": {
+        "name": "Kawowiec",
+        "walk": "coffee",
+        "order": 6,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Elbląska · Żoliborz",
+        "rating": 4.9,
+        "rating_count": 341,
+        "place_id": "ChIJv8P3e8bLHkcRBi6Y--aKOZ0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0580756,
+          52.1309514
+        ]
+      },
+      "properties": {
+        "name": "Goodly Specialty Coffee",
+        "walk": "coffee",
+        "order": 7,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Wąwozowa · Kabaty",
+        "rating": 4.9,
+        "rating_count": 337,
+        "place_id": "ChIJY1eKPQAtGUcRX9IpWM_GbAs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9970057,
+          52.2482557
+        ]
+      },
+      "properties": {
+        "name": "Tekla — kawa i winyle",
+        "walk": "coffee",
+        "order": 8,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Andersa · Muranów",
+        "rating": 4.9,
+        "rating_count": 252,
+        "place_id": "ChIJF5m0tE3NHkcROPtFRO6a2kA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0241329,
+          52.2390015
+        ]
+      },
+      "properties": {
+        "name": "Cosmo espresso bar",
+        "walk": "coffee",
+        "order": 9,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Topiel · Powiśle",
+        "rating": 4.9,
+        "rating_count": 199,
+        "place_id": "ChIJiRaj6tzNHkcRj9xoPg4sWlo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.082909,
+          52.247242
+        ]
+      },
+      "properties": {
+        "name": "ROST microroastery",
+        "walk": "coffee",
+        "order": 10,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kobielska · Praga",
+        "rating": 4.9,
+        "rating_count": 183,
+        "place_id": "ChIJ9ZOrZlnNHkcR3ED4GGR65EU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9657837,
+          52.2351296
+        ]
+      },
+      "properties": {
+        "name": "Labuna",
+        "walk": "coffee",
+        "order": 11,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Płocka · Wola",
+        "rating": 4.9,
+        "rating_count": 175,
+        "place_id": "ChIJH3kzL5vJHkcRb38JptuXzM0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0210897,
+          52.2113965
+        ]
+      },
+      "properties": {
+        "name": "Najmniejsza kawiarnia w Polsce",
+        "walk": "coffee",
+        "order": 12,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Puławska · Śródmieście",
+        "rating": 4.9,
+        "rating_count": 112,
+        "place_id": "ChIJx3DpVwDNHkcRbw48HvcxNu4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.040039,
+          52.2533321
+        ]
+      },
+      "properties": {
+        "name": "We are. Coffee and Flowers",
+        "walk": "coffee",
+        "order": 13,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ząbkowska · Praga",
+        "rating": 4.9,
+        "rating_count": 94,
+        "place_id": "ChIJLUShNV_NHkcR07CK2FS9oKE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9351379,
+          52.1921649
+        ]
+      },
+      "properties": {
+        "name": "WEST Speciality Coffee",
+        "walk": "coffee",
+        "order": 14,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Krakowiaków · Włochy",
+        "rating": 4.9,
+        "rating_count": 22,
+        "place_id": "ChIJuZxvqPk1GUcRmi2kypGT1jc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0481159,
+          52.2044577
+        ]
+      },
+      "properties": {
+        "name": "Kultura Kawy — lobby cafe & bar",
+        "walk": "coffee",
+        "order": 15,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Czerniakowska",
+        "rating": 4.9,
+        "rating_count": 18,
+        "place_id": "ChIJU6n_WQDNHkcRFJrqCBPHzYU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.2308581,
+          52.2167089
+        ]
+      },
+      "properties": {
+        "name": "Frykasy Rarytasy",
+        "walk": "coffee",
+        "order": 16,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Wesoła",
+        "rating": 4.8,
+        "rating_count": 826,
+        "place_id": "ChIJ0x5c7YzTHkcRD-w4UrmcLZQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9879618,
+          52.2324832
+        ]
+      },
+      "properties": {
+        "name": "Kawalek",
+        "walk": "coffee",
+        "order": 17,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Łucka · Wola",
+        "rating": 4.8,
+        "rating_count": 802,
+        "place_id": "ChIJx-jYHYXMHkcRQGpDAbilIzI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0632474,
+          52.247652
+        ]
+      },
+      "properties": {
+        "name": "No i Co",
+        "walk": "coffee",
+        "order": 18,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kamionek · Praga",
+        "rating": 4.8,
+        "rating_count": 698,
+        "place_id": "ChIJuW8JyrXNHkcRlfIjwRgMQCU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9511297,
+          52.2255204
+        ]
+      },
+      "properties": {
+        "name": "Aroma Café",
+        "walk": "coffee",
+        "order": 19,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ordona · Wola",
+        "rating": 4.8,
+        "rating_count": 663,
+        "place_id": "ChIJc0hHsULLHkcR9TUtaJufUxA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9945272,
+          52.2455959
+        ]
+      },
+      "properties": {
+        "name": "Dobra Materia",
+        "walk": "coffee",
+        "order": 20,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Nowolipki · Muranów",
+        "rating": 4.8,
+        "rating_count": 636,
+        "place_id": "ChIJk7jD-qPNHkcRGP_7kzA7Hrc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0179921,
+          52.2188059
+        ]
+      },
+      "properties": {
+        "name": "El Cafetero — Plac Zbawiciela",
+        "walk": "coffee",
+        "order": 21,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Plac Zbawiciela",
+        "rating": 4.8,
+        "rating_count": 589,
+        "place_id": "ChIJl1n4I8nNHkcRwpkyWzhU_OQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9904601,
+          52.2326396
+        ]
+      },
+      "properties": {
+        "name": "JAVA Cafe Speciality Roasters",
+        "walk": "coffee",
+        "order": 22,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Żelazna · Wola",
+        "rating": 4.8,
+        "rating_count": 539,
+        "place_id": "ChIJAQAAAIXMHkcRDNHMnh7yYy8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0286379,
+          52.2004564
+        ]
+      },
+      "properties": {
+        "name": "MUAS COFFEE",
+        "walk": "coffee",
+        "order": 23,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Dolna · Mokotów",
+        "rating": 4.8,
+        "rating_count": 519,
+        "place_id": "ChIJ69kyex3NHkcRDiZTC35u1GA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9631076,
+          52.2462923
+        ]
+      },
+      "properties": {
+        "name": "Buno Specialty Coffee",
+        "walk": "coffee",
+        "order": 24,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Obozowa · Wola",
+        "rating": 4.8,
+        "rating_count": 506,
+        "place_id": "ChIJjb8TeDLLHkcR22z0dQXELkg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.00825,
+          52.2237406
+        ]
+      },
+      "properties": {
+        "name": "El Cafetero — Emilii Plater",
+        "walk": "coffee",
+        "order": 25,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Emilii Plater · Centrum",
+        "rating": 4.8,
+        "rating_count": 413,
+        "place_id": "ChIJix7ahIHNHkcRPMe-4fOX6cg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9491675,
+          52.2025301
+        ]
+      },
+      "properties": {
+        "name": "Kawogród",
+        "walk": "coffee",
+        "order": 26,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Włodarzewska · Ochota",
+        "rating": 4.8,
+        "rating_count": 350,
+        "place_id": "ChIJPectTOE1GUcRymFRkEEWjT8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9055179,
+          52.186386
+        ]
+      },
+      "properties": {
+        "name": "Story Coffee Roasters",
+        "walk": "coffee",
+        "order": 27,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Al. Jerozolimskie · Włochy",
+        "rating": 4.8,
+        "rating_count": 305,
+        "place_id": "ChIJm_x0wJQ0GUcR8iDO8qJ83EQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0393477,
+          52.2530592
+        ]
+      },
+      "properties": {
+        "name": "Tables",
+        "walk": "coffee",
+        "order": 28,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ząbkowska · Praga",
+        "rating": 4.8,
+        "rating_count": 171,
+        "place_id": "ChIJZ17cwt7NHkcRUlPW44JYT_Q"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0458463,
+          52.2071152
+        ]
+      },
+      "properties": {
+        "name": "BOZO",
+        "walk": "coffee",
+        "order": 29,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Gagarina · Mokotów",
+        "rating": 4.8,
+        "rating_count": 142,
+        "place_id": "ChIJv_iqQr3NHkcRvjlgjzU06aw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0184932,
+          52.2091909
+        ]
+      },
+      "properties": {
+        "name": "Sando Cafe",
+        "walk": "coffee",
+        "order": 30,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sandomierska · Mokotów",
+        "rating": 4.8,
+        "rating_count": 135,
+        "place_id": "ChIJzcf61IfNHkcR-X5Pr0I_CqY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9421017,
+          52.2240776
+        ]
+      },
+      "properties": {
+        "name": "The frāme",
+        "walk": "coffee",
+        "order": 31,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Jana Kazimierza · Wola",
+        "rating": 4.8,
+        "rating_count": 107,
+        "place_id": "ChIJPZxMUS_LHkcRGSLN3EKurdI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0134698,
+          52.2245635
+        ]
+      },
+      "properties": {
+        "name": "Coffeedesk — Wilcza",
+        "walk": "coffee",
+        "order": 32,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Wilcza · Centrum",
+        "rating": 4.7,
+        "rating_count": 2927,
+        "place_id": "ChIJLwOWbO7MHkcRVvBJLxJH5ns"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0032217,
+          52.2433573
+        ]
+      },
+      "properties": {
+        "name": "Na Bank Specialty Coffee",
+        "walk": "coffee",
+        "order": 33,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "plac Bankowy · Centrum",
+        "rating": 4.7,
+        "rating_count": 1696,
+        "place_id": "ChIJiXImTdTNHkcRSe39S3e-a24"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0048556,
+          52.2363222
+        ]
+      },
+      "properties": {
+        "name": "Coffeedesk — Próżna",
+        "walk": "coffee",
+        "order": 34,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Próżna · Centrum",
+        "rating": 4.7,
+        "rating_count": 1242,
+        "place_id": "ChIJv9rU8xTNHkcRnbkBic0KO3I"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0777799,
+          52.2442777
+        ]
+      },
+      "properties": {
+        "name": "U Krawca Café",
+        "walk": "coffee",
+        "order": 35,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Siennicka · Praga",
+        "rating": 4.7,
+        "rating_count": 1095,
+        "place_id": "ChIJYVrDGLnNHkcRuHZyR-mqXIA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9885493,
+          52.2204761
+        ]
+      },
+      "properties": {
+        "name": "Filtry Cafe",
+        "walk": "coffee",
+        "order": 36,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Niemcewicza · Ochota",
+        "rating": 4.7,
+        "rating_count": 1085,
+        "place_id": "ChIJOeCiO5bMHkcRr322Y6Dx2w0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.064725,
+          52.1381657
+        ]
+      },
+      "properties": {
+        "name": "Ach Cafe",
+        "walk": "coffee",
+        "order": 37,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ursynów",
+        "rating": 4.7,
+        "rating_count": 919,
+        "place_id": "ChIJfV2vxMAtGUcRZg-sXYNCzDw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0112573,
+          52.2256825
+        ]
+      },
+      "properties": {
+        "name": "Cafe Central — Hoża",
+        "walk": "coffee",
+        "order": 38,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Hoża · Centrum",
+        "rating": 4.7,
+        "rating_count": 835,
+        "place_id": "ChIJqb657e3MHkcRiLoOdhRBwas"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9884234,
+          52.2230054
+        ]
+      },
+      "properties": {
+        "name": "Paręosób",
+        "walk": "coffee",
+        "order": 39,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Tarczyńska · Ochota",
+        "rating": 4.7,
+        "rating_count": 793,
+        "place_id": "ChIJCaZ6A5fMHkcRQLZFqsju5-c"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.053784,
+          52.2376453
+        ]
+      },
+      "properties": {
+        "name": "HAŁAS Coffee+Vinyl",
+        "walk": "coffee",
+        "order": 40,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Saska Kępa",
+        "rating": 4.7,
+        "rating_count": 668,
+        "place_id": "ChIJJSePVbzNHkcRFO7_SJwzl7Q"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.932711,
+          52.230766
+        ]
+      },
+      "properties": {
+        "name": "CzyKawka",
+        "walk": "coffee",
+        "order": 41,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sowińskiego · Wola",
+        "rating": 4.7,
+        "rating_count": 640,
+        "place_id": "ChIJ8Uu78ZPLHkcRQogMFjp9x4E"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0079589,
+          52.2242001
+        ]
+      },
+      "properties": {
+        "name": "The Espresso Bar",
+        "walk": "coffee",
+        "order": 42,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Emilii Plater · Centrum",
+        "rating": 4.7,
+        "rating_count": 413,
+        "place_id": "ChIJa1jEScDNHkcR_zntspttulU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0856427,
+          52.2366231
+        ]
+      },
+      "properties": {
+        "name": "MIŁOŚĆ Praga",
+        "walk": "coffee",
+        "order": 43,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ostrobramska · Praga",
+        "rating": 4.7,
+        "rating_count": 385,
+        "place_id": "ChIJDYzxI9zNHkcRybcIyD3u-Rs"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.969625,
+          52.2148566
+        ]
+      },
+      "properties": {
+        "name": "Fortunata",
+        "walk": "coffee",
+        "order": 44,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Szczęśliwicka · Ochota",
+        "rating": 4.7,
+        "rating_count": 315,
+        "place_id": "ChIJv1N74pbNHkcRAebP-Qwgst4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0070103,
+          52.2482297
+        ]
+      },
+      "properties": {
+        "name": "Wazaap — Matcha & Coffee",
+        "walk": "coffee",
+        "order": 45,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Miodowa · Stare Miasto",
+        "rating": 4.7,
+        "rating_count": 258,
+        "place_id": "ChIJ31b8YSLNHkcR6iw56hQcuh4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0351303,
+          52.2341811
+        ]
+      },
+      "properties": {
+        "name": "Cafe Central — Solec",
+        "walk": "coffee",
+        "order": 46,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Solec · Powiśle",
+        "rating": 4.7,
+        "rating_count": 228,
+        "place_id": "ChIJj8NExnjNHkcRO7Inr3f3T-s"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0123648,
+          52.2205036
+        ]
+      },
+      "properties": {
+        "name": "Cafe Central — Lwowska",
+        "walk": "coffee",
+        "order": 47,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Lwowska · Centrum",
+        "rating": 4.7,
+        "rating_count": 222,
+        "place_id": "ChIJqfj8l_HNHkcR9ySVbhm6uQI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0118809,
+          52.234455
+        ]
+      },
+      "properties": {
+        "name": "Łoskot Cafe x Prześniona",
+        "walk": "coffee",
+        "order": 48,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Jasna · Centrum",
+        "rating": 4.7,
+        "rating_count": 212,
+        "place_id": "ChIJJcuRMQDNHkcRb421_a497qo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0184546,
+          52.2184011
+        ]
+      },
+      "properties": {
+        "name": "Ministerstwo Kawy",
+        "walk": "coffee",
+        "order": 49,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Marszałkowska · Centrum",
+        "rating": 4.6,
+        "rating_count": 2388,
+        "place_id": "ChIJUfm8NMIqGUcR7TIkklj_bXQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0246748,
+          52.236852
+        ]
+      },
+      "properties": {
+        "name": "STOR Café — Tamka",
+        "walk": "coffee",
+        "order": 50,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Tamka · Powiśle",
+        "rating": 4.6,
+        "rating_count": 1761,
+        "place_id": "ChIJrXO77VjMHkcRbqK4LfszRVU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0646416,
+          52.2476331
+        ]
+      },
+      "properties": {
+        "name": "Żona Krawca",
+        "walk": "coffee",
+        "order": 51,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kamionek · Praga",
+        "rating": 4.6,
+        "rating_count": 1697,
+        "place_id": "ChIJAVqE2rXNHkcRI_J7yep4x88"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9796223,
+          52.2697145
+        ]
+      },
+      "properties": {
+        "name": "Secret Life",
+        "walk": "coffee",
+        "order": 52,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Słowackiego · Żoliborz",
+        "rating": 4.6,
+        "rating_count": 1544,
+        "place_id": "ChIJEzdDbOzLHkcReH-mKcEx6kk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9973155,
+          52.1848642
+        ]
+      },
+      "properties": {
+        "name": "Culture Cafe — Mokotów",
+        "walk": "coffee",
+        "order": 53,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Postępu · Mokotów",
+        "rating": 4.6,
+        "rating_count": 1531,
+        "place_id": "ChIJu8DO_ogzGUcRl341nhR9vAg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.949238,
+          52.282286
+        ]
+      },
+      "properties": {
+        "name": "Kawiarnia Czytelnia",
+        "walk": "coffee",
+        "order": 54,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Bielany",
+        "rating": 4.6,
+        "rating_count": 1394,
+        "place_id": "ChIJb9j0HdLLHkcRG9i2mnwRPfk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0186643,
+          52.2253608
+        ]
+      },
+      "properties": {
+        "name": "Relax na Wilczej",
+        "walk": "coffee",
+        "order": 55,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Wilcza · Centrum",
+        "rating": 4.6,
+        "rating_count": 1275,
+        "place_id": "ChIJiy1dZGnNHkcRt8AxTMoosxI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0116037,
+          52.204672
+        ]
+      },
+      "properties": {
+        "name": "Panna",
+        "walk": "coffee",
+        "order": 56,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kwiatowa · Mokotów",
+        "rating": 4.6,
+        "rating_count": 1139,
+        "place_id": "ChIJzbcO3_7NHkcRykPWbckRPJo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0154091,
+          52.2245299
+        ]
+      },
+      "properties": {
+        "name": "The White Bear Coffee",
+        "walk": "coffee",
+        "order": 57,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Marszałkowska · Centrum",
+        "rating": 4.6,
+        "rating_count": 1041,
+        "place_id": "ChIJ-YKjHWXNHkcRWkjhlyRUpQ8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9643213,
+          52.2446794
+        ]
+      },
+      "properties": {
+        "name": "Balance Speciality Coffee",
+        "walk": "coffee",
+        "order": 58,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Banderii · Wola",
+        "rating": 4.6,
+        "rating_count": 702,
+        "place_id": "ChIJ6zE-S3bLHkcRhPRiKQ09W9E"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0706555,
+          52.1609371
+        ]
+      },
+      "properties": {
+        "name": "Plakatówka",
+        "walk": "coffee",
+        "order": 59,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sadyba",
+        "rating": 4.6,
+        "rating_count": 643,
+        "place_id": "ChIJ7akbnl0tGUcRCyvmPLylqjA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9906486,
+          52.2489388
+        ]
+      },
+      "properties": {
+        "name": "Cała w Mące",
+        "walk": "coffee",
+        "order": 60,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Karmelicka · Muranów",
+        "rating": 4.6,
+        "rating_count": 580,
+        "place_id": "ChIJHRj8xL7NHkcRNESMvA9weEU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.009492,
+          52.1847763
+        ]
+      },
+      "properties": {
+        "name": "Vennskap",
+        "walk": "coffee",
+        "order": 61,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Zdziechowskiego · Mokotów",
+        "rating": 4.6,
+        "rating_count": 443,
+        "place_id": "ChIJSXz6pfMzGUcRqO2Dl6KLCLI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0145487,
+          52.2040131
+        ]
+      },
+      "properties": {
+        "name": "Kultura Kawy — specialty",
+        "walk": "coffee",
+        "order": 62,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kazimierzowska · Mokotów",
+        "rating": 4.6,
+        "rating_count": 173,
+        "place_id": "ChIJT7cqffbLHkcRzp0041L2ePw"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9673201,
+          52.2365727
+        ]
+      },
+      "properties": {
+        "name": "Cafe Central — Górczewska",
+        "walk": "coffee",
+        "order": 63,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Górczewska · Wola",
+        "rating": 4.6,
+        "rating_count": 130,
+        "place_id": "ChIJ1791dpvLHkcRem38TPjkHew"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9664557,
+          52.2563445
+        ]
+      },
+      "properties": {
+        "name": "ASTRA Coffeebar",
+        "walk": "coffee",
+        "order": 64,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Jędrusik · Wola",
+        "rating": 4.6,
+        "rating_count": 101,
+        "place_id": "ChIJXedhIgDLHkcR7B4x0cHzVMg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9823646,
+          52.2702631
+        ]
+      },
+      "properties": {
+        "name": "Cafe Bar Havana",
+        "walk": "coffee",
+        "order": 65,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Słowackiego · Żoliborz",
+        "rating": 4.5,
+        "rating_count": 2004,
+        "place_id": "ChIJQe7j5hfLHkcRFbHSB6J-mc8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0334322,
+          52.2515878
+        ]
+      },
+      "properties": {
+        "name": "Proces Kawki",
+        "walk": "coffee",
+        "order": 66,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kłopotowskiego · Praga",
+        "rating": 4.5,
+        "rating_count": 1584,
+        "place_id": "ChIJsflctHzNHkcRYYQAUqwf5MU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9831605,
+          52.2267015
+        ]
+      },
+      "properties": {
+        "name": "TYPIKA",
+        "walk": "coffee",
+        "order": 67,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Kolejowa · Wola",
+        "rating": 4.5,
+        "rating_count": 1398,
+        "place_id": "ChIJYd9rHnzNHkcR2b0Ytrm-wok"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.011258,
+          52.2493934
+        ]
+      },
+      "properties": {
+        "name": "Kawiarnia Patio",
+        "walk": "coffee",
+        "order": 68,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Piwna · Stare Miasto",
+        "rating": 4.5,
+        "rating_count": 1363,
+        "place_id": "ChIJWfvackzNHkcRNb1Qv8bC_FE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0298318,
+          52.2398396
+        ]
+      },
+      "properties": {
+        "name": "Coffeedesk — Tamka",
+        "walk": "coffee",
+        "order": 69,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Tamka · Powiśle",
+        "rating": 4.5,
+        "rating_count": 1278,
+        "place_id": "ChIJh7i5qJHNHkcRYaFwSLQr-0I"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.94772,
+          52.2792279
+        ]
+      },
+      "properties": {
+        "name": "LAS kawiarnia",
+        "walk": "coffee",
+        "order": 70,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Żoliborz",
+        "rating": 4.5,
+        "rating_count": 1226,
+        "place_id": "ChIJyX8PvNzLHkcRQJ1NA5O5Osg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0218229,
+          52.2026908
+        ]
+      },
+      "properties": {
+        "name": "Relaks",
+        "walk": "coffee",
+        "order": 71,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Puławska · Mokotów",
+        "rating": 4.5,
+        "rating_count": 1156,
+        "place_id": "ChIJrzai-yfNHkcRCp8rA7PhuBE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0233458,
+          52.2134915
+        ]
+      },
+      "properties": {
+        "name": "Po Drodze",
+        "walk": "coffee",
+        "order": 72,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Bagatela · Śródmieście",
+        "rating": 4.5,
+        "rating_count": 815,
+        "place_id": "ChIJU84GA0XNHkcR0eJVqESeTzY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0168132,
+          52.2318289
+        ]
+      },
+      "properties": {
+        "name": "STOR Café — Bracka",
+        "walk": "coffee",
+        "order": 73,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Bracka · Centrum",
+        "rating": 4.5,
+        "rating_count": 814,
+        "place_id": "ChIJaTofE2rNHkcRejvUmxEOGNE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0325502,
+          52.2493119
+        ]
+      },
+      "properties": {
+        "name": "Moss Cafe",
+        "walk": "coffee",
+        "order": 74,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sierakowskiego · Praga",
+        "rating": 4.5,
+        "rating_count": 371,
+        "place_id": "ChIJu6n8UwDNHkcRdNsuDDqwK4o"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9262172,
+          52.2832903
+        ]
+      },
+      "properties": {
+        "name": "Noble Coffee",
+        "walk": "coffee",
+        "order": 75,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Sokratesa · Bielany",
+        "rating": 4.5,
+        "rating_count": 310,
+        "place_id": "ChIJLeRDXRfLHkcRMN1P9Xp5-AU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.8856925,
+          52.2020752
+        ]
+      },
+      "properties": {
+        "name": "CHICHI CAFE",
+        "walk": "coffee",
+        "order": 76,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Ursus",
+        "rating": 4.5,
+        "rating_count": 194,
+        "place_id": "ChIJr6VYyo41GUcRCn5JuILDUGA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9931139,
+          52.17645
+        ]
+      },
+      "properties": {
+        "name": "Cafe point",
+        "walk": "coffee",
+        "order": 77,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Cybernetyki · Mokotów",
+        "rating": 4.5,
+        "rating_count": 107,
+        "place_id": "ChIJiamfV8ozGUcRE2Tzh0Dnpow"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0328411,
+          52.2353005
+        ]
+      },
+      "properties": {
+        "name": "The Cool Cat",
+        "walk": "coffee",
+        "order": 78,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Solec · Powiśle",
+        "rating": 4.4,
+        "rating_count": 2657,
+        "place_id": "ChIJ8xWLsFfMHkcR5RtwnOo4HuE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0736991,
+          52.2423479
+        ]
+      },
+      "properties": {
+        "name": "Café Waszyngton",
+        "walk": "coffee",
+        "order": 79,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "al. Waszyngtona · Praga",
+        "rating": 4.4,
+        "rating_count": 1745,
+        "place_id": "ChIJTbAIULbNHkcRYlgdBMu8cyU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9447598,
+          52.2803533
+        ]
+      },
+      "properties": {
+        "name": "Roślina Cafe",
+        "walk": "coffee",
+        "order": 80,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Żoliborz",
+        "rating": 4.4,
+        "rating_count": 1168,
+        "place_id": "ChIJ_SjeIM3LHkcRwH1Y_Ea0WGA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9443248,
+          52.2241645
+        ]
+      },
+      "properties": {
+        "name": "Culture Cafe — Wola",
+        "walk": "coffee",
+        "order": 81,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Jana Kazimierza · Wola",
+        "rating": 4.4,
+        "rating_count": 1141,
+        "place_id": "ChIJRSGFbpzLHkcRGu6vpXJ_NjQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0357519,
+          52.2242708
+        ]
+      },
+      "properties": {
+        "name": "Kawiarnia Fabryczna",
+        "walk": "coffee",
+        "order": 82,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Fabryczna · Powiśle",
+        "rating": 4.4,
+        "rating_count": 774,
+        "place_id": "ChIJgX-8dP3MHkcRaaFxKCLaTmI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0298321,
+          52.2603313
+        ]
+      },
+      "properties": {
+        "name": "Trzy Kruki",
+        "walk": "coffee",
+        "order": 83,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "plac Hallera · Praga",
+        "rating": 4.4,
+        "rating_count": 667,
+        "place_id": "ChIJ8Qt5SzjNHkcRa-f7H4mePbc"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0262338,
+          52.2407667
+        ]
+      },
+      "properties": {
+        "name": "DOT Coffee & Matcha",
+        "walk": "coffee",
+        "order": 84,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Leszczyńska · Powiśle",
+        "rating": 4.4,
+        "rating_count": 285,
+        "place_id": "ChIJYUywPQDNHkcRDIbPw-JUY10"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0030749,
+          52.2174137
+        ]
+      },
+      "properties": {
+        "name": "Bochena",
+        "walk": "coffee",
+        "order": 85,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Wawelska · Ochota",
+        "rating": 4.4,
+        "rating_count": 199,
+        "place_id": "ChIJ8TL5wpnNHkcR8Aqen_YUpIg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.991677,
+          52.2625044
+        ]
+      },
+      "properties": {
+        "name": "Kawiarnia Fawory",
+        "walk": "coffee",
+        "order": 86,
+        "theme": "coffee",
+        "status": "coffee",
+        "area": "Mickiewicza · Żoliborz",
+        "rating": 4.1,
+        "rating_count": 1383,
+        "place_id": "ChIJ_UxgRovLHkcR0LnAQ5VMb54"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.9798461,
+          52.2438567
+        ]
+      },
+      "properties": {
+        "name": "Pływalnia \"Foka\"",
+        "walk": "pool",
+        "order": 1,
+        "theme": "pool",
+        "status": "pool",
+        "area": "Esperanto 5 · Wola",
+        "rating": 4.4,
+        "rating_count": 1194,
+        "blurb": "Public pool + sauna near the base.",
+        "place_id": "ChIJlw2mMYDLHkcRt_yrW5NIO8E"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.035814,
+          52.2150475
+        ]
+      },
+      "properties": {
+        "name": "Palace on the Isle (Pałac na Wyspie)",
+        "walk": "sights",
+        "order": 7,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "palace",
+        "blurb": "King Stanisław's island summer palace on the lake.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJP37zjB7NHkcR873Uas0o4bo",
+        "rating": 4.8,
+        "rating_count": 21789
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0366162,
+          52.2137183
+        ]
+      },
+      "properties": {
+        "name": "Amphitheatre (Amfiteatr)",
+        "walk": "sights",
+        "order": 8,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "park",
+        "blurb": "Roman-style open-air stage on the water.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJP37zjB7NHkcRSAVS01ZlLPc",
+        "rating": 4.7,
+        "rating_count": 473
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0281415,
+          52.2147012
+        ]
+      },
+      "properties": {
+        "name": "Chopin Monument",
+        "walk": "sights",
+        "order": 9,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "monument",
+        "blurb": "Art-nouveau statue; free Sunday summer recitals.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJ3wQ0SuDMHkcR1AvCsuqqTkA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0300247,
+          52.2164029
+        ]
+      },
+      "properties": {
+        "name": "Old Orangery (Stara Pomarańczarnia)",
+        "walk": "sights",
+        "order": 10,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "palace",
+        "blurb": "18th-c. royal court theatre + sculpture gallery.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJC6FY6OPMHkcRxf0bIZKgAUI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0315684,
+          52.2153075
+        ]
+      },
+      "properties": {
+        "name": "White Pavilion (Biały Domek)",
+        "walk": "sights",
+        "order": 11,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "palace",
+        "blurb": "The king's intimate garden villa.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJUUEGPBzNHkcRPll7_yuYZuY",
+        "rating": 4.6,
+        "rating_count": 324
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0383018,
+          52.2154725
+        ]
+      },
+      "properties": {
+        "name": "Myślewicki Palace (Pałac Myślewicki)",
+        "walk": "sights",
+        "order": 12,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "palace",
+        "blurb": "Neoclassical palace tucked among the trees.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJ7y6Mph7NHkcRd4GWMzcQc4Y"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0297173,
+          52.2154975
+        ]
+      },
+      "properties": {
+        "name": "Water Tower (Wodozbiór)",
+        "walk": "sights",
+        "order": 13,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "park",
+        "blurb": "Neoclassical rotunda that fed the fountains.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJN0GhxeHMHkcRWsSH2Xyewt0",
+        "rating": 4.5,
+        "rating_count": 156
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0291138,
+          52.2137243
+        ]
+      },
+      "properties": {
+        "name": "Temple of Diana (Świątynia)",
+        "walk": "sights",
+        "order": 14,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "park",
+        "blurb": "Little Greek temple at a shady path crossing.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJ2aapJuDMHkcRFqACsKzeR68",
+        "rating": 4.7,
+        "rating_count": 264
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0334992,
+          52.2114623
+        ]
+      },
+      "properties": {
+        "name": "New Orangery (Nowa Pomarańczarnia)",
+        "walk": "sights",
+        "order": 15,
+        "theme": "sights",
+        "status": "sight",
+        "days": [
+          3
+        ],
+        "icon": "palace",
+        "blurb": "Glasshouse with the Belvedere restaurant.",
+        "area": "Łazienki Królewskie",
+        "place_id": "ChIJ3_1Xex_NHkcRdcqSspwD9Mo",
+        "rating": 4.7,
+        "rating_count": 206
+      }
     }
   ]
 };
@@ -3942,10 +6133,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   const keyOf=p=>p.walk+":"+p.order;
 
   const TRIPS={
-    trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga & the Uprising trail",walks:["stay1","small-ghetto","uprising-srodmiescie","praga"]},
+    trip1:{label:"Jul 31 – Aug 8",sub:"Ghetto, Praga, the Uprising trail & a swim",walks:["stay1","small-ghetto","uprising-srodmiescie","praga","pool"]},
     trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["stay2","sights"]},
     food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]},
-    warcam:{label:"WarCam",sub:"Remnants of old Warsaw — ranked",walks:["warcam"]}
+    warcam:{label:"WarCam",sub:"Remnants of old Warsaw — ranked",walks:["warcam"]},
+    coffee:{label:"Coffee Shops",sub:"Specialty cafés — best-reviewed first",walks:["coffee"]}
   };
   let curTrip="trip1";
 
@@ -3960,11 +6152,47 @@ svg.leaflet-image-layer.leaflet-interactive path {
   function dist(a,b){const R=6371000,r=Math.PI/180;const x=(b[1]-a[1])*r*Math.cos((a[0]+b[0])/2*r),y=(b[0]-a[0])*r;return Math.sqrt(x*x+y*y)*R}
   function walkDir(p,lat,lng){let u="https://www.google.com/maps/dir/?api=1&destination="+lat+","+lng+"&travelmode=walking";if(p.place_id)u+="&destination_place_id="+encodeURIComponent(p.place_id);return u}
 
+  function fmtCount(n){n=+n||0;return n>=1000?(n/1000).toFixed(n>=10000?0:1).replace(/\.0$/,'')+'k':''+n;}
+  function ratePill(p){return '<span class="rlabel"><span class="rname">'+esc(p.name)+'</span>'+(p.rating?'<span class="rstars">★'+esc(p.rating)+' <em>('+fmtCount(p.rating_count)+')</em></span>':'')+'</span>';}
+  const SYM={
+    star:'<polygon points="12,2.6 19.6,15.7 4.4,15.7"/><polygon points="12,21.4 4.4,8.3 19.6,8.3"/>',
+    cross:'<path d="M10 3h4v5h5v4h-5v9h-4v-9H5V8h5z"/>',
+    castle:'<path d="M3 10h2V8h2v2h2V8h2v2h2V8h2v2h2V8h2v2h2v11H3z"/><path d="M10.3 21v-4a1.7 1.7 0 0 1 3.4 0v4z" fill="#fff" stroke="none"/>',
+    oldtown:'<path d="M2.5 21V12l3-3 3 3v9z"/><path d="M8.5 21V10l3.5-3.5L15.5 10v11z"/><path d="M15.5 21V12l3-3 3 3v9z"/>',
+    park:'<circle cx="12" cy="9" r="5.4"/><rect x="11" y="12.5" width="2" height="7.5" rx=".5"/>',
+    palace:'<path d="M12 3 2.5 8.2h19z"/><rect x="4" y="9.4" width="2" height="8.4"/><rect x="8" y="9.4" width="2" height="8.4"/><rect x="14" y="9.4" width="2" height="8.4"/><rect x="18" y="9.4" width="2" height="8.4"/><rect x="2.6" y="18" width="18.8" height="2.8"/>',
+    monument:'<ellipse cx="8" cy="16.6" rx="3" ry="2.3"/><rect x="10.3" y="4.6" width="1.7" height="12.2"/><path d="M12 4.6c3 .5 4.3 1.9 4.3 4-1-1.5-2.6-2.1-4.3-1.9z"/>',
+    ruin:'<path d="M4 21V11l2-1v2l2-1v2.4l2-1.2V15l2-2v3l2-1.2V17l2-1v-2l2-1v9z"/>'
+  };
+  const LINE={
+    kotwica:'<circle cx="12" cy="4" r="1.5"/><path d="M12 5.6V18"/><path d="M12 6.4a2.6 2.6 0 0 1 0 5.2"/><path d="M8 12.4h8"/><path d="M6.4 13.8a5.6 5.6 0 0 0 11.2 0"/><path d="M6.4 13.8l-1.4.5M17.6 13.8l1.4.5"/>',
+    swimmer:'<circle cx="7.2" cy="7" r="2.1" fill="var(--c)" stroke="none"/><path d="M3 15.2c1.8-1.4 3.3.9 5.4 0 2.1-.9 3.6 .9 5.6 0s3.4 .9 5 0"/><path d="M8.6 12.4 12 10l4.2 1.2"/>'
+  };
+  function symbolSVG(kind,c){
+    if(SYM[kind])return '<svg viewBox="0 0 24 24" style="fill:'+c+';stroke:#fff;stroke-width:1.1;stroke-linejoin:round">'+SYM[kind]+'</svg>';
+    if(LINE[kind])return '<svg viewBox="0 0 24 24" style="fill:none;stroke:'+c+';stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;--c:'+c+'">'+LINE[kind]+'</svg>';
+    return '';
+  }
+  const FOOD_EMOJI={"Meats, grill & steak":"🥩","Italian & pizza":"🍕","Japanese — sushi & ramen":"🍣","Korean & East Asian":"🍜","Middle Eastern & Mediterranean":"🧆","Seafood & fish":"🐟","Mexican":"🌮","Modern Polish":"🥟","Vegan":"🥗","Cafés, brunch & wine bars":"🥐"};
   function pinIcon(p){
     const c=THEME[p.theme]||INK;
     if(p.theme==="base")return L.divIcon({className:"",html:'<div class="home" style="--c:'+c+'">⌂</div>',iconSize:[32,32],iconAnchor:[16,16],popupAnchor:[0,-17]});
-    if(p.theme==="food")return L.divIcon({className:"",html:'<div class="dot" style="--c:'+c+'"></div>',iconSize:[15,15],iconAnchor:[8,8],popupAnchor:[0,-8]});
+    if(p.theme==="food"){
+      const em=FOOD_EMOJI[p.group]||"🍽️";
+      return L.divIcon({className:"",html:'<div class="pinwrap"><div class="foodpin">'+em+'</div>'+ratePill(p)+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
+    }
+    if(p.theme==="coffee"){
+      const cup='<div class="cup"><svg viewBox="0 0 24 24"><path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z"/><path d="M17 9h2.2a2.3 2.3 0 0 1 0 4.6H17" fill="none"/><path d="M7 3.5c0 1-1 1.3-1 2.2M10 3.5c0 1-1 1.3-1 2.2M13 3.5c0 1-1 1.3-1 2.2" fill="none"/></svg></div>';
+      return L.divIcon({className:"",html:'<div class="pinwrap">'+cup+ratePill(p)+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
+    }
     if(p.theme==="warcam")return L.divIcon({className:"",html:'<div class="cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.1"/></svg></div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
+    let kind=null;
+    if(p.theme==="ghetto")kind="star";
+    else if(p.theme==="uprising")kind="kotwica";
+    else if(p.theme==="prewar")kind="ruin";
+    else if(p.theme==="pool")kind="swimmer";
+    else if(p.theme==="sights")kind=p.icon||"park";
+    if(kind)return L.divIcon({className:"",html:'<div class="sym">'+symbolSVG(kind,c)+'</div>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-16]});
     const cls="pin "+(p.status==="fragment"?"fragment":p.status==="gone"?"gone":"")+(p.order===1?" start":"");
     return L.divIcon({className:"",html:'<div class="'+cls.trim()+'" style="--c:'+c+'">'+esc(p.order)+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
   }
@@ -3982,6 +6210,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       return '<div>'+img+'<div class="pop-b"><div class="pop-k">'+esc(p.cuisine||"")+'</div><div class="pop-name">'+esc(p.name)+'</div>'
         +'<div class="pop-meta">'+esc(p.area||"")+'</div><div class="btns">'+ig+gm
         +'<a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div></div>';
+    }
+    if(p.theme==="coffee"){
+      const rc=p.rating?'<div class="pop-k">★ '+esc(p.rating)+' · '+esc(p.rating_count)+' reviews · No. '+esc(p.order)+'</div>':'';
+      return '<div class="pop-b">'+rc+'<div class="pop-name">'+esc(p.name)+'</div>'
+        +(p.area?'<div class="pop-blurb">'+esc(p.area)+'</div>':'')
+        +'<div class="btns"><a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div>';
     }
     if(p.theme==="warcam"){
       const wiki=p.wiki?'<a class="btn sub" href="'+esc(p.wiki)+'" target="_blank" rel="noopener">Wikipedia ↗</a>':'';
@@ -4008,27 +6242,56 @@ svg.leaflet-image-layer.leaflet-interactive path {
     return FEATURES.filter(f=>ws.includes(f.properties.walk));
   }
 
+  const DAY_COLORS={1:"#d9822b",2:"#3f6fb0",3:"#3f9b6b"};
+  function dotIcon(color,num){
+    if(num!=null)return L.divIcon({className:"",html:'<div class="pin start" style="--c:'+color+'">'+esc(num)+'</div>',iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
+    return L.divIcon({className:"",html:'<div class="dot" style="--c:'+color+'"></div>',iconSize:[15,15],iconAnchor:[8,8],popupAnchor:[0,-9]});
+  }
+  function segmentsFor(shown){
+    if(curTrip==="trip1"){
+      let i=0;const segs=[];
+      TRIPS.trip1.walks.forEach(w=>{
+        if(w.indexOf("stay")===0)return;
+        const fs=shown.filter(f=>f.properties.walk===w);
+        if(!fs.length)return;i++;
+        segs.push({feats:fs,color:(WALKS[w]&&WALKS[w].color)||INK,num:i});
+      });
+      return segs;
+    }
+    return DAYS.map(dd=>{
+      const fs=shown.filter(f=>(f.properties.days||[]).includes(dd.n));
+      return fs.length?{feats:fs,color:DAY_COLORS[dd.n]||INK,num:dd.n}:null;
+    }).filter(Boolean);
+  }
+
   function render(){
     stopLayer.clearLayers();routeLayer.clearLayers();
     for(const k in idx)delete idx[k];
     const shown=tripFeatures();
+    const isSeq=(curTrip==="trip1"||curTrip==="trip2");
+    const meta={};
 
-    // route lines for the historical walks only
-    const byWalk={};
-    shown.forEach(f=>{const w=f.properties.walk;(byWalk[w]=byWalk[w]||[]).push(f)});
-    Object.entries(byWalk).forEach(([w,feats])=>{
-      if(w==="food"||w==="sights"||w==="warcam"||w.indexOf("stay")===0||feats.length<2)return;
-      const c=(WALKS[w]&&WALKS[w].color)||INK;
-      const pts=feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0)).map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
-      for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])<=1200)L.polyline([pts[i],pts[i+1]],{color:c,weight:2.5,opacity:.5,dashArray:"1 7",lineCap:"round"}).addTo(routeLayer);
-    });
+    if(isSeq){
+      segmentsFor(shown).forEach(seg=>{
+        const sorted=seg.feats.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
+        const pts=sorted.map(f=>[f.geometry.coordinates[1],f.geometry.coordinates[0]]);
+        for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])<=6000)L.polyline([pts[i],pts[i+1]],{color:seg.color,weight:2.5,opacity:.65,dashArray:"2 6",lineCap:"round"}).addTo(routeLayer);
+        sorted.forEach((f,i)=>{const k=keyOf(f.properties);
+          if(i===0)meta[k]={color:seg.color,num:seg.num};
+          else if(!meta[k])meta[k]={color:seg.color,num:null};
+        });
+      });
+    }
 
-    // markers for the current trip (bases are scoped via their walk)
-    const all=shown;
-    all.forEach(f=>{
+    shown.forEach(f=>{
       const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
-      const m=L.marker([lat,lng],{icon:pinIcon(p)}).bindPopup(popupHtml(p,lat,lng),{maxWidth:280,autoPanPadding:[16,90]}).addTo(stopLayer);
-      idx[keyOf(p)]=m;
+      let icon;
+      if(isSeq&&p.theme!=="base"){
+        const m=meta[keyOf(p)]||{color:THEME[p.theme]||INK,num:null};
+        icon=dotIcon(m.color,m.num);
+      }else icon=pinIcon(p);
+      const mk=L.marker([lat,lng],{icon:icon}).bindPopup(popupHtml(p,lat,lng),{maxWidth:280,autoPanPadding:[16,90]}).addTo(stopLayer);
+      idx[keyOf(p)]=mk;
     });
     fitTo(shown);
     buildSheet();
@@ -4051,6 +6314,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   function areaOf(p){return (p.area||"").split(" · ")[0]||"Other"}
   const AREA_ORDER=["Śródmieście","Wola","Mokotów","Sadyba","Saska Kępa","Praga"];
+  const FOOD_GROUP_ORDER=["Meats, grill & steak","Italian & pizza","Japanese — sushi & ramen","Korean & East Asian","Middle Eastern & Mediterranean","Seafood & fish","Mexican","Modern Polish","Vegan","Cafés, brunch & wine bars"];
 
   function buildSheet(){
     const b=document.getElementById("sheet-body");
@@ -4059,13 +6323,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const shown=tripFeatures();
 
     if(curTrip==="food"){
-      const groups={};shown.forEach(f=>{const a=areaOf(f.properties);(groups[a]=groups[a]||[]).push(f)});
-      const order=AREA_ORDER.filter(a=>groups[a]).concat(Object.keys(groups).filter(a=>!AREA_ORDER.includes(a)));
+      const groups={};shown.forEach(f=>{const g=f.properties.group||"Other";(groups[g]=groups[g]||[]).push(f)});
+      const order=FOOD_GROUP_ORDER.filter(g=>groups[g]).concat(Object.keys(groups).filter(g=>!FOOD_GROUP_ORDER.includes(g)));
       h+='<div class="cardlist">';
-      order.forEach(a=>{
-        h+='<div class="grouphd">'+esc(a)+'</div>';
-        groups[a].sort((x,y)=>x.properties.name.localeCompare(y.properties.name)).forEach(f=>{h+=foodCard(f)});
+      order.forEach(g=>{
+        h+='<div class="grouphd">'+esc(g)+'</div>';
+        groups[g].sort((x,y)=>x.properties.name.localeCompare(y.properties.name)).forEach(f=>{h+=foodCard(f)});
       });
+      h+='</div>';
+    } else if(curTrip==="coffee"){
+      const cards=shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
+      h+='<div class="cardlist">';
+      cards.forEach(f=>{h+=coffeeCard(f)});
       h+='</div>';
     } else if(curTrip==="warcam"){
       const cards=shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
@@ -4104,6 +6373,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.cuisine||"")+' · '+esc((p.area||"").split(" · ")[1]||"")+'</div>'
       +'<div class="cact">'+ig+gm+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
   }
+  function coffeeCard(f){
+    const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
+    return '<div class="card" data-key="'+esc(keyOf(p))+'">'
+      +'<div class="rankbadge">'+esc(p.order)+'</div>'
+      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div>'
+      +'<div class="cmeta">★ '+esc(p.rating)+' · '+esc(p.rating_count)+' · '+esc(p.area||"")+'</div>'
+      +'<div class="cact"><a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
+  }
   function warcamCard(f){
     const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
     const wiki=p.wiki?'<a class="chip" href="'+esc(p.wiki)+'" target="_blank" rel="noopener">Wikipedia</a>':'';
@@ -4118,7 +6395,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     const badge=p.theme==="sights"?'<div class="badge" style="background:'+c+'">'+esc(p.order)+'</div>'
       :'<div class="badge" style="background:'+c+'">'+esc(p.order)+'</div>';
     return '<div class="card" data-key="'+esc(keyOf(p))+'">'+badge
-      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.date||p.area||"")+'</div></div></div>';
+      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.blurb||p.date||p.area||"")+'</div></div></div>';
   }
 
   /* nav */
