@@ -686,7 +686,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .segwrap{flex:1;min-width:0;overflow:hidden}
     .seg{display:flex;width:100%;gap:2px;background:rgba(118,118,128,.12);border-radius:13px;padding:2px}
     .seg button{flex:1;min-width:0;white-space:normal;line-height:1.12;border:0;background:none;border-radius:11px;padding:8px 4px;cursor:pointer;
-      font-family:var(--font);font-size:11px;font-weight:600;color:var(--ink);letter-spacing:-.02em;text-align:center}
+      font-family:var(--font);font-size:10px;font-weight:600;color:var(--ink);letter-spacing:-.02em;text-align:center}
     .seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14)}
 
     .leaflet-top.leaflet-right{top:calc(10px + env(safe-area-inset-top,0px))}
@@ -741,6 +741,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .cup{width:26px;height:26px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
     .cup svg{width:24px;height:24px;fill:#6f4e37;stroke:#fff;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
     .cup svg path[fill="none"]{stroke:#6f4e37;stroke-width:1.6}
+    .book{width:26px;height:26px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+    .book svg{width:24px;height:24px;fill:#2f6f7a;stroke:#fff;stroke-width:1.2;stroke-linejoin:round}
+    .book svg path[fill="none"]{stroke:#fff;stroke-width:1.2}
     .sym{width:30px;height:30px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
     .sym svg{width:28px;height:28px;overflow:visible}
     .pinwrap{position:relative;width:26px;height:26px}
@@ -803,6 +806,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <button data-trip="food">Restaurants</button>
       <button data-trip="warcam">WarCam</button>
       <button data-trip="coffee">Coffee Shops</button>
+      <button data-trip="books">Books</button>
     </div></div>
   </nav>
 
@@ -861,6 +865,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       "pool": {
         "label": "Swimming",
         "color": "#1f8fb2"
+      },
+      "books": {
+        "label": "Antykwariaty",
+        "color": "#2f6f7a"
       }
     }
   },
@@ -6122,6 +6130,206 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "rating": 4.7,
         "rating_count": 206
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0408716,
+          52.2602463
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Zakładka",
+        "walk": "books",
+        "order": 1,
+        "theme": "books",
+        "status": "books",
+        "area": "Środkowa 12 · Praga",
+        "rating": 5.0,
+        "rating_count": 789,
+        "website": "https://www.antykwariat-zakladka.pl/",
+        "blurb": "Rare & out-of-print books plus Polish poster art; owner digs things out for you.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDpVKONxz9Msi2nRdJ26K2RMpNqMpHUkZtOmjW8LiXr41klkMlyrl32Vfr_dXfpOIu25WLyfdlnsMdW_j02CQmLyXk4AEc06DpggBDkLWkO1bOYZdZoWSFLxL-Q4bZuuy2TNORazBvIw6RI3g=s1200-w800-h600",
+        "place_id": "ChIJ-8NFyZHOHkcRvCsKfDOy7G0",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Zakładka&query_place_id=ChIJ-8NFyZHOHkcRvCsKfDOy7G0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0195762,
+          52.2234652
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Polski",
+        "walk": "books",
+        "order": 2,
+        "theme": "books",
+        "status": "books",
+        "area": "Piękna 11b · Śródmieście",
+        "rating": 5.0,
+        "rating_count": 22,
+        "website": "http://antykwariat-polski.pl/",
+        "blurb": "Collectable first editions + expert bookbinding and restoration.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBg-6go1vLAXtupZVjXw_8aeZJRWWseu_6I8kxpblSelggNoUtWZnsDbkReuFT-Hu7PSijVZ0zqk3FX8WCqHBrbN69tOAbPZ3EajLzvesLcoY-z2sNv9ySIut5e1dLr9aH_zx_nO1xtIYW_ZtMNrxsHOg=s1200-w800-h600",
+        "place_id": "ChIJQcA4i-_MHkcRACdYq_lAnDQ",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Polski&query_place_id=ChIJQcA4i-_MHkcRACdYq_lAnDQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.014072,
+          52.2079904
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Warszawa",
+        "walk": "books",
+        "order": 3,
+        "theme": "books",
+        "status": "books",
+        "area": "Wiśniowa 63 · Mokotów",
+        "rating": 4.9,
+        "rating_count": 1183,
+        "website": "http://antykwariatwaw.pl/",
+        "blurb": "Books, retro posters & vinyl; English-speaking staff. Buy in person.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjAs3eRLjWy6CSEoM_OKrgvdFSGk32aCEtZsOT-WGiswOun-cyrzZDhm1nfmOjhzU9HmKQvnzvqTaDcVu1u9FydB6aXCtQ1hrwMLipHK6_9JGYXN9nNwWwD2hSE9Hsh-XEO3j8NXo7igTBqsa90=s1200-w800-h600",
+        "place_id": "ChIJV2DWFdrMHkcRAgXyJK54W7w",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Warszawa&query_place_id=ChIJV2DWFdrMHkcRAgXyJK54W7w"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0081296,
+          52.1999825
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Gryf",
+        "walk": "books",
+        "order": 4,
+        "theme": "books",
+        "status": "books",
+        "area": "Dąbrowskiego 71 · Mokotów",
+        "rating": 4.9,
+        "rating_count": 564,
+        "website": "https://antykwariatgryf.pl/",
+        "blurb": "Big, well-run, knowledgeable owner — strong comics selection. Open Sat.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCyr3zo6IYKOJ72PsXr0YLQdymmoz5HY6e1eOFyALA8mViV-DIr9BOO3w3riGJvZCkYRQHNa1B-O_Ond9Ptm78PhBxORfCKFmij6_I2MmMPYRopwe3bowO-UNQcDjtKTu1ODTInxBSIUvLiYTk=s1200-w480-h600",
+        "place_id": "ChIJbXrZmdPMHkcRROQMF5Vb7T4",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Gryf&query_place_id=ChIJbXrZmdPMHkcRROQMF5Vb7T4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0161,
+          52.2247907
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Kwadryga",
+        "walk": "books",
+        "order": 5,
+        "theme": "books",
+        "status": "books",
+        "area": "Wilcza 29A · Śródmieście",
+        "rating": 4.9,
+        "rating_count": 231,
+        "website": "http://www.kwadryga.com/",
+        "blurb": "Hidden in a courtyard: old books, postcards, maps and posters.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjCh7uDAgqPPy5qs9QM2Mc9lPjCRrlkTytNgKAMncgt2OeoUWxYX9xwjda2N-cn4ZVHsWjRKTt9WB6jsYis-XsmQmVh67fD7WcvanXPEVVA47n8T1aqSJC_hYOWsidlmI8waufIGyC0NoGwb9g=s1200-w800-h600",
+        "place_id": "ChIJK1GaLe7MHkcR0a9hKEoZTOE",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Kwadryga&query_place_id=ChIJK1GaLe7MHkcR0a9hKEoZTOE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.023894,
+          52.226025
+        ]
+      },
+      "properties": {
+        "name": "KOSMOS — Antykwariat Naukowy",
+        "walk": "books",
+        "order": 6,
+        "theme": "books",
+        "status": "books",
+        "area": "Al. Ujazdowskie 16 · Śródmieście",
+        "rating": 4.9,
+        "rating_count": 73,
+        "website": "http://www.wankosmos.pl/",
+        "blurb": "Scholarly: historic prints, old newspapers, maps and documents.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjDzYeAfP-N7xlO0tGVLc5aMRrF42DHd7vWytQ7F7STzJNT8xcG1fHpB2FHbJUPGoz56yQk8K286SduaamwrBZhFzoMiEBAWdEvuffm3qAyGBBkjgtiFN04AljgIP23dW8S2WcyDLgPtSBHGsQ=s1200-w800-h600",
+        "place_id": "ChIJ4cA2kvrMHkcRW8C5tkUz8TE",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=KOSMOS+—+Antykwariat+Naukowy&query_place_id=ChIJ4cA2kvrMHkcRW8C5tkUz8TE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0801146,
+          52.2479143
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Grochowski",
+        "walk": "books",
+        "order": 7,
+        "theme": "books",
+        "status": "books",
+        "area": "Kickiego 12 · Kamionek",
+        "rating": 4.8,
+        "rating_count": 1576,
+        "website": "http://agrochowski.pl/",
+        "blurb": "Vast secondhand books + vinyl/CDs, 80s-NYC vibe. Resident cat.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBYCpKZdBZPjeAQ_8TKG5VZDJMffbtfHMfAfI3Uw9n1vMY3eGeHuOhgtL1tVK2YlnR_0xztYKc30sB3idFxfbUEDBWzUCwD6MCRcQ2SNdZUlvcdShQwMdlQPAKb7jwPlb9YlygsnsjYjaMYWA=s1200-w800-h600",
+        "place_id": "ChIJc7tBbsfNHkcRwwF4Yw99aqg",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Grochowski&query_place_id=ChIJc7tBbsfNHkcRwwF4Yw99aqg"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.0176769,
+          52.23893
+        ]
+      },
+      "properties": {
+        "name": "Antykwariat Atticus",
+        "walk": "books",
+        "order": 8,
+        "theme": "books",
+        "status": "books",
+        "area": "Krakowskie Przedmieście 12 · Śródmieście",
+        "rating": 4.4,
+        "rating_count": 85,
+        "website": "https://www.atticus.pl/",
+        "blurb": "Central & scenic, by the university — books, wood prints, maps.",
+        "photo": "https://lh3.googleusercontent.com/place-photos/AG9NLjBEOmRh9gLXTkrfcJbbXgeexF1n2BQK1BObYwRAm-bkPQjnOhwS49EmcUCr1PVXkZ6TpwnH8DFcAOHcsk_rF2j46hnpxcLjV8lqtTg8xf4UoXdp4RGnlxN4tPgSAN4bWC7JpMJwcgzVGc7HEA=s1200-w800-h600",
+        "place_id": "ChIJW7CXs1_MHkcRSIKEmRm6TNY",
+        "gmaps": "https://www.google.com/maps/search/?api=1&query=Antykwariat+Atticus&query_place_id=ChIJW7CXs1_MHkcRSIKEmRm6TNY"
+      }
     }
   ]
 };
@@ -6137,7 +6345,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     trip2:{label:"Aug 21 – 23",sub:"With the parents · base Pańska 57",walks:["stay2","sights"]},
     food:{label:"Restaurants",sub:FEATURES.filter(f=>f.properties.theme==="food").length+" places to eat",walks:["food"]},
     warcam:{label:"WarCam",sub:"Remnants of old Warsaw — ranked",walks:["warcam"]},
-    coffee:{label:"Coffee Shops",sub:"Specialty cafés — best-reviewed first",walks:["coffee"]}
+    coffee:{label:"Coffee Shops",sub:"Specialty cafés — best-reviewed first",walks:["coffee"]},
+    books:{label:"Antykwariaty",sub:"Antiquarian & secondhand bookshops — top-rated",walks:["books"]}
   };
   let curTrip="trip1";
 
@@ -6185,6 +6394,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const cup='<div class="cup"><svg viewBox="0 0 24 24"><path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z"/><path d="M17 9h2.2a2.3 2.3 0 0 1 0 4.6H17" fill="none"/><path d="M7 3.5c0 1-1 1.3-1 2.2M10 3.5c0 1-1 1.3-1 2.2M13 3.5c0 1-1 1.3-1 2.2" fill="none"/></svg></div>';
       return L.divIcon({className:"",html:'<div class="pinwrap">'+cup+ratePill(p)+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
     }
+    if(p.theme==="books"){
+      const bk='<div class="book"><svg viewBox="0 0 24 24"><path d="M12 6.2C9.8 4.9 7 4.6 4.3 5.3v12.4C7 17 9.8 17.3 12 18.6c2.2-1.3 5-1.6 7.7-.9V5.3C16.7 4.6 14 4.9 12 6.2z"/><path d="M12 6.6v12" fill="none"/></svg></div>';
+      return L.divIcon({className:"",html:'<div class="pinwrap">'+bk+ratePill(p)+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
+    }
     if(p.theme==="warcam")return L.divIcon({className:"",html:'<div class="cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.1"/></svg></div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-13]});
     let kind=null;
     if(p.theme==="ghetto")kind="star";
@@ -6216,6 +6429,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       return '<div class="pop-b">'+rc+'<div class="pop-name">'+esc(p.name)+'</div>'
         +(p.area?'<div class="pop-blurb">'+esc(p.area)+'</div>':'')
         +'<div class="btns"><a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div>';
+    }
+    if(p.theme==="books"){
+      const web=p.website?'<a class="btn sub" href="'+esc(p.website)+'" target="_blank" rel="noopener">Website ↗</a>':'';
+      return '<div>'+img+'<div class="pop-b"><div class="pop-k">★ '+esc(p.rating)+' · '+esc(p.rating_count)+' reviews</div>'
+        +'<div class="pop-name">'+esc(p.name)+'</div>'
+        +(p.blurb?'<div class="pop-blurb">'+esc(p.blurb)+'</div>':'')
+        +'<div class="pop-meta">'+esc(p.area||"")+'</div>'
+        +'<div class="btns">'+web+'<a class="btn primary full" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions ↗</a></div></div></div>';
     }
     if(p.theme==="warcam"){
       const wiki=p.wiki?'<a class="btn sub" href="'+esc(p.wiki)+'" target="_blank" rel="noopener">Wikipedia ↗</a>':'';
@@ -6331,6 +6552,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
         groups[g].sort((x,y)=>x.properties.name.localeCompare(y.properties.name)).forEach(f=>{h+=foodCard(f)});
       });
       h+='</div>';
+    } else if(curTrip==="books"){
+      const cards=shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
+      h+='<div class="cardlist">';
+      cards.forEach(f=>{h+=bookCard(f)});
+      h+='</div>';
     } else if(curTrip==="coffee"){
       const cards=shown.slice().sort((a,b)=>(a.properties.order||0)-(b.properties.order||0));
       h+='<div class="cardlist">';
@@ -6372,6 +6598,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
       +(p.photo?'<img class="thumb" src="'+esc(p.photo)+'" loading="lazy" alt="" onerror="this.style.visibility=\'hidden\'">':'<div class="thumb"></div>')
       +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div><div class="cmeta">'+esc(p.cuisine||"")+' · '+esc((p.area||"").split(" · ")[1]||"")+'</div>'
       +'<div class="cact">'+ig+gm+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
+  }
+  function bookCard(f){
+    const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
+    const web=p.website?'<a class="chip" href="'+esc(p.website)+'" target="_blank" rel="noopener">Website</a>':'';
+    return '<div class="card" data-key="'+esc(keyOf(p))+'">'
+      +(p.photo?'<img class="thumb pop-img" src="'+esc(p.photo)+'" loading="lazy" alt="" onerror="this.style.visibility=\'hidden\'">':'<div class="thumb"></div>')
+      +'<div class="cbody"><div class="cname">'+esc(p.name)+'</div>'
+      +'<div class="cmeta">★ '+esc(p.rating)+' · '+esc(p.rating_count)+' · '+esc(p.area||"")+'</div>'
+      +(p.blurb?'<div class="cmeta">'+esc(p.blurb)+'</div>':'')
+      +'<div class="cact">'+web+'<a class="chip ghost" href="'+esc(walkDir(p,lat,lng))+'" target="_blank" rel="noopener">Directions</a></div></div></div>';
   }
   function coffeeCard(f){
     const p=f.properties,lat=f.geometry.coordinates[1],lng=f.geometry.coordinates[0];
